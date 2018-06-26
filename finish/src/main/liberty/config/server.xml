@@ -1,0 +1,41 @@
+<!-- tag::copyright[] -->
+<!--
+    Copyright (c) 2018 IBM Corporation and others.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+
+    Contributors:
+    IBM Corporation - Initial implementation
+-->
+<!-- end::copyright[] -->
+
+<!-- tag::server[] -->
+<server description="Liberty Server for Sessions Management">
+
+    <featureManager>
+        <feature>servlet-3.1</feature>
+        <!-- tag::feature[] -->
+        <feature>sessionCache-1.0</feature>
+        <!-- end::feature[] -->
+        <feature>jaxrs-2.0</feature>
+        <feature>mpOpenAPI-1.0</feature>
+    </featureManager>
+
+    <httpEndpoint httpPort="${default.http.port}" httpsPort="${default.https.port}"
+        id="defaultHttpEndpoint" host="*" />
+
+    <!-- tag::jcachelib[] -->
+    <library id="jCacheVendorLib">
+	     <fileset dir="${wlp.install.dir}../../../src/main/resources/" includes="hazelcast-3.9.2.jar"/>
+  	</library>
+  	<!-- end::jcachelib[] -->
+
+    <!-- tag::sessionCache[] -->
+    <httpSessionCache libraryRef="jCacheVendorLib" uri="file:${wlp.install.dir}../../../src/main/resources/hazelcast-config.xml"/>
+    <!-- end::sessionCache[] -->
+
+     <webApplication location="sessionsManagement.war" contextRoot="${app.context.root}"/>
+</server>
+<!-- end::server[] -->

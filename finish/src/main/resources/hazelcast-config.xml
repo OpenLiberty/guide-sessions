@@ -1,0 +1,20 @@
+<!-- tag::copyright[] -->
+<!--
+    Copyright (c) 2017 IBM Corporation and others.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+    
+    Contributors:
+    IBM Corporation - Initial implementation
+-->
+<!-- end::copyright[] -->
+<hazelcast xsi:schemaLocation="http://www.hazelcast.com/schema/config hazelcast-config-3.9.xsd"
+           xmlns="http://www.hazelcast.com/schema/config"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <group>
+    <name>NewCluster</name>
+    <password>super-secret</password>
+  </group>
+</hazelcast>
