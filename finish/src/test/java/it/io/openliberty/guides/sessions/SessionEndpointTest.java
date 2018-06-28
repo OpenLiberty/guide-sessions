@@ -15,7 +15,6 @@ package it.io.openliberty.guides.sessions;
 import static org.junit.Assert.assertEquals;
 
 import java.util.Map;
-
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.Cookie;
@@ -23,21 +22,14 @@ import javax.ws.rs.core.NewCookie;
 import javax.ws.rs.core.Response;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class SessionEndpointTest {
 		private Client client;
-    private static String port;
-    private static String altPort;
+    private static String server1port = System.getProperty("liberty.server1.port");
+    private static String server2port = System.getProperty("liberty.server2.port");
     private final static String ITEM = "SpaceShip";
     private final static String PRICE = "20.0";
-
-    @BeforeClass
-    public static void oneTimeSetup() {
-        port = System.getProperty("liberty.test.port");
-        altPort = System.getProperty("liberty.alttest.port");
-    }
 
     @Before
     public void setup() {
@@ -52,8 +44,8 @@ public class SessionEndpointTest {
     // tag::testEmptyCart[]
     @Test
     public void testEmptyCart() {
-        Response response = getResponse(fromCartURL(port), null);
-        assertResponse(fromCartURL(port), response);
+        Response response = getResponse(fromCartURL(server1port), null);
+        assertResponse(fromCartURL(server1port), response);
 
         String actual = response.readEntity(String.class);
         String expected = "[]";
@@ -66,12 +58,11 @@ public class SessionEndpointTest {
     // tag::testMatch[]
     @Test
     public void testMatchOneServer() {
-        Response toCartResponse = getResponse(toCartURL(port), null);
-        assertResponse(toCartURL(port), toCartResponse);
+        Response toCartResponse = getResponse(toCartURL(server1port), null);
 
         Map<String, NewCookie> cookies = toCartResponse.getCookies();
         Cookie cookie = ((NewCookie) cookies.values().iterator().next()).toCookie();
-        Response fromCartResponse = getResponse(fromCartURL(port), cookie);
+        Response fromCartResponse = getResponse(fromCartURL(server1port), cookie);
 
         String actualToCart = toCartResponse.readEntity(String.class);
         String expectedToCart = ITEM + " added to your cart and costs $" + PRICE;
@@ -87,14 +78,13 @@ public class SessionEndpointTest {
     }
     // end::testMatch[]
     // tag::testMatch[]
-     @Test
+    @Test
      public void testMatchTwoServers() {
-         Response toCartResponse = getResponse(toCartURL(port), null);
-         assertResponse(toCartURL(port), toCartResponse);
+         Response toCartResponse = getResponse(toCartURL(server1port), null);
 
          Map<String, NewCookie> cookies = toCartResponse.getCookies();
          Cookie cookie = ((NewCookie) cookies.values().iterator().next()).toCookie();
-         Response fromCartResponse = getResponse(fromCartURL(altPort), cookie);
+         Response fromCartResponse = getResponse(fromCartURL(server2port), cookie);
 
          String actualToCart = toCartResponse.readEntity(String.class);
          String expectedToCart = ITEM + " added to your cart and costs $" + PRICE;
@@ -122,10 +112,10 @@ public class SessionEndpointTest {
     }
 
     private String toCartURL(String port) {
-    	return "http://localhost:" + port + "/LibertyProject/sessions/session/addToCart/" + ITEM + "&" + PRICE;
+    	return "http://localhost:" + port + "/SessionsGuide/sessions/cart/" + ITEM + "&" + PRICE;
     }
-
+    
     private String fromCartURL(String port) {
-    	return "http://localhost:" + port + "/LibertyProject/sessions/session/getFromCart";
+    	return "http://localhost:" + port + "/SessionsGuide/sessions/cart";
     }
 }

@@ -11,14 +11,12 @@
  *     IBM Corporation - Initial implementation
  *******************************************************************************/
  // end::copyright[]
- 
+
 package io.openliberty.guides.sessions;
 
-import javax.enterprise.context.ApplicationScoped;
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 
-@ApplicationScoped
 @ApplicationPath("/sessions")
 public class SessionApp extends Application {
 
