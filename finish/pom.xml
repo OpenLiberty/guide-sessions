@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>io.openliberty.guides</groupId>
-    <artifactId>sessionsManagement</artifactId>
+    <artifactId>guide-sessions</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
 
@@ -11,11 +11,11 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <app.name>LibertyProject</app.name>
-        <testServerHttpPort>9080</testServerHttpPort>
-        <testServerHttpsPort>9443</testServerHttpsPort>
-        <altTestServerHttpPort>9081</altTestServerHttpPort>
-        <altTestServerHttpsPort>9444</altTestServerHttpsPort>
+        <app.name>SessionsGuide</app.name>
+        <server1HttpPort>9080</server1HttpPort>
+        <server1HttpsPort>9443</server1HttpsPort>
+        <server2HttpPort>9081</server2HttpPort>
+        <server2HttpsPort>9444</server2HttpsPort>
         <warContext>${app.name}</warContext>
         <package.file>${project.build.directory}/${app.name}.zip</package.file>
         <packaging.type>usr</packaging.type>
@@ -37,19 +37,13 @@
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
-            <version>4.0.0</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>javax.inject</groupId>
-            <artifactId>javax.inject</artifactId>
-            <version>1</version>
+            <version>3.1.0</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>javax.ws.rs</groupId>
             <artifactId>javax.ws.rs-api</artifactId>
-            <version>2.1</version>
+            <version>2.0</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -63,23 +57,6 @@
             <artifactId>cdi-api</artifactId>
             <version>1.2</version>
             <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.ibm.websphere.appserver.api</groupId>
-            <artifactId>com.ibm.websphere.appserver.api.jaxrs20</artifactId>
-            <version>1.0.10</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>javax.json</groupId>
-            <artifactId>javax.json-api</artifactId>
-            <version>1.1</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.glassfish</groupId>
-            <artifactId>javax.json</artifactId>
-            <version>1.1</version>
         </dependency>
         <dependency>
             <groupId>javax.xml.bind</groupId>
@@ -142,7 +119,7 @@
             <plugin>
                 <groupId>net.wasdev.wlp.maven.plugins</groupId>
                 <artifactId>liberty-maven-plugin</artifactId>
-                <version>2.0</version>
+                <version>2.4.2</version>
                 <configuration>
                   <!-- TODO switch from daily driver to release containing sessionCache-1.0 before release-->
                     <install>
@@ -154,7 +131,7 @@
                          <version>18.0.0.1</version>
                         <type>zip</type>
                     </assemblyArtifact-->
-                    <configFile>src/main/liberty/config/server.xml</configFile>
+                    <configDirectory>src/main/liberty/config/</configDirectory>
                     <packageFile>${package.file}</packageFile>
                     <include>${packaging.type}</include>
                 </configuration>
@@ -208,8 +185,8 @@
                         <configuration>
                             <serverName>server1</serverName>
                             <bootstrapProperties>
-                                <default.http.port>${testServerHttpPort}</default.http.port>
-                                <default.https.port>${testServerHttpsPort}</default.https.port>
+                                <default.http.port>${server1HttpPort}</default.http.port>
+                                <default.https.port>${server1HttpsPort}</default.https.port>
                                 <app.context.root>${warContext}</app.context.root>
                             </bootstrapProperties>
                             <outputDirectory>target/wlp-package</outputDirectory>
@@ -256,8 +233,8 @@
                         </goals>
                         <configuration>
                             <bootstrapProperties>
-                                <default.http.port>${altTestServerHttpPort}</default.http.port>
-                                <default.https.port>${altTestServerHttpsPort}</default.https.port>
+                                <default.http.port>${server2HttpPort}</default.http.port>
+                                <default.https.port>${server2HttpsPort}</default.https.port>
                                 <app.context.root>${warContext}</app.context.root>
                             </bootstrapProperties>
                             <outputDirectory>target/wlp-package</outputDirectory>
@@ -284,8 +261,8 @@
                                 <include>**/it/**</include>
                             </includes>
                             <systemPropertyVariables>
-                                <liberty.test.port>${testServerHttpPort}</liberty.test.port>
-                                <liberty.alttest.port>${altTestServerHttpPort}</liberty.alttest.port>
+                                <liberty.server1.port>${server1HttpPort}</liberty.server1.port>
+                                <liberty.server2.port>${server2HttpPort}</liberty.server2.port>
                                 <war.name>${warContext}</war.name>
                             </systemPropertyVariables>
                         </configuration>

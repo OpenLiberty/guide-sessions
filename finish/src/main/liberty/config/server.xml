@@ -33,7 +33,7 @@
   	<!-- end::jcachelib[] -->
 
     <!-- tag::sessionCache[] -->
-    <httpSessionCache libraryRef="jCacheVendorLib" uri="file:${wlp.install.dir}../../../src/main/resources/hazelcast-config.xml"/>
+    <httpSessionCache libraryRef="jCacheVendorLib" uri="file:${server.config.dir}hazelcast-config.xml"/>
     <!-- end::sessionCache[] -->
 
      <webApplication location="sessionsManagement.war" contextRoot="${app.context.root}"/>
