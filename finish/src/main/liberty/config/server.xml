@@ -10,10 +10,8 @@
     IBM Corporation - Initial implementation
 -->
 <!-- end::copyright[] -->
-
 <!-- tag::server[] -->
 <server description="Liberty Server for Sessions Management">
-
     <featureManager>
         <feature>servlet-3.1</feature>
         <!-- tag::feature[] -->
@@ -22,20 +20,16 @@
         <feature>jaxrs-2.0</feature>
         <feature>mpOpenAPI-1.0</feature>
     </featureManager>
-
     <httpEndpoint httpPort="${default.http.port}" httpsPort="${default.https.port}"
         id="defaultHttpEndpoint" host="*" />
-
+    <!-- tag::sessionCache[] -->
+    <httpSessionCache libraryRef="jCacheVendorLib" uri="file:${server.config.dir}/hazelcast-config.xml"/>
+    <!-- end::sessionCache[] -->
     <!-- tag::jcachelib[] -->
     <library id="jCacheVendorLib">
-	     <fileset dir="${wlp.install.dir}../../../src/main/resources/" includes="hazelcast-3.9.2.jar"/>
+	     <file name="${shared.resource.dir}/hazelcast.jar"/>
   	</library>
   	<!-- end::jcachelib[] -->
-
-    <!-- tag::sessionCache[] -->
-    <httpSessionCache libraryRef="jCacheVendorLib" uri="file:${server.config.dir}hazelcast-config.xml"/>
-    <!-- end::sessionCache[] -->
-
      <webApplication location="sessionsManagement.war" contextRoot="${app.context.root}"/>
 </server>
 <!-- end::server[] -->
