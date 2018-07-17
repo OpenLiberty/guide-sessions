@@ -59,16 +59,6 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>javax.xml.bind</groupId>
-            <artifactId>jaxb-api</artifactId>
-            <version>2.2.11</version>
-        </dependency>
-        <dependency>
-            <groupId>com.sun.xml.bind</groupId>
-            <artifactId>jaxb-core</artifactId>
-            <version>2.2.11</version>
-        </dependency>
-        <dependency>
             <groupId>com.sun.xml.bind</groupId>
             <artifactId>jaxb-impl</artifactId>
             <version>2.2.11</version>
@@ -82,7 +72,7 @@
         <dependency>
             <groupId>com.hazelcast</groupId>
             <artifactId>hazelcast</artifactId>
-            <version>3.10.1</version>
+            <version>3.10.2</version>
         </dependency>
     </dependencies>
 
@@ -121,17 +111,13 @@
                 <artifactId>liberty-maven-plugin</artifactId>
                 <version>2.4.2</version>
                 <configuration>
-                  <!-- TODO switch from daily driver to release containing sessionCache-1.0 before release-->
-                    <install>
-                        <runtimeUrl>https://public.dhe.ibm.com/ibmdl/export/pub/software/openliberty/runtime/nightly/2018-06-01_0659/openliberty-all-20180601-0500.zip</runtimeUrl>
-                    </install>
-                    <!--assemblyArtifact>
+                    <assemblyArtifact>
                          <groupId>io.openliberty</groupId>
                          <artifactId>openliberty-runtime</artifactId>
-                         <version>18.0.0.1</version>
+                         <version>RELEASE</version>
                         <type>zip</type>
-                    </assemblyArtifact-->
-                    <configDirectory>src/main/liberty/config/</configDirectory>
+                    </assemblyArtifact>
+                    <configFile>src/main/liberty/config/server.xml</configFile>
                     <packageFile>${package.file}</packageFile>
                     <include>${packaging.type}</include>
                 </configuration>
@@ -144,7 +130,7 @@
                         </goals>
                     </execution>
                     <execution>
-                        <id>install-app</id>
+                        <id>install-app-1</id>
                         <phase>pre-integration-test</phase>
                         <goals>
                             <goal>install-apps</goal>
@@ -157,7 +143,20 @@
                         </configuration>
                     </execution>
                     <execution>
-                        <id>start-server</id>
+                        <id>install-app-2</id>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>install-apps</goal>
+                        </goals>
+                        <configuration>
+                            <serverName>server2</serverName>
+                            <looseApplication>true</looseApplication>
+                            <stripVersion>true</stripVersion>
+                            <installAppPackages>project</installAppPackages>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>start-server-1</id>
                         <phase>pre-integration-test</phase>
                         <configuration>
                             <serverName>server1</serverName>
@@ -167,7 +166,7 @@
                         </goals>
                     </execution>
                     <execution>
-                        <id>stop-server</id>
+                        <id>stop-server-1</id>
                         <phase>post-integration-test</phase>
                         <configuration>
                             <serverName>server1</serverName>
@@ -177,7 +176,7 @@
                         </goals>
                     </execution>
                     <execution>
-                        <id>package-app</id>
+                        <id>package-app-1</id>
                         <phase>package</phase>
                         <goals>
                             <goal>package-server</goal>
@@ -193,20 +192,7 @@
                         </configuration>
                     </execution>
                     <execution>
-                        <id>install-app1</id>
-                        <phase>pre-integration-test</phase>
-                        <goals>
-                            <goal>install-apps</goal>
-                        </goals>
-                        <configuration>
-                            <serverName>server2</serverName>
-                            <looseApplication>true</looseApplication>
-                            <stripVersion>true</stripVersion>
-                            <installAppPackages>project</installAppPackages>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>start-server1</id>
+                        <id>start-server-2</id>
                         <phase>pre-integration-test</phase>
                         <configuration>
                             <serverName>server2</serverName>
@@ -216,7 +202,7 @@
                         </goals>
                     </execution>
                     <execution>
-                        <id>stop-server1</id>
+                        <id>stop-server-2</id>
                         <phase>post-integration-test</phase>
                         <configuration>
                             <serverName>server2</serverName>
@@ -226,7 +212,7 @@
                         </goals>
                     </execution>
                     <execution>
-                        <id>package-app1</id>
+                        <id>package-app-2</id>
                         <phase>package</phase>
                         <goals>
                             <goal>package-server</goal>
@@ -297,7 +283,7 @@
                   <artifactItem>
                     <groupId>com.hazelcast</groupId>
                     <artifactId>hazelcast</artifactId>
-                    <version>3.10.1</version>
+                    <version>3.10.2</version>
                     <type>jar</type>
                     <overWrite>false</overWrite>
                     <outputDirectory>${project.build.directory}/liberty/wlp/usr/shared/resources</outputDirectory>
@@ -308,6 +294,30 @@
                 <overWriteReleases>false</overWriteReleases>
                 <overWriteSnapshots>true</overWriteSnapshots>
               </configuration>
+          </plugin>
+          <plugin>
+              <artifactId>maven-resources-plugin</artifactId>
+              <version>3.1.0</version>
+              <executions>
+                  <execution>
+                      <id>copy-resources</id>
+                      <phase>package</phase>
+                      <goals>
+                          <goal>copy-resources</goal>
+                      </goals>
+                      <configuration>
+                          <outputDirectory>${project.build.directory}/liberty/wlp/usr/shared/config</outputDirectory>
+                          <resources>
+                              <resource>
+                                  <directory>${project.basedir}/src/main/liberty/config</directory>
+                                  <includes>
+                                      <include>hazelcast-config.xml</include>
+                                  </includes>
+                              </resource>
+                          </resources>
+                      </configuration>
+                  </execution>
+              </executions>
           </plugin>
         </plugins>
     </build>
