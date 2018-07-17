@@ -11,8 +11,6 @@
  *     IBM Corporation - Initial implementation
  *******************************************************************************/
  // end::copyright[]
-
-// tag::SessionEndpoint[]
 package io.openliberty.guides.sessions;
 
 import java.util.ArrayList;
@@ -34,12 +32,12 @@ import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 public class SessionEndpoint {
 	// tag::addToCart[]
 	@POST
-	@Path("/cart/{item}&{price}")
+	@Path("cart/{item}&{price}")
 	@Produces(MediaType.TEXT_PLAIN)
-	@APIResponse(responseCode = "200", description = "Execute to add an item to your cart.")
-	@Operation(summary = "POST request to add an item to your cart.", description = "Adds an item to your cart.")
+	@APIResponse(responseCode = "200", description = "Item successfully added to cart.")
+	@Operation(summary = "Add a new item to cart.")
 	public String addToCart(@Context HttpServletRequest request,
-			@Parameter(description = "An item you need for intergalatic travel.", required = true)
+			@Parameter(description = "Item you need for intergalatic travel.", required = true)
 			@PathParam("item") String item,
 			@Parameter(description = "Price for this item.", required = true)
 			@PathParam("price") double price) {
@@ -49,13 +47,13 @@ public class SessionEndpoint {
 		return item + " added to your cart and costs $" + price;
 	}
 	// end::addToCart[]
-	// tag::getFromCart[]
+	// tag::getCart[]
 	@GET
-	@Path("/cart")
+	@Path("cart")
 	@Produces(MediaType.TEXT_PLAIN)
-	@APIResponse(responseCode = "200", description = "Execute to request your cart details.")
-	@Operation(summary = "GET request to view your cart")
-	public String getFromCart(@Context HttpServletRequest request) {
+	@APIResponse(responseCode = "200", description = "Item successfully retrieved from cart.")
+	@Operation(summary = "Return list of items in your cart.")
+	public String getCart(@Context HttpServletRequest request) {
 		HttpSession sess = request.getSession();
 		Enumeration<String> names = sess.getAttributeNames();
 		ArrayList<String> results = new ArrayList<>();
@@ -67,6 +65,5 @@ public class SessionEndpoint {
 		}
 		return results.toString();
 	}
-	// end::getFromCart[]
+	// end::getCart[]
 }
-// end::SessionEndpoint[]
