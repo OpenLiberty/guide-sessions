@@ -92,7 +92,7 @@ problem by allowing all server instances to share caches amongst each other. Thi
 eliminates the need to always route a user to the same server instance, and also
 helps in failover situations by distributing the cache.
 
-== Building and running the application
+== Creating the application
 === Using best practices
 For security reasons, using `sessions` is preferred over using `cookies` for
 sensitive data. Sessions hide data from users. Cookies store data on the clients
@@ -236,6 +236,27 @@ link:http://docs.hazelcast.org/docs/latest-dev/manual/html/config.html[]
 For testing, the `pom.xml` file has been configured for you to create two
 local server instances that operate side-by-side using different ports `9080` and
 `9081`. The server instances will be a part of the same Hazelcast cluster.
+
+== Building and running the application
+
+To build the application, run the Maven `install` phase from the command line in the `start` directory:
+
+```
+mvn install
+```
+
+This command builds the application and creates a `.war` file in the target directory. It also
+configures and installs Open Liberty into the `target/liberty/wlp` directory.
+
+Next, run the Maven `liberty:start-server` goal for both servers:
+
+```
+mvn liberty:start-server -DserverName=server1
+mvn liberty:start-server -DserverName=server2
+```
+
+This goal starts an Open Liberty server instance. Your Maven `pom.xml` is already configured to start
+the application in this server instance.
 
 == Testing your servers
 Create a `SessionEndpointTest` class in the
