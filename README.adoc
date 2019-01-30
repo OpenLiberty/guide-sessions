@@ -9,12 +9,14 @@
 :page-layout: guide
 :projectid: sessions
 :page-duration: 25 minutes
-:page-releasedate: 2018-07-17
+:page-releasedate: 2019-03-01
 :page-description: Learn how to create and cache session data that persists between servers.
-:page-tags: ['sessions', 'session persistence','sessionCache-1.0']
-:page-related-guides: ['microprofile-openapi', 'rest-intro']
+:page-tags: ['Java EE']
+:page-related-guides: ['rest-intro', 'microprofile-openapi']
 :page-permalink: /guides/{projectid}
 :common-includes: https://raw.githubusercontent.com/OpenLiberty/guides-common/master
+:page-seo-title: Caching and persisting session data
+:page-seo-description: Learn how to create and cache session data that persists between servers.
 :imagesdir: assets/
 = Creating an application with HTTP session caching
 
@@ -27,28 +29,21 @@ theory, and create an application that will persist a user's shopping cart data.
 You will run this application on two servers accessing the same session cache.
 This guide uses the MicroProfile OpenAPI as a UI for interacting with the servers.
 
-=== Learning about sessions
 A `session` is a way to store information to be used across multiple pages.
-
 When you work with a local application (such as a word processor), you open it,
 make changes, and then you close it. The computer knows that you opened the app,
 made changes, and closed the app. On the internet, however, the web server does
 not know who you are, or what you do, because it is just processing stateless HTTP
-requests.
-
-Session variables store user information like usernames, items in a cart, etc.
+requests. Session variables store user information like usernames, items in a cart, etc.
 By default, session variables will timeout after 30 minutes of being unused.
 Session variables are maintained on a web server. `Cookies`, which also store user
 information, are maintained on a clients computer.
 
-=== Learning about session persistence
 The primary use case of `session persistence` is to be able to handle client requests
 being routed to different backends or to handle failover of the backend system.
-
 High traffic websites must support thousands of users in a fast and reliable way.
 Load balancing requires running several instances of the same service in parallel
 so that traffic can be routed to servers to maximize speed and reliability.
-
 This poses a problem when each server keeps an isolated copy of their session data.
 In this case, a user is tied to a particular server, and if that server crashes
 then that server's session data will be lost.
@@ -71,8 +66,7 @@ the following Maven goal to build the application and run it inside Open Liberty
 
 ```
 cd finish
-mvn install
-mvn liberty:start-server -DserverName=server1
+mvn install liberty:start-server -DserverName=server1
 ```
 
 Point your browser to the link:http://localhost:9080/openapi/ui/[] URL. This will
@@ -134,14 +128,14 @@ request into the method parameter.
 
 The `addToCart` method gets the current session and sets a new attribute
 stored as the key-value pair `{item}:{price}`. A response is then built and
-returned to confirm that an item has been added to your cart/session.
+returned to confirm that an item has been added to your cart or session.
 
 The `getCart` method will get the current session. Iterate through all key-value
 pairs stored in the current session and create a `String` response that is returned
-to confirm the value of the item(s) in your cart/session.
+to confirm the value of the item(s) in your cart or session.
 
 == Configuring session persistence
-=== Using Client/Server vs Peer-to-Peer
+=== Using Client-Server vs Peer-to-Peer
 The `sessionCache-1.0` feature is only valuable when it is connected to at least
 one other member. There are two different ways session caching can behave in a
 server environment:
@@ -154,16 +148,14 @@ part of the same cluster.
 
 You will use the peer-to-peer model for this application.
 
-=== Learning about JCache
-JCache stands for Java Caching and is an interface to standardize distributed
-caching on the Java platform. The `sessionCache-1.0` feature makes use of JCache
-which allows for session persistence by providing a common cache of session data
-between servers.
-
-The `sessionCache-1.0` feature does not include a JCache implementation.
+=== Configuring Session Persistence with JCache in OpenLiberty
+JCache stands for Java Caching and is an interface
+to standardize distributed caching on the Java platform.
+The `sessionCache-1.0` feature makes use of JCache which allows for session
+persistence by providing a common cache of session data between servers.
+This feature does not include a JCache implementation.
 For this guide you will use Hazelcast as an open source JCache provider.
 
-=== Configuring Session Persistence with JCache in OpenLiberty
 Hazelcast is a JCache provider. OpenLiberty needs to be configured to use
 HazelCast once the `sessionCache-1.0` feature is enabled.
 
