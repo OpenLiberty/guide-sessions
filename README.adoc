@@ -72,11 +72,11 @@ mvn install liberty:start-server -DserverName=server1
 Point your browser to the link:http://localhost:9080/openapi/ui/[] URL. This will
 display the available REST endpoints on the `server1` server.
 
-First, make a POST request to `/sessions/session/cart/{item}&{price}`.
+First, make a POST request to `/sessions/cart/{item}&{price}`.
 The POST request will add a user specified item and price to a session
 that represents data in a user's cart.
 
-Then, make a GET request to `/sessions/session/cart`. The GET request
+Then, make a GET request to `/sessions/cart`. The GET request
 will return all the items from your session and display it as a string.
 
 When you are ready to continue stop your server and navigate to the `start` directory.
@@ -180,7 +180,7 @@ them join a cluster with the correct username/password. This is accomplished by
 creating a Hazelcast configuration file.
 
 Create a new `hazelcast-config.xml` config in the
-`/src/main/liberty/config/hazelcast-config.xml` file.
+`src/main/liberty/config/hazelcast-config.xml` file.
 
 [source, xml, indent=0]
 ----
@@ -221,7 +221,7 @@ the application in this server instance.
 
 == Testing your servers
 Create a `SessionResourceTest` class in the
-`/src/test/java/it/io/openliberty/guides/sessions/SessionResourceTest.java` file:
+`src/test/java/it/io/openliberty/guides/sessions/SessionResourceTest.java` file:
 
 [source, Java, indent=0]
 ----
