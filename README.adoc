@@ -12,22 +12,54 @@
 :page-releasedate: 2018-07-17
 :page-description: Learn how to create and cache session data that persists between servers.
 :page-tags: ['sessions', 'session persistence','sessionCache-1.0']
-:page-related-guides: ['microprofile-openapi']
+:page-related-guides: ['microprofile-openapi', 'rest-intro']
 :page-permalink: /guides/{projectid}
 :common-includes: https://raw.githubusercontent.com/OpenLiberty/guides-common/master
 :imagesdir: assets/
-= HTTP Session caching
+= Creating an application with HTTP session caching
 
 Learn how to create and work with session data. Expand on this knowledge by using
 the sessionCache feature to persist session data between servers.
 
 == What you'll learn
 You'll learn how to set and get session data, about session and session persistence
-theory, and then create an application that will persist a user's shopping cart data.
-You will also configure two servers to use the same session cache.
+theory, and create an application that will persist a user's shopping cart data.
+You will run this application on two servers accessing the same session cache.
 This guide uses the MicroProfile OpenAPI as a UI for interacting with the servers.
 
-== Getting started
+=== Learning about sessions
+A `session` is a way to store information to be used across multiple pages.
+
+When you work with a local application (such as a word processor), you open it,
+make changes, and then you close it. The computer knows that you opened the app,
+made changes, and closed the app. On the internet, however, the web server does
+not know who you are, or what you do, because it is just processing stateless HTTP
+requests.
+
+Session variables store user information like usernames, items in a cart, etc.
+By default, session variables will timeout after 30 minutes of being unused.
+Session variables are maintained on a web server. `Cookies`, which also store user
+information, are maintained on a clients computer.
+
+=== Learning about session persistence
+The primary use case of `session persistence` is to be able to handle client requests
+being routed to different backends or to handle failover of the backend system.
+
+High traffic websites must support thousands of users in a fast and reliable way.
+Load balancing requires running several instances of the same service in parallel
+so that traffic can be routed to servers to maximize speed and reliability.
+
+This poses a problem when each server keeps an isolated copy of their session data.
+In this case, a user is tied to a particular server, and if that server crashes
+then that server's session data will be lost.
+
+image::sessionCache.png[]
+
+`Session persistence` using a `session cache`, as illustrated above, solves this
+problem by allowing all server instances to share caches amongst each other. This
+eliminates the need to always route a user to the same server instance, and also
+helps in failover situations by distributing the cache.
+
 include::{common-includes}/gitclone.adoc[]
 
 === Try what you’ll build
@@ -39,6 +71,7 @@ the following Maven goal to build the application and run it inside Open Liberty
 
 ```
 cd finish
+mvn install
 mvn liberty:start-server -DserverName=server1
 ```
 
@@ -59,82 +92,32 @@ mvn liberty:stop-server -DserverName=server1
 cd ../start
 ```
 
-== Learning about sessions
-A `session` is a way to store information to be used across multiple pages.
-
-When you work with a local application (such as a word processor), you open it,
-make changes, and then you close it. The computer knows that you opened the app,
-made changes, and closed the app. On the internet, however, the web server does
-not know who you are, or what you do, because it is just processing stateless HTTP
-requests.
-
-Session variables store user information like usernames, items in a cart, etc.
-By default, session variables will timeout after 30 minutes of being unused.
-Session variables are maintained on a web server. `Cookies`, which also store user
-information, are maintained on a clients computer.
-
-== Learning about session persistence
-The primary use case of `session persistence` is to be able to handle client requests
-being routed to different backends or to handle failover of the backend system.
-
-High traffic websites must support thousands of users in a fast and reliable way.
-Load balancing requires running several instances of the same service in parallel
-so that traffic can be routed to servers to maximize speed and reliability.
-
-This poses a problem when each server keeps an isolated copy of their session data.
-In this case, a user is tied to a particular server, and if that server crashes
-then that server's session data will be lost.
-
-image::sessionCache.png[]
-
-`Session persistence` using a `session cache`, as illustrated above, solves this
-problem by allowing all server instances to share caches amongst each other. This
-eliminates the need to always route a user to the same server instance, and also
-helps in failover situations by distributing the cache.
-
 == Creating the application
-=== Using best practices
 For security reasons, using `sessions` is preferred over using `cookies` for
 sensitive data. Sessions hide data from users. Cookies store data on the clients
 computer, and can be manipulated by a savvy user to make fake requests to your site.
+You will create an application to store and retrieve session data.
 
-=== Storing and retrieving session data
-Start by creating the `server.xml` config in the
-`src/main/liberty/config/server.xml` file.
-
-[source, xml]
-----
-include::finish/src/main/liberty/config/server.xml[tags=!copyright;!sessionCache-1.0;!jCacheVendorLib;!jcachelib]
-----
-
-|===
-|Feature | Description
-
-|`servlet-3.1`    | Allows the server to accept incoming HTTP requests.
-|`jaxrs-2.0`      | Provides annotations to help map java objects to web resources.
-|`mpOpenAPI-1.0`  | Provides the user interface.
-|===
-
-Create the `SessionApp` class in the
-`src/main/java/io/openliberty/guides/sessions/SessionApp.java` file.
+Create the `SessionApplication` class in the
+`src/main/java/io/openliberty/guides/sessions/SessionApplication.java` file.
 
 [source, Java, indent=0]
 ----
-include::finish/src/main/java/io/openliberty/guides/sessions/SessionApp.java[tags=!copyright]
+include::finish/src/main/java/io/openliberty/guides/sessions/SessionApplication.java[tags=!copyright]
 ----
 
 This class extends the generic JAX-RS application class needed to run the
 application.
 
-Create the `SessionEndpoint` class in the
-`src/main/java/io/openliberty/guides/sessions/SessionEndpoint.java` file:
+Create the `SessionResource` class in the
+`src/main/java/io/openliberty/guides/sessions/SessionResource.java` file:
 
 [source, Java, indent=0]
 ----
-include::finish/src/main/java/io/openliberty/guides/sessions/SessionEndpoint.java[tags=!copyright]
+include::finish/src/main/java/io/openliberty/guides/sessions/SessionResource.java[tags=!copyright]
 ----
 
-The `sessionEndpoint` class defines the REST endpoints at which a user can make
+The `SessionResource` class defines the REST endpoints at which a user can make
 a HTTP request.
 
 The `addToCart` and `getCart` methods have a number of annotations most of which
@@ -153,23 +136,9 @@ The `addToCart` method gets the current session and sets a new attribute
 stored as the key-value pair `{item}:{price}`. A response is then built and
 returned to confirm that an item has been added to your cart/session.
 
-The `getCart` method will get the current session. Iterate through all key:value
+The `getCart` method will get the current session. Iterate through all key-value
 pairs stored in the current session and create a `String` response that is returned
 to confirm the value of the item(s) in your cart/session.
-
-=== Expiring a session
-By default, sessions expire once a user closes their browser or after 30 minutes
-of inactivity. You can change the default behavior using the following methods:
-
-* https://openliberty.io/javadocs/liberty-javaee7-javadoc/javax/servlet/http/HttpSession.html#setMaxInactiveInterval-int-[setMaxInactiveInterval( seconds )]
-* https://openliberty.io/javadocs/liberty-javaee7-javadoc/javax/servlet/http/HttpSession.html#invalidate--[invalidate()]
-
-`setMaxInactiveInterval` specifies a duration in seconds after which
-a session will become invalid and the data no longer accessible. This only applies
-to the session that the method is called on
-
-`invalidate` makes the session invalid and the data no longer accessible even
-if the user is still accessing the server, and the session has not expired.
 
 == Configuring session persistence
 === Using Client/Server vs Peer-to-Peer
@@ -183,6 +152,8 @@ to a dedicated JCache server.
 that are also running with the `sessionCache-1.0` feature and configured to be
 part of the same cluster.
 
+You will use the peer-to-peer model for this application.
+
 === Learning about JCache
 JCache stands for Java Caching and is an interface to standardize distributed
 caching on the Java platform. The `sessionCache-1.0` feature makes use of JCache
@@ -192,12 +163,11 @@ between servers.
 The `sessionCache-1.0` feature does not include a JCache implementation.
 For this guide you will use Hazelcast as an open source JCache provider.
 
-=== Configuring OpenLiberty
+=== Configuring Session Persistence with JCache in OpenLiberty
 Hazelcast is a JCache provider. OpenLiberty needs to be configured to use
 HazelCast once the `sessionCache-1.0` feature is enabled.
 
-Delete and replace the `server.xml` config in the
-`src/main/liberty/config/server.xml` file.
+Create the `server.xml` config in the `src/main/liberty/config/server.xml` file.
 
 [source, xml, indent=0]
 ----
@@ -210,7 +180,7 @@ the `hazelcast.jar` file is downloaded as a dependency and then copied to the
 predefined `{shared.resource.dir}` directory.
 
 === Configuring HazelCast
-By default, all OpenLiberty servers running `sessionCache`, the `SessionApp`
+By default, all OpenLiberty servers running `sessionCache`, the `SessionApplication`
 you have created, and Hazelcast will be connected using a peer-to-peer model.
 
 You can limit the Hazelcast instances that have access to session data by making
@@ -229,8 +199,7 @@ In the `server.xml` file a reference to the Hazelcast config file is made using
 the `httpSessionCache` tag.  When the maven build is run the `hazelcast-config.xml`
 file is copied to the predefined `{shared.resource.dir}` directory.
 
-There are more configuration settings you can explore for Hazelcast at
-link:http://docs.hazelcast.org/docs/latest-dev/manual/html/config.html[]
+There are more configuration settings you can explore in the http://docs.hazelcast.org/docs/latest-dev/manual/html/config.html[Hazelcast Documentation].
 
 === Setting up multiple servers
 For testing, the `pom.xml` file has been configured for you to create two
@@ -259,12 +228,12 @@ This goal starts an Open Liberty server instance. Your Maven `pom.xml` is alread
 the application in this server instance.
 
 == Testing your servers
-Create a `SessionEndpointTest` class in the
-`/src/test/java/it/io/openliberty/guides/sessions/SessionEndpointTest.java` file:
+Create a `SessionResourceTest` class in the
+`/src/test/java/it/io/openliberty/guides/sessions/SessionResourceTest.java` file:
 
 [source, Java, indent=0]
 ----
-include::finish/src/test/java/it/io/openliberty/guides/sessions/SessionEndpointTest.java[tags=**;!copyright]
+include::finish/src/test/java/it/io/openliberty/guides/sessions/SessionResourceTest.java[tags=**;!copyright]
 ----
 
 The `testEmptyCart` test makes sure that the `getCart` endpoint returns
@@ -298,7 +267,7 @@ If the tests pass, you will see a similar output to the following:
 -------------------------------------------------------
  T E S T S
 -------------------------------------------------------
-Running it.io.openliberty.guides.sessions.SessionEndpointTest
+Running it.io.openliberty.guides.sessions.SessionResourceTest
 Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 10.259 sec
 
 Results :
@@ -307,5 +276,7 @@ Tests run: 3, Failures: 0, Errors: 0, Skipped: 0
 ```
 
 == Great work! You're done!
+You developed and tested a Java application using HTTP session caching and Open
+Liberty.
 
 include::{common-includes}/finish.adoc[]

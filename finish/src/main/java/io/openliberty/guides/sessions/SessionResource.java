@@ -29,7 +29,7 @@ import org.eclipse.microprofile.openapi.annotations.parameters.Parameter;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 
 @Path("/")
-public class SessionEndpoint {
+public class SessionResource {
 	// tag::addToCart[]
 	@POST
 	@Path("cart/{item}&{price}")

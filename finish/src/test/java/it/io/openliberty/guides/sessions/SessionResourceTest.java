@@ -26,7 +26,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public class SessionEndpointTest {
+public class SessionResourceTest {
 	private Client client;
 	private static String server1port =
 		System.getProperty("liberty.server1.port");

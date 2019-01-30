@@ -18,6 +18,6 @@ import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 
 @ApplicationPath("/sessions")
-public class SessionApp extends Application {
+public class SessionApplication extends Application {
 
 }
