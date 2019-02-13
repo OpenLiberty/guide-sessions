@@ -39,7 +39,7 @@ relational database. Furthermore, failover of HTTP sessions can be achieved by
 configuring multiple servers to persist data to the
 same location.
 
-=== What is session?
+=== What is a session?
 A `session` is a way to store information to be used across multiple pages.
 When you work with a local application (such as a word processor), you open it,
 make changes, and then you close it. The computer knows that you opened the app,
