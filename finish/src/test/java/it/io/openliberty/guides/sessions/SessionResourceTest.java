@@ -47,7 +47,6 @@ public class SessionResourceTest {
 		client.close();
 	}
 
-	// tag::testEmptyCart[]
 	@Test
 	public void testEmptyCart() {
 		Response response = getResponse(GET, server1port, null);
@@ -62,8 +61,6 @@ public class SessionResourceTest {
 		response.close();
 	}
 
-	// end::testEmptyCart[]
-	// tag::testOneServer[]
 	@Test
 	public void testOneServer() {
 		Response addToCartResponse = getResponse(POST, server1port, null);
@@ -88,8 +85,6 @@ public class SessionResourceTest {
 		getCartResponse.close();
 	}
 
-	// end::testOneServer[]
-	// tag::testTwoServers[]
 	@Test
 	public void testTwoServers() throws Exception {
 		Response addToCartResponse = getResponse(POST, server1port, null);
@@ -114,7 +109,6 @@ public class SessionResourceTest {
 		getCartResponse.close();
 	}
 
-	// end::testTwoServers[]
 	/**
 	 * Get response from server using the following configuration
 	 *
