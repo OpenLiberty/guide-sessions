@@ -1,4 +1,3 @@
-
 // tag::copyright[]
 /*******************************************************************************
  * Copyright (c) 2019 IBM Corporation and others.
@@ -30,7 +29,7 @@ import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 
 @Path("/")
 public class SessionResource {
-	// tag::addToCart[]
+
 	@POST
 	@Path("cart/{item}&{price}")
 	@Produces(MediaType.TEXT_PLAIN)
@@ -46,8 +45,7 @@ public class SessionResource {
 		sess.setAttribute(item, price);
 		return item + " added to your cart and costs $" + price;
 	}
-	// end::addToCart[]
-	// tag::getCart[]
+
 	@GET
 	@Path("cart")
 	@Produces(MediaType.TEXT_PLAIN)
@@ -65,5 +63,4 @@ public class SessionResource {
 		}
 		return results.toString();
 	}
-	// end::getCart[]
 }
