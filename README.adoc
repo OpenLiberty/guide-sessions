@@ -11,24 +11,32 @@
 :page-duration: 25 minutes
 :page-releasedate: 2019-03-01
 :page-description: Learn how to create and cache session data that persists between servers.
-:page-tags: ['Java EE']
+:page-tags: ['Java EE', 'sessions', 'session persistence', 'sessionCache']
 :page-related-guides: ['rest-intro', 'microprofile-openapi']
 :page-permalink: /guides/{projectid}
 :common-includes: https://raw.githubusercontent.com/OpenLiberty/guides-common/master
-:page-seo-title: Caching and persisting session data
+:page-seo-title: Caching and persisting session data in microservices
 :page-seo-description: Learn how to create and cache session data that persists between servers.
 :imagesdir: assets/
-= Caching HTTP sessions in microservices
+= Caching and persisting HTTP sessions in microservices
 
-Learn how to create and work with session data. Expand on this knowledge by using
-the sessionCache feature to persist session data between servers.
+Learn how to create and work with session data that persists between servers using the sessionCache feature.
 
 == What you'll learn
-You'll learn how to set and get session data, about session and session persistence
-theory, and create a microservice that will persist a user's shopping cart data.
-You will run this microservice on two servers accessing the same session cache.
-This guide uses the MicroProfile OpenAPI as a UI for interacting with the servers.
+You'll learn about session and session persistence theory. You'll learn how to set
+and get session data in microservices. For security reasons, using
+`sessions` is preferred over using `cookies` for sensitive data. Sessions hide data
+from users. Cookies store data on the client's computer, and can be manipulated by a
+savvy user to make fake requests to your site.
 
+The microservice that you will be working with is a shopping cart web service. You'll
+learn how to persist an user's shopping cart data that persists between servers using
+the `sessionCache` feature in Open Liberty. You'll run the microservice
+on two servers accessing the same session cache. This guide uses the MicroProfile
+OpenAPI as the UI for interacting with the servers. You can learn more about
+MicroProfile OpenAPI in https://openliberty.io/guides/microprofile-openapi.html[Documenting RESTful APIs].
+
+=== What is session?
 A `session` is a way to store information to be used across multiple pages.
 When you work with a local application (such as a word processor), you open it,
 make changes, and then you close it. The computer knows that you opened the app,
@@ -37,11 +45,9 @@ not know who you are, or what you do, because it is just processing stateless HT
 requests. Session variables store user information like usernames, items in a cart, etc.
 By default, session variables will timeout after 30 minutes of being unused.
 Session variables are maintained on a web server. `Cookies`, which also store user
-information, are maintained on a clients computer. For security reasons, using 
-`sessions` is preferred over using `cookies` for sensitive data. Sessions hide data 
-from users. Cookies store data on the clients computer, and can be manipulated by a 
-savvy user to make fake requests to your site.
+information, are maintained on a clients computer.
 
+=== What is session persistence?
 The primary use case of `session persistence` is to be able to handle client requests
 being routed to different backends or to handle failover of the backend system.
 High traffic websites must support thousands of users in a fast and reliable way.
@@ -268,7 +274,7 @@ Tests run: 3, Failures: 0, Errors: 0, Skipped: 0
 ```
 
 == Great work! You're done!
-You developed and tested a Java microservice using HTTP session caching and 
+You developed and tested a Java microservice using HTTP session caching and
 Open Liberty.
 
 include::{common-includes}/finish.adoc[]
