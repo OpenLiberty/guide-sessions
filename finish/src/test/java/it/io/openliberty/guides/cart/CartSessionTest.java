@@ -10,7 +10,7 @@
  *     IBM Corporation - Initial implementation
  *******************************************************************************/
 // end::copyright[]
-package it.io.openliberty.guides.sessions;
+package it.io.openliberty.guides.cart;
 
 import static org.junit.Assert.assertEquals;
 
@@ -26,7 +26,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public class SessionResourceTest {
+public class CartSessionTest {
 	private Client client;
 	private static String server1port =
 		System.getProperty("liberty.server1.port");
@@ -108,7 +108,8 @@ public class SessionResourceTest {
 		addToCartResponse.close();
 		getCartResponse.close();
 	}
-
+	
+	// tag::comment[]
 	/**
 	 * Get response from server using the following configuration
 	 *
@@ -117,6 +118,7 @@ public class SessionResourceTest {
 	 * @param cookie (OPTIONAL) provides identification to get session data
 	 * @return Response
 	 */
+	// end::comment[]
 	private Response getResponse(String method, String port, Cookie cookie) {
 		Response result = null;
 		switch (method) {
@@ -136,7 +138,8 @@ public class SessionResourceTest {
 		}
 		return result;
 	}
-
+	
+	// tag::comment[]
 	/**
 	 * Construct and return URL for requests
 	 *
@@ -144,6 +147,7 @@ public class SessionResourceTest {
 	 * @param port for HTTP communication with server
 	 * @return URL as a String
 	 */
+	// end::comment[]
 	private String getURL(String method, String port) {
 		String result = null;
 		switch (method) {

@@ -10,7 +10,7 @@
  *     IBM Corporation - Initial implementation
  *******************************************************************************/
  // end::copyright[]
-package io.openliberty.guides.sessions;
+package io.openliberty.guides.cart;
 
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -28,7 +28,7 @@ import org.eclipse.microprofile.openapi.annotations.parameters.Parameter;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 
 @Path("/")
-public class SessionResource {
+public class CartResource {
 
 	@POST
 	@Path("cart/{item}&{price}")
