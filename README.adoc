@@ -19,9 +19,9 @@
 :page-seo-title: Caching and persisting session data in microservices
 :page-seo-description: Learn how to create and cache session data that persists between servers.
 :imagesdir: assets/
-= Caching and persisting HTTP sessions in microservices
+= Caching HTTP sessions in microservices
 
-Learn how to create and work with session data that persists between servers using the sessionCache feature in Open Liberty.
+Learn how to create and work with session data that persists between servers using the `sessionCache` feature in Open Liberty.
 
 == What you'll learn
 You'll learn about session and session persistence theory. You'll also learn how to set
@@ -31,7 +31,7 @@ from users. Cookies store data on the client's computer, and can be manipulated 
 savvy user to make fake requests to your site.
 
 The microservice that you will be working with is a shopping cart web service. You'll
-learn how to persist an user's shopping cart data between servers using
+learn how to persist a user's shopping cart data between servers using
 the `sessionCache` feature in Open Liberty.
 The `sessionCache` feature persists HTTP sessions using Java Caching (JCache).
 You can have high performance HTTP session persistence without the use of a
@@ -100,38 +100,38 @@ mvn liberty:stop-server -DserverName=server1
 ```
 
 == Creating the microservice
-You will create a microservice to store and retrieve session data.
+You will create a `cart` microservice to store and retrieve session data.
 
 Navigate to the `start` directory to begin.
 
 [role="code_command", subs="quotes"]
 ----
-#Create the `SessionApplication` class.#
-`src/main/java/io/openliberty/guides/sessions/SessionApplication.java`
+#Create the `CartApplication` class.#
+`src/main/java/io/openliberty/guides/cart/CartApplication.java`
 ----
 
-SessionApplication.java
+CartApplication.java
 [source, Java, linenums, indent=0, role="code_column"]
 ----
-include::finish/src/main/java/io/openliberty/guides/sessions/SessionApplication.java[tags=!copyright]
+include::finish/src/main/java/io/openliberty/guides/cart/CartApplication.java[tags=!copyright]
 ----
 
-The [hotspot file=0]`SessionApplication` class extends the generic JAX-RS application class needed to run the
+The [hotspot file=0]`CartApplication` class extends the generic JAX-RS application class needed to run the
 application.
 
 [role="code_command", subs="quotes"]
 ----
-#Create the `SessionResource` class.#
-`src/main/java/io/openliberty/guides/sessions/SessionResource.java`
+#Create the `CartResource` class.#
+`src/main/java/io/openliberty/guides/cart/CartResource.java`
 ----
 
-SessionResource.java
+CartResource.java
 [source, Java, linenums, indent=0, role="code_column"]
 ----
-include::finish/src/main/java/io/openliberty/guides/sessions/SessionResource.java[tags=!copyright]
+include::finish/src/main/java/io/openliberty/guides/cart/CartResource.java[tags=!copyright]
 ----
 
-The [hotspot file=1]`SessionResource` class defines the REST endpoints at which a user can make
+The [hotspot file=1]`CartResource` class defines the REST endpoints at which a user can make
 a HTTP request.
 
 The [hotspot=21-35 file=1]`addToCart` and [hotspot=37-53 file=1]`getCart` methods
@@ -256,14 +256,14 @@ the application in this server instance.
 
 [role="code_command", subs="quotes"]
 ----
-#Create a `SessionResourceTest` class.#
-`src/test/java/it/io/openliberty/guides/sessions/SessionResourceTest.java`
+#Create a `CartSessionTest` class.#
+`src/test/java/it/io/openliberty/guides/cart/CartSessionTest.java`
 ----
 
-SessionResourceTest.java
+CartSessionTest.java
 [source, Java, linenums, indent=0, role="code_column"]
 ----
-include::finish/src/test/java/it/io/openliberty/guides/sessions/SessionResourceTest.java[tags=**;!copyright]
+include::finish/src/test/java/it/io/openliberty/guides/cart/CartSessionTest.java[tags=**;!copyright;!comment]
 ----
 
 The [hotspot=38-50]`testEmptyCart` test makes sure that the `getCart` endpoint returns
@@ -298,7 +298,7 @@ If the tests pass, you will see a similar output to the following:
 -------------------------------------------------------
  T E S T S
 -------------------------------------------------------
-Running it.io.openliberty.guides.sessions.SessionResourceTest
+Running it.io.openliberty.guides.cart.CartSessionTest
 Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 10.259 sec
 
 Results :
