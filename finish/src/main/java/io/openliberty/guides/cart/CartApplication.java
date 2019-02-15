@@ -1,4 +1,3 @@
-
 // tag::copyright[]
 /*******************************************************************************
  * Copyright (c) 2019 IBM Corporation and others.
@@ -10,8 +9,7 @@
  * Contributors:
  *     IBM Corporation - Initial implementation
  *******************************************************************************/
- // end::copyright[]
-
+// end::copyright[]
 package io.openliberty.guides.cart;
 
 import javax.ws.rs.ApplicationPath;

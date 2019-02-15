@@ -24,6 +24,7 @@
 Learn how to create and work with session data that persists between servers using the `sessionCache` feature in Open Liberty.
 
 == What you'll learn
+
 You'll learn about session and session persistence theory. You'll also learn how to set
 and get session data in microservices. For security reasons, using
 `sessions` is preferred over using `cookies` for sensitive data. Sessions hide data
@@ -40,6 +41,7 @@ configuring multiple servers to persist data to the
 same location.
 
 === What is a session?
+
 A `session` is a way to store information to be used across multiple pages.
 When you work with a local application (such as a word processor), you open it,
 make changes, and then you close it. The computer knows that you opened the app,
@@ -51,6 +53,7 @@ Session variables are maintained on a web server. `Cookies`, which also store us
 information, are maintained on a client's computer.
 
 === What is session persistence?
+
 The primary use case of `session persistence` is to be able to handle client requests
 being routed to different backends or to handle failover of the backend system.
 High traffic websites must support thousands of users in a fast and reliable way.
@@ -71,6 +74,7 @@ helps in failover situations by distributing the cache.
 include::{common-includes}/gitclone.adoc[]
 
 === Try what you’ll build
+
 The `finish` directory in the root of this guide contains the finished application.
 Give it a try before you proceed.
 
@@ -82,7 +86,7 @@ the following Maven goal to build the application and run it inside Open Liberty
 mvn install liberty:start-server -DserverName=server1
 ```
 
-Point your browser to the link:http://localhost:9080/openapi/ui/[] URL. This will
+Point your browser to the link:http://localhost:9080/openapi/ui/[^] URL. This will
 display the available REST endpoints on the `server1` server.
 
 First, make a POST request to `/cart/{item}&{price}`.
@@ -100,11 +104,12 @@ mvn liberty:stop-server -DserverName=server1
 ```
 
 == Creating the microservice
+
 You'll create a `cart` microservice to store and retrieve session data.
 
 Navigate to the `start` directory to begin.
 
-[role="code_command", subs="quotes"]
+[role="code_command hotspot", subs="quotes"]
 ----
 #Create the `CartApplication` class.#
 `src/main/java/io/openliberty/guides/cart/CartApplication.java`
@@ -119,7 +124,7 @@ include::finish/src/main/java/io/openliberty/guides/cart/CartApplication.java[ta
 The [hotspot file=0]`CartApplication` class extends the generic JAX-RS application class needed to run the
 application.
 
-[role="code_command", subs="quotes"]
+[role="code_command hotspot", subs="quotes"]
 ----
 #Create the `CartResource` class.#
 `src/main/java/io/openliberty/guides/cart/CartResource.java`
@@ -134,30 +139,32 @@ include::finish/src/main/java/io/openliberty/guides/cart/CartResource.java[tags=
 The [hotspot file=1]`CartResource` class defines the REST endpoints at which a user can make
 an HTTP request.
 
-The [hotspot=21-35 file=1]`addToCart` and [hotspot=37-53 file=1]`getCart` methods
+The [hotspot=21-37 file=1]`addToCart` and [hotspot=39-56 file=1]`getCart` methods
 have a number of annotations most of which
 are used by the `myOpenAPI` and `jaxrs` features to provide context to
 the user interface and map java objects to web resources.
 More information about these annotations can be found in the
-https://openliberty.io/guides/microprofile-openapi.html#augmenting-the-existing-jax-rs-annotations-with-openapi-annotations[Documenting RESTful APIs]
+https://openliberty.io/guides/microprofile-openapi.html#augmenting-the-existing-jax-rs-annotations-with-openapi-annotations[Documenting RESTful APIs^]
 and
-https://openliberty.io/guides/rest-intro.html#creating-a-jax-rs-application[Creating a RESTful web service]
+https://openliberty.io/guides/rest-intro.html#creating-a-jax-rs-application[Creating a RESTful web service^]
 guides.
 
-The [hotspot=28 hotspot=30 file=1]`@PathParam` annotation injects a custom
-[hotspot=28 file=1]`item` and [hotspot=30 file=1]`price` from the POST
+The [hotspot=29 hotspot=32 file=1]`@PathParam` annotation injects a custom
+[hotspot=29 file=1]`item` and [hotspot=32 file=1]`price` from the POST
 request into the method parameter.
 
-The [hotspot=21-35 file=1]`addToCart` method gets the current session and sets a new attribute
+The [hotspot=21-37 file=1]`addToCart` method gets the current session and sets a new attribute
 stored as the key-value pair `{item}:{price}`. A response is then built and
 returned to confirm that an item has been added to your cart or session.
 
-The [hotspot=37-53 file=1]`getCart` method will get the current session. Iterate through all key-value
+The [hotspot=39-56 file=1]`getCart` method will get the current session. Iterate through all key-value
 pairs stored in the current session and create a `String` response that is returned
 to confirm the value of the item(s) in your cart or session.
 
 == Configuring session persistence
+
 === Using Client-Server vs Peer-to-Peer
+
 The `sessionCache` feature is only valuable when it's connected to at least
 one other member. There are two different ways session caching can behave in a
 server environment:
@@ -170,7 +177,8 @@ part of the same cluster.
 
 You'll use the peer-to-peer model for this guide.
 
-=== Configuring Session Persistence with JCache in OpenLiberty
+=== Configuring Session Persistence with JCache in Open Liberty
+
 JCache stands for Java Caching and is an interface
 to standardize distributed caching on the Java platform.
 The `sessionCache` feature makes use of JCache which allows for session
@@ -178,10 +186,10 @@ persistence by providing a common cache of session data between servers.
 This feature doesn't include a JCache implementation.
 For this guide, you'll use Hazelcast as an open source JCache provider.
 
-Hazelcast is a JCache provider. OpenLiberty needs to be configured to use
+Hazelcast is a JCache provider. Open Liberty needs to be configured to use
 HazelCast once the `sessionCache` feature is enabled.
 
-[role="code_command", subs="quotes"]
+[role="code_command hotspot", subs="quotes"]
 ----
 #Create the `server.xml` config file.#
 `src/main/liberty/config/server.xml`
@@ -193,20 +201,34 @@ server.xml
 include::finish/src/main/liberty/config/server.xml[tags=!copyright;]
 ----
 
-The [hotspot=15-17 file=0]`library` tag lets the server know where the Hazelcast implementation of
+The [hotspot=14-16]`library` tag lets the server know where the Hazelcast implementation of
 JCache is located by including a library reference. When the maven build is run
-the [hotspot=16 file=0]`hazelcast.jar` file is downloaded as a dependency and then copied to the
+the [hotspot=15]`hazelcast.jar` file is downloaded as a dependency and then copied to the
 predefined `{shared.resource.dir}` directory.
 
 === Configuring HazelCast
-By default, all OpenLiberty servers running `sessionCache`, the [hotspot]`CartApplication`
-you have created, and Hazelcast will be connected using a peer-to-peer model.
+
+CartApplication.java
+[source, Java, linenums, indent=0, role="code_column"]
+----
+include::finish/src/main/java/io/openliberty/guides/cart/CartApplication.java[tags=!copyright]
+----
+
+server.xml
+[source, xml, linenums, indent=0, role="code_column"]
+----
+include::finish/src/main/liberty/config/server.xml[tags=!copyright;]
+----
+
+By default, all Open Liberty servers running [hotspot=5 file=1]`sessionCache`,
+the [hotspot file=0]`CartApplication` you have created,
+and Hazelcast will be connected using a peer-to-peer model.
 
 You can limit the Hazelcast instances that have access to session data by making
 them join a cluster with the correct username and password. This is accomplished by
 creating a Hazelcast configuration file.
 
-[role="code_command", subs="quotes"]
+[role="code_command hotspot", subs="quotes"]
 ----
 #Create a new `hazelcast-config.xml` config file.#
 `src/main/liberty/config/hazelcast-config.xml`
@@ -218,14 +240,16 @@ hazelcast-config.xml
 include::finish/src/main/liberty/config/hazelcast-config.xml[tags=!copyright]
 ----
 
-In the [hotspot file=0]`server.xml` file a reference to the Hazelcast config file is made using
-the [hotspot=13-14 file=0]`httpSessionCache` tag. When the maven build is run the [hotspot file=1]`hazelcast-config.xml`
+In the [hotspot file=1]`server.xml` file a reference to the Hazelcast config file is made using
+the [hotspot=12-13 file=1]`httpSessionCache` tag. When the maven build is run
+the [hotspot file=2]`hazelcast-config.xml`
 file is copied to the predefined `{shared.resource.dir}` directory.
 
 There are more configuration settings you can explore in the
-http://docs.hazelcast.org/docs/latest-dev/manual/html/config.html[Hazelcast Documentation].
+http://docs.hazelcast.org/docs/latest-dev/manual/html/config.html[Hazelcast Documentation^].
 
 === Setting up multiple servers
+
 For testing, the `pom.xml` file has been configured for you to create two
 local server instances that operate side-by-side using different ports `9080` and
 `9081`. The server instances will be a part of the same Hazelcast cluster.
@@ -255,7 +279,7 @@ the application in this server instance.
 
 == Testing your servers
 
-[role="code_command", subs="quotes"]
+[role="code_command hotspot", subs="quotes"]
 ----
 #Create a `CartSessionTest` class.#
 `src/test/java/it/io/openliberty/guides/cart/CartSessionTest.java`
@@ -267,22 +291,22 @@ CartSessionTest.java
 include::finish/src/test/java/it/io/openliberty/guides/cart/CartSessionTest.java[tags=**;!copyright;!comment]
 ----
 
-The [hotspot=38-50]`testEmptyCart` test makes sure that the `getCart` endpoint returns
+The [hotspot=36-48]`testEmptyCart` test makes sure that the `getCart` endpoint returns
 empty when you first start the application. Otherwise, additional tests may cause
 errors if you're unable to access this endpoint or if data is already stored in
 this session.
 
-The [hotspot=52-74]`testOneServer` test first makes a POST request to the `addToCart` endpoint
+The [hotspot=50-72]`testOneServer` test first makes a POST request to the `addToCart` endpoint
 and ensures that the expected response is returned. Then, it makes a GET request
 to the `getCart` endpoint and ensures that the expected response is returned.
 This test uses the same server.
 
-The [hotspot=76-98]`testTwoServers` test makes the same checks as the previous test, but the
+The [hotspot=74-96]`testTwoServers` test makes the same checks as the previous test, but the
 `addToCart` endpoint is on the server at port 9080, and the `getCart` endpoint
 is on the server at port 9081.
 
 Although REST endpoints are generally stateless, they're used for simplicity in
-this guide. The [hotspot=52-74]`testOneServer` and [hotspot=76-98]`testTwoServers` tests use a cookie
+this guide. The [hotspot=50-72]`testOneServer` and [hotspot=74-96]`testTwoServers` tests use a cookie
 to ensure that the same person's session data is being used for the `addToCart`
 and `getCart` requests.
 
@@ -308,6 +332,7 @@ Tests run: 3, Failures: 0, Errors: 0, Skipped: 0
 ```
 
 == Great work! You're done!
+
 You developed and tested a Java microservice using HTTP session caching and
 Open Liberty.
 
