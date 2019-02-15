@@ -1,4 +1,4 @@
-// Copyright (c) 2018 IBM Corporation and others.
+// Copyright (c) 2019 IBM Corporation and others.
 // Licensed under Creative Commons Attribution-NoDerivatives
 // 4.0 International (CC BY-ND 4.0)
 //   https://creativecommons.org/licenses/by-nd/4.0/
@@ -16,7 +16,7 @@
 :page-related-guides: ['rest-intro', 'microprofile-openapi']
 :page-permalink: /guides/{projectid}
 :common-includes: https://raw.githubusercontent.com/OpenLiberty/guides-common/master
-:page-seo-title: Caching and persisting session data in microservices
+:page-seo-title: Caching HTTP session data in microservices
 :page-seo-description: Learn how to create and cache session data that persists between servers.
 :imagesdir: assets/
 = Caching HTTP sessions in microservices
@@ -30,7 +30,7 @@ and get session data in microservices. For security reasons, using
 from users. Cookies store data on the client's computer, and can be manipulated by a
 savvy user to make fake requests to your site.
 
-The microservice that you will be working with is a shopping cart web service. You'll
+The microservice that you'll be working with is a shopping cart web service. You'll
 learn how to persist a user's shopping cart data between servers using
 the `sessionCache` feature in Open Liberty.
 The `sessionCache` feature persists HTTP sessions using Java Caching (JCache).
@@ -43,12 +43,12 @@ same location.
 A `session` is a way to store information to be used across multiple pages.
 When you work with a local application (such as a word processor), you open it,
 make changes, and then you close it. The computer knows that you opened the app,
-made changes, and closed the app. On the internet, however, the web server does
-not know who you are, or what you do, because it is just processing stateless HTTP
-requests. Session variables store user information like usernames, items in a cart, etc.
-By default, session variables will timeout after 30 minutes of being unused.
+made changes, and closed the app. On the internet, however, the web server doesn't
+know who you are, or what you do, because it's just processing stateless HTTP
+requests. Session variables store user information like user names, items in a cart.
+By default, session variables will time out after 30 minutes of being unused.
 Session variables are maintained on a web server. `Cookies`, which also store user
-information, are maintained on a clients computer.
+information, are maintained on a client's computer.
 
 === What is session persistence?
 The primary use case of `session persistence` is to be able to handle client requests
@@ -57,13 +57,13 @@ High traffic websites must support thousands of users in a fast and reliable way
 Load balancing requires running several instances of the same service in parallel
 so that traffic can be routed to servers to maximize speed and reliability.
 This poses a problem when each server keeps an isolated copy of their session data.
-In this case, a user is tied to a particular server, and if that server crashes
+In this case, a user is tied to a particular server, and if that server fails
 then that server's session data will be lost.
 
 image::sessionCache.png[]
 
-`Session persistence` using a `session cache`, as illustrated above, solves this
-problem by allowing all server instances to share caches amongst each other. This
+`Session persistence` using a `session cache`, as illustrated, solves this
+problem by allowing all server instances to share caches among each other. This
 eliminates the need to always route a user to the same server instance, and also
 helps in failover situations by distributing the cache.
 
@@ -92,7 +92,7 @@ that represents data in a user's cart.
 Then, make a GET request to `/sessions/cart`. The GET request
 will return all the items from your session and display it as a string.
 
-When you are ready to continue stop your server.
+After you're done checking out the application, stop the Open Liberty server.
 
 [role="command"]
 ```
@@ -100,7 +100,7 @@ mvn liberty:stop-server -DserverName=server1
 ```
 
 == Creating the microservice
-You will create a `cart` microservice to store and retrieve session data.
+You'll create a `cart` microservice to store and retrieve session data.
 
 Navigate to the `start` directory to begin.
 
@@ -132,7 +132,7 @@ include::finish/src/main/java/io/openliberty/guides/cart/CartResource.java[tags=
 ----
 
 The [hotspot file=1]`CartResource` class defines the REST endpoints at which a user can make
-a HTTP request.
+an HTTP request.
 
 The [hotspot=21-35 file=1]`addToCart` and [hotspot=37-53 file=1]`getCart` methods
 have a number of annotations most of which
@@ -144,7 +144,8 @@ and
 https://openliberty.io/guides/rest-intro.html#creating-a-jax-rs-application[Creating a RESTful web service]
 guides.
 
-The [hotspot=28 hotspot=30 file=1]`@PathParam` annotation injects a custom [hotspot=28 file=1]`item` and [hotspot=30 file=1]`price` from the POST
+The [hotspot=28 hotspot=30 file=1]`@PathParam` annotation injects a custom
+[hotspot=28 file=1]`item` and [hotspot=30 file=1]`price` from the POST
 request into the method parameter.
 
 The [hotspot=21-35 file=1]`addToCart` method gets the current session and sets a new attribute
@@ -157,7 +158,7 @@ to confirm the value of the item(s) in your cart or session.
 
 == Configuring session persistence
 === Using Client-Server vs Peer-to-Peer
-The `sessionCache` feature is only valuable when it is connected to at least
+The `sessionCache` feature is only valuable when it's connected to at least
 one other member. There are two different ways session caching can behave in a
 server environment:
 
@@ -167,15 +168,15 @@ to a dedicated JCache server.
 that are also running with the `sessionCache` feature and configured to be
 part of the same cluster.
 
-You will use the peer-to-peer model for this guide.
+You'll use the peer-to-peer model for this guide.
 
 === Configuring Session Persistence with JCache in OpenLiberty
 JCache stands for Java Caching and is an interface
 to standardize distributed caching on the Java platform.
 The `sessionCache` feature makes use of JCache which allows for session
 persistence by providing a common cache of session data between servers.
-This feature does not include a JCache implementation.
-For this guide you will use Hazelcast as an open source JCache provider.
+This feature doesn't include a JCache implementation.
+For this guide, you'll use Hazelcast as an open source JCache provider.
 
 Hazelcast is a JCache provider. OpenLiberty needs to be configured to use
 HazelCast once the `sessionCache` feature is enabled.
@@ -202,7 +203,7 @@ By default, all OpenLiberty servers running `sessionCache`, the [hotspot]`Sessio
 you have created, and Hazelcast will be connected using a peer-to-peer model.
 
 You can limit the Hazelcast instances that have access to session data by making
-them join a cluster with the correct username/password. This is accomplished by
+them join a cluster with the correct username and password. This is accomplished by
 creating a Hazelcast configuration file.
 
 [role="code_command", subs="quotes"]
@@ -218,7 +219,7 @@ include::finish/src/main/liberty/config/hazelcast-config.xml[tags=!copyright]
 ----
 
 In the [hotspot file=0]`server.xml` file a reference to the Hazelcast config file is made using
-the [hotspot=13-14 file=0]`httpSessionCache` tag.  When the maven build is run the [hotspot file=1]`hazelcast-config.xml`
+the [hotspot=13-14 file=0]`httpSessionCache` tag. When the maven build is run the [hotspot file=1]`hazelcast-config.xml`
 file is copied to the predefined `{shared.resource.dir}` directory.
 
 There are more configuration settings you can explore in the
@@ -268,7 +269,7 @@ include::finish/src/test/java/it/io/openliberty/guides/cart/CartSessionTest.java
 
 The [hotspot=38-50]`testEmptyCart` test makes sure that the `getCart` endpoint returns
 empty when you first start the application. Otherwise, additional tests may cause
-errors if you are unable to access this endpoint or if data is already stored in
+errors if you're unable to access this endpoint or if data is already stored in
 this session.
 
 The [hotspot=52-74]`testOneServer` test first makes a POST request to the `addToCart` endpoint
@@ -280,7 +281,7 @@ The [hotspot=76-98]`testTwoServers` test makes the same checks as the previous t
 `addToCart` endpoint is on the server at port 9080, and the `getCart` endpoint
 is on the server at port 9081.
 
-Although REST endpoints are generally stateless, they are used for simplicity in
+Although REST endpoints are generally stateless, they're used for simplicity in
 this guide. The [hotspot=52-74]`testOneServer` and [hotspot=76-98]`testTwoServers` tests use a cookie
 to ensure that the same person's session data is being used for the `addToCart`
 and `getCart` requests.
@@ -292,7 +293,7 @@ Verify that the tests pass using the Maven `verify` goal:
 mvn verify
 ```
 
-If the tests pass, you will see a similar output to the following:
+If the tests pass, you'll see a similar output to the following:
 
 ```
 -------------------------------------------------------
