@@ -153,11 +153,11 @@ public class CartSessionTest {
 		switch (method) {
 		case POST:
 			result = "http://localhost:" + port +
-				"/SessionsGuide/sessions/cart/" + ITEM + "&" + PRICE;
+				"/SessionsGuide/cart/" + ITEM + "&" + PRICE;
 			break;
 		case GET:
 			result = "http://localhost:" + port +
-				"/SessionsGuide/sessions/cart";
+				"/SessionsGuide/cart";
 			break;
 		}
 		return result;
