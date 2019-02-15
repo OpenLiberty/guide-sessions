@@ -27,143 +27,145 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class CartSessionTest {
-	private Client client;
-	private static String server1port =
-		System.getProperty("liberty.server1.port");
-	private static String server2port =
-		System.getProperty("liberty.server2.port");
-	private static final String ITEM = "SpaceShip";
-	private static final String PRICE = "20.0";
-	private static final String POST = "POST";
-	private static final String GET = "GET";
+    private Client client;
+    private static String server1port = System.getProperty("liberty.server1.port");
+    private static String server2port = System.getProperty("liberty.server2.port");
+    private static final String ITEM = "SpaceShip";
+    private static final String PRICE = "20.0";
+    private static final String POST = "POST";
+    private static final String GET = "GET";
 
-	@Before
-	public void setup() {
-		client = ClientBuilder.newClient();
-	}
+    @Before
+    public void setup() {
+        client = ClientBuilder.newClient();
+    }
 
-	@After
-	public void teardown() {
-		client.close();
-	}
+    @After
+    public void teardown() {
+        client.close();
+    }
 
-	@Test
-	public void testEmptyCart() {
-		Response response = getResponse(GET, server1port, null);
-		assertResponse(getURL(GET,server1port), response);
+    @Test
+    public void testEmptyCart() {
+        Response response = getResponse(GET, server1port, null);
+        assertResponse(getURL(GET, server1port), response);
 
-		String actual = response.readEntity(String.class);
-		String expected = "[]";
+        String actual = response.readEntity(String.class);
+        String expected = "[]";
 
-		assertEquals("The cart should be empty on application start but was not",
-			expected, actual);
+        assertEquals("The cart should be empty on application start but was not",
+                     expected, actual);
 
-		response.close();
-	}
+        response.close();
+    }
 
-	@Test
-	public void testOneServer() {
-		Response addToCartResponse = getResponse(POST, server1port, null);
-		assertResponse(getURL(POST,server1port), addToCartResponse);
+    @Test
+    public void testOneServer() {
+        Response addToCartResponse = getResponse(POST, server1port, null);
+        assertResponse(getURL(POST, server1port), addToCartResponse);
 
-		Map<String, NewCookie> cookies = addToCartResponse.getCookies();
-		Cookie cookie = ((NewCookie) cookies.values().iterator().next()).toCookie();
-		Response getCartResponse = getResponse(GET, server1port, cookie);
+        Map<String, NewCookie> cookies = addToCartResponse.getCookies();
+        Cookie cookie = ((NewCookie) cookies.values().iterator().next()).toCookie();
+        Response getCartResponse = getResponse(GET, server1port, cookie);
 
-		String actualAddToCart = addToCartResponse.readEntity(String.class);
-		String expectedAddToCart = ITEM + " added to your cart and costs $" + PRICE;
+        String actualAddToCart = addToCartResponse.readEntity(String.class);
+        String expectedAddToCart = ITEM + " added to your cart and costs $" + PRICE;
 
-		String actualGetCart = getCartResponse.readEntity(String.class);
-		String expectedGetCart = "[" + ITEM + " | $" + PRICE + "]";
+        String actualGetCart = getCartResponse.readEntity(String.class);
+        String expectedGetCart = "[" + ITEM + " | $" + PRICE + "]";
 
-		assertEquals("Adding item to cart response failed",
-			expectedAddToCart, actualAddToCart);
-		assertEquals("Cart response did not match expected string",
-			expectedGetCart, actualGetCart);
+        assertEquals("Adding item to cart response failed", expectedAddToCart,
+                     actualAddToCart);
+        assertEquals("Cart response did not match expected string", expectedGetCart,
+                     actualGetCart);
 
-		addToCartResponse.close();
-		getCartResponse.close();
-	}
+        addToCartResponse.close();
+        getCartResponse.close();
+    }
 
-	@Test
-	public void testTwoServers() throws Exception {
-		Response addToCartResponse = getResponse(POST, server1port, null);
-		assertResponse(getURL(POST,server1port), addToCartResponse);
+    @Test
+    public void testTwoServers() throws Exception {
+        Response addToCartResponse = getResponse(POST, server1port, null);
+        assertResponse(getURL(POST, server1port), addToCartResponse);
 
-		Map<String, NewCookie> cookies = addToCartResponse.getCookies();
-		Cookie cookie = ((NewCookie) cookies.values().iterator().next()).toCookie();
-		Response getCartResponse = getResponse(GET, server2port, cookie);
+        Map<String, NewCookie> cookies = addToCartResponse.getCookies();
+        Cookie cookie = ((NewCookie) cookies.values().iterator().next()).toCookie();
+        Response getCartResponse = getResponse(GET, server2port, cookie);
 
-		String actualAddToCart = addToCartResponse.readEntity(String.class);
-		String expectedAddToCart = ITEM + " added to your cart and costs $" + PRICE;
+        String actualAddToCart = addToCartResponse.readEntity(String.class);
+        String expectedAddToCart = ITEM + " added to your cart and costs $" + PRICE;
 
-		String actualGetCart = getCartResponse.readEntity(String.class);
-		String expectedGetCart = "[" + ITEM + " | $" + PRICE + "]";
+        String actualGetCart = getCartResponse.readEntity(String.class);
+        String expectedGetCart = "[" + ITEM + " | $" + PRICE + "]";
 
-		assertEquals("Adding item to cart response failed",
-			expectedAddToCart, actualAddToCart);
-		assertEquals("Cart response did not match expected string",
-			expectedGetCart, actualGetCart);
+        assertEquals("Adding item to cart response failed", expectedAddToCart,
+                     actualAddToCart);
+        assertEquals("Cart response did not match expected string", expectedGetCart,
+                     actualGetCart);
 
-		addToCartResponse.close();
-		getCartResponse.close();
-	}
-	
-	// tag::comment[]
-	/**
-	 * Get response from server using the following configuration
-	 *
-	 * @param method GET or POST request
-	 * @param port for HTTP communication with server
-	 * @param cookie (OPTIONAL) provides identification to get session data
-	 * @return Response
-	 */
-	// end::comment[]
-	private Response getResponse(String method, String port, Cookie cookie) {
-		Response result = null;
-		switch (method) {
-		case POST:
-			Form form = new Form().param(ITEM, PRICE);
-			result = client.target(getURL(method, port)).request().post(Entity.form(form));
-			break;
-		case GET:
-			if (cookie == null) {
-				result = client.target(getURL(method, port))
-					.request().get();
-			} else {
-				result = client.target(getURL(method, port))
-					.request().cookie(cookie).get();
-			}
-			break;
-		}
-		return result;
-	}
-	
-	// tag::comment[]
-	/**
-	 * Construct and return URL for requests
-	 *
-	 * @param method GET or POST request
-	 * @param port for HTTP communication with server
-	 * @return URL as a String
-	 */
-	// end::comment[]
-	private String getURL(String method, String port) {
-		String result = null;
-		switch (method) {
-		case POST:
-			result = "http://localhost:" + port +
-				"/SessionsGuide/cart/" + ITEM + "&" + PRICE;
-			break;
-		case GET:
-			result = "http://localhost:" + port +
-				"/SessionsGuide/cart";
-			break;
-		}
-		return result;
-	}
+        addToCartResponse.close();
+        getCartResponse.close();
+    }
 
-	private void assertResponse(String url, Response response) {
-		assertEquals("Incorrect response code from " + url, 200, response.getStatus());
-	}
+    // tag::comment[]
+    /**
+     * Get response from server using the following configuration
+     *
+     * @param method
+     *            GET or POST request
+     * @param port
+     *            for HTTP communication with server
+     * @param cookie
+     *            (OPTIONAL) provides identification to get session data
+     * @return Response
+     */
+    // end::comment[]
+    private Response getResponse(String method, String port, Cookie cookie) {
+        Response result = null;
+        switch (method) {
+        case POST:
+            Form form = new Form().param(ITEM, PRICE);
+            result = client.target(getURL(method, port)).request()
+                           .post(Entity.form(form));
+            break;
+        case GET:
+            if (cookie == null) {
+                result = client.target(getURL(method, port)).request().get();
+            } else {
+                result = client.target(getURL(method, port)).request().cookie(cookie)
+                               .get();
+            }
+            break;
+        }
+        return result;
+    }
+
+    // tag::comment[]
+    /**
+     * Construct and return URL for requests
+     *
+     * @param method
+     *            GET or POST request
+     * @param port
+     *            for HTTP communication with server
+     * @return URL as a String
+     */
+    // end::comment[]
+    private String getURL(String method, String port) {
+        String result = null;
+        switch (method) {
+        case POST:
+            result = "http://localhost:" + port + "/SessionsGuide/cart/" + ITEM + "&"
+                            + PRICE;
+            break;
+        case GET:
+            result = "http://localhost:" + port + "/SessionsGuide/cart";
+            break;
+        }
+        return result;
+    }
+
+    private void assertResponse(String url, Response response) {
+        assertEquals("Incorrect response code from " + url, 200, response.getStatus());
+    }
 }
