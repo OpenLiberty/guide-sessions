@@ -45,7 +45,7 @@ When you work with a local application (such as a word processor), you open it,
 make changes, and then you close it. The computer knows that you opened the app,
 made changes, and closed the app. On the internet, however, the web server doesn't
 know who you are, or what you do, because it's just processing stateless HTTP
-requests. Session variables store user information like user names, items in a cart.
+requests. Session variables store user information like user names or items in a cart.
 By default, session variables will time out after 30 minutes of being unused.
 Session variables are maintained on a web server. `Cookies`, which also store user
 information, are maintained on a client's computer.
@@ -85,11 +85,11 @@ mvn install liberty:start-server -DserverName=server1
 Point your browser to the link:http://localhost:9080/openapi/ui/[] URL. This will
 display the available REST endpoints on the `server1` server.
 
-First, make a POST request to `/sessions/cart/{item}&{price}`.
+First, make a POST request to `/cart/{item}&{price}`.
 The POST request will add a user specified item and price to a session
 that represents data in a user's cart.
 
-Then, make a GET request to `/sessions/cart`. The GET request
+Then, make a GET request to `/cart`. The GET request
 will return all the items from your session and display it as a string.
 
 After you're done checking out the application, stop the Open Liberty server.
@@ -199,7 +199,7 @@ the [hotspot=16 file=0]`hazelcast.jar` file is downloaded as a dependency and th
 predefined `{shared.resource.dir}` directory.
 
 === Configuring HazelCast
-By default, all OpenLiberty servers running `sessionCache`, the [hotspot]`SessionApplication`
+By default, all OpenLiberty servers running `sessionCache`, the [hotspot]`CartApplication`
 you have created, and Hazelcast will be connected using a peer-to-peer model.
 
 You can limit the Hazelcast instances that have access to session data by making
