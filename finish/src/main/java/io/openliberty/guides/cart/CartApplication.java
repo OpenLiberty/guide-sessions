@@ -12,12 +12,12 @@
  *******************************************************************************/
  // end::copyright[]
 
-package io.openliberty.guides.sessions;
+package io.openliberty.guides.cart;
 
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 
-@ApplicationPath("/sessions")
-public class SessionApplication extends Application {
+@ApplicationPath("/")
+public class CartApplication extends Application {
 
 }
