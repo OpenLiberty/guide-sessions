@@ -9,7 +9,7 @@
  * Contributors:
  *     IBM Corporation - Initial implementation
  *******************************************************************************/
- // end::copyright[]
+// end::copyright[]
 package io.openliberty.guides.cart;
 
 import java.util.ArrayList;
@@ -30,37 +30,40 @@ import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 @Path("/")
 public class CartResource {
 
-	@POST
-	@Path("cart/{item}&{price}")
-	@Produces(MediaType.TEXT_PLAIN)
-	@APIResponse(responseCode = "200", description = "Item successfully added to cart.")
-	@Operation(summary = "Add a new item to cart.")
-	public String addToCart(@Context HttpServletRequest request,
-			@Parameter(description = "Item you need for intergalatic travel.", required = true)
-			@PathParam("item") String item,
-			@Parameter(description = "Price for this item.", required = true)
-			@PathParam("price") double price) {
+    @POST
+    @Path("cart/{item}&{price}")
+    @Produces(MediaType.TEXT_PLAIN)
+    @APIResponse(responseCode = "200", description = "Item successfully added to cart.")
+    @Operation(summary = "Add a new item to cart.")
+    public String addToCart(@Context HttpServletRequest request,
+                    @Parameter(description = "Item you need for intergalatic travel.",
+                               required = true) 
+                    @PathParam("item") String item,
+                    @Parameter(description = "Price for this item.",
+                               required = true) 
+                    @PathParam("price") double price) {
 
-		HttpSession sess = request.getSession();
-		sess.setAttribute(item, price);
-		return item + " added to your cart and costs $" + price;
-	}
+        HttpSession sess = request.getSession();
+        sess.setAttribute(item, price);
+        return item + " added to your cart and costs $" + price;
+    }
 
-	@GET
-	@Path("cart")
-	@Produces(MediaType.TEXT_PLAIN)
-	@APIResponse(responseCode = "200", description = "Item successfully retrieved from cart.")
-	@Operation(summary = "Return list of items in your cart.")
-	public String getCart(@Context HttpServletRequest request) {
-		HttpSession sess = request.getSession();
-		Enumeration<String> names = sess.getAttributeNames();
-		ArrayList<String> results = new ArrayList<>();
+    @GET
+    @Path("cart")
+    @Produces(MediaType.TEXT_PLAIN)
+    @APIResponse(responseCode = "200",
+        description = "Item successfully retrieved from cart.")
+    @Operation(summary = "Return list of items in your cart.")
+    public String getCart(@Context HttpServletRequest request) {
+        HttpSession sess = request.getSession();
+        Enumeration<String> names = sess.getAttributeNames();
+        ArrayList<String> results = new ArrayList<>();
 
-		while(names.hasMoreElements()) {
-			String name = names.nextElement();
-			String price = sess.getAttribute(name).toString();
-			results.add(name + " | $" + price);
-		}
-		return results.toString();
-	}
+        while (names.hasMoreElements()) {
+            String name = names.nextElement();
+            String price = sess.getAttribute(name).toString();
+            results.add(name + " | $" + price);
+        }
+        return results.toString();
+    }
 }
