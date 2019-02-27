@@ -89,7 +89,7 @@ mvn install liberty:start-server -DserverName=server1
 Point your browser to the link:http://localhost:9080/openapi/ui/[^] URL. This will
 display the available REST endpoints on the `server1` server.
 
-First, make a POST request to `/cart/{item}&{price}`.
+First, make a POST request to `/cart/{item}&{price}` by expanding POST endpoint on the UI and clicking on `Try it out` button.
 The POST request will add a user specified item and price to a session
 that represents data in a user's cart.
 
@@ -278,7 +278,8 @@ This goal starts an Open Liberty server instance. Your Maven `pom.xml` is alread
 the application in this server instance.
 
 As a last step, verify that Hazelcast Cluster is already formed by checking OpenLiberty log located at
-`target/liberty/wlp/usr/servers/server1/logs/messages.log`
+`target/liberty/wlp/usr/servers/server1/logs/messages.log`. If you don't see this log, you might need to check 
+if multicast is enabled or any firewall is blocking multicast packages.
 
 ```
 Members {size:2, ver:2} [
