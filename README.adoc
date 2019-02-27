@@ -246,7 +246,7 @@ the [hotspot file=2]`hazelcast-config.xml`
 file is copied to the predefined `{shared.resource.dir}` directory.
 
 There are more configuration settings you can explore in the
-http://docs.hazelcast.org/docs/latest-dev/manual/html/config.html[Hazelcast Documentation^].
+https://docs.hazelcast.org/docs/latest/manual/html-single/[Hazelcast Documentation^].
 
 === Setting up multiple servers
 
@@ -276,6 +276,16 @@ mvn liberty:start-server -DserverName=server2
 
 This goal starts an Open Liberty server instance. Your Maven `pom.xml` is already configured to start
 the application in this server instance.
+
+As a last step, verify that Hazelcast Cluster is already formed by checking OpenLiberty log located at
+`target/liberty/wlp/usr/servers/server1/logs/messages.log`
+
+```
+Members {size:2, ver:2} [
+	Member [172.31.98.59]:5701 - fb4da600-ab54-44cc-bc4e-0fd65b4ee6da this
+	Member [172.31.98.59]:5702 - 29b4c11d-fa54-482e-a81d-807eef837249
+]
+```
 
 == Testing your servers
 

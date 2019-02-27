@@ -19,3 +19,7 @@ README.html
 
 # Zip files
 *.zip
+
+#intellij files
+.idea/
+*.iml
