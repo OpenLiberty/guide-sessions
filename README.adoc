@@ -246,7 +246,7 @@ the [hotspot file=2]`hazelcast-config.xml`
 file is copied to the predefined `{shared.resource.dir}` directory.
 
 There are more configuration settings you can explore in the
-https://docs.hazelcast.org/docs/latest/manual/html-single/[Hazelcast Documentation^].
+https://docs.hazelcast.org/docs/latest/manual/html-single/#understanding-configuration[Hazelcast Documentation^].
 
 === Setting up multiple servers
 
