@@ -27,7 +27,7 @@ Learn how to create and work with session data that persists between servers usi
 
 You'll learn about session and session persistence theory. You'll also learn how to set
 and get session data in microservices. For security reasons, using
-`sessions` is preferred over using `cookies` for sensitive data. Sessions hide data
+sessions is preferred over using cookies for sensitive data. Sessions hide data
 from users. Cookies store data on the client's computer, and can be manipulated by a
 savvy user to make fake requests to your site.
 
@@ -42,7 +42,7 @@ same location.
 
 === What is a session?
 
-A `session` is a way to store information to be used across multiple pages.
+A session is a way to store information to be used across multiple pages.
 When you work with a local application (such as a word processor), you open it,
 make changes, and then you close it. The computer knows that you opened the app,
 made changes, and closed the app. On the internet, however, the web server doesn't
@@ -54,7 +54,7 @@ information, are maintained on a client's computer.
 
 === What is session persistence?
 
-The primary use case of `session persistence` is to be able to handle client requests
+The primary use case of session persistence is to be able to handle client requests
 being routed to different backends or to handle failover of the backend system.
 High traffic websites must support thousands of users in a fast and reliable way.
 Load balancing requires running several instances of the same service in parallel
@@ -65,7 +65,7 @@ then that server's session data will be lost.
 
 image::sessionCache.png[]
 
-`Session persistence` using a `session cache`, as illustrated, solves this
+Session persistence using a session cache, as illustrated, solves this
 problem by allowing all server instances to share caches among each other. This
 eliminates the need to always route a user to the same server instance, and also
 helps in failover situations by distributing the cache.
@@ -89,7 +89,8 @@ mvn install liberty:start-server -DserverName=server1
 Point your browser to the link:http://localhost:9080/openapi/ui/[^] URL. This will
 display the available REST endpoints on the `server1` server.
 
-First, make a POST request to `/cart/{item}&{price}` by expanding POST endpoint on the UI and clicking on `Try it out` button.
+First, make a POST request to `/cart/{item}&{price}` by expanding POST endpoint
+on the UI and clicking on `Try it out` button.
 The POST request will add a user specified item and price to a session
 that represents data in a user's cart.
 
@@ -278,7 +279,7 @@ This goal starts an Open Liberty server instance. Your Maven `pom.xml` is alread
 the application in this server instance.
 
 As a last step, verify that Hazelcast Cluster is already formed by checking OpenLiberty log located at
-`target/liberty/wlp/usr/servers/server1/logs/messages.log`. If you don't see this log, you might need to check 
+`target/liberty/wlp/usr/servers/server1/logs/messages.log`. If you don't see this log, you might need to check
 if multicast is enabled or any firewall is blocking multicast packages.
 
 ```
