@@ -6,9 +6,8 @@
 <!-- end::copyright[] -->
 <hazelcast xmlns="http://www.hazelcast.com/schema/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.hazelcast.com/schema/config
-           https://hazelcast.com/schema/config/hazelcast-config-3.10.xsd">
+           https://hazelcast.com/schema/config/hazelcast-config.xsd">
     <group>
         <name>myCluster</name>
-        <password>super-secret</password>
     </group>
 </hazelcast>
