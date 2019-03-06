@@ -89,7 +89,8 @@ mvn install liberty:start-server -DserverName=server1
 Point your browser to the link:http://localhost:9080/openapi/ui/[^] URL. This will
 display the available REST endpoints on the `server1` server.
 
-First, make a POST request to `/cart/{item}&{price}` by expanding POST endpoint on the UI and clicking on `Try it out` button.
+First, make a POST request to `/cart/{item}&{price}` by expanding the POST 
+endpoint on the UI and clicking on the `Try it out` button.
 The POST request will add a user specified item and price to a session
 that represents data in a user's cart.
 
@@ -224,9 +225,9 @@ By default, all Open Liberty servers running [hotspot=5 file=1]`sessionCache`,
 the [hotspot file=0]`CartApplication` you have created,
 and Hazelcast will be connected using a peer-to-peer model.
 
-You can limit the Hazelcast instances that have access to session data by making
-them join a cluster with the correct username and password. This is accomplished by
-creating a Hazelcast configuration file.
+You can create a named cluster group to limit the Hazelcast instances which 
+automatically join the cluster. This is accomplished by creating a Hazelcast 
+configuration file.
 
 [role="code_command hotspot", subs="quotes"]
 ----
@@ -277,9 +278,10 @@ mvn liberty:start-server -DserverName=server2
 This goal starts an Open Liberty server instance. Your Maven `pom.xml` is already configured to start
 the application in this server instance.
 
-As a last step, verify that Hazelcast Cluster is already formed by checking OpenLiberty log located at
-`target/liberty/wlp/usr/servers/server1/logs/messages.log`. If you don't see this log, you might need to check 
-if multicast is enabled or any firewall is blocking multicast packages.
+As a last step, verify the Hazelcast Cluster is running by checking the Open Liberty log located at 
+`target/liberty/wlp/usr/servers/server1/logs/messages.log`. If you don't see a message similar to 
+the one below in this log, you might need to check if multicast is enabled or any firewall is blocking 
+the multicast packages.
 
 ```
 Members {size:2, ver:2} [

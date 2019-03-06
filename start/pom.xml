@@ -19,6 +19,7 @@
         <warContext>${app.name}</warContext>
         <package.file>${project.build.directory}/${app.name}.zip</package.file>
         <packaging.type>usr</packaging.type>
+        <hazelcast.version>3.11.2</hazelcast.version>
     </properties>
 
     <dependencies>
@@ -82,7 +83,7 @@
         <dependency>
             <groupId>com.hazelcast</groupId>
             <artifactId>hazelcast</artifactId>
-            <version>3.10.2</version>
+            <version>${hazelcast.version}</version>
         </dependency>
     </dependencies>
 
@@ -293,7 +294,7 @@
                   <artifactItem>
                     <groupId>com.hazelcast</groupId>
                     <artifactId>hazelcast</artifactId>
-                    <version>3.10.2</version>
+                    <version>${hazelcast.version}</version>
                     <type>jar</type>
                     <overWrite>false</overWrite>
                     <outputDirectory>${project.build.directory}/liberty/wlp/usr/shared/resources</outputDirectory>
