@@ -353,5 +353,4 @@ Tests run: 3, Failures: 0, Errors: 0, Skipped: 0
 You developed and tested a Java microservice using HTTP session caching and
 Open Liberty.
 
-[role="command"]
 include::{common-includes}/attribution.adoc[subs="attributes"]

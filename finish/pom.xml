@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <parent>
+        <groupId>net.wasdev.wlp.maven.parent</groupId>
+        <artifactId>liberty-maven-app-parent</artifactId>
+        <version>RELEASE</version>
+    </parent>
+
     <groupId>io.openliberty.guides</groupId>
     <artifactId>guide-sessions</artifactId>
     <version>1.0-SNAPSHOT</version>
@@ -11,18 +17,63 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
+        <hazelcast.version>3.11.2</hazelcast.version>
+        <!-- Plugins -->
+        <version.maven-war-plugin>3.2.2</version.maven-war-plugin>
+        <!-- Tests -->
+        <version.maven-surefire-plugin>3.0.0-M1</version.maven-surefire-plugin>
+        <version.maven-failsafe-plugin>3.0.0-M1</version.maven-failsafe-plugin>
+        <!-- OpenLiberty runtime -->
+        <version.openliberty-runtime>RELEASE</version.openliberty-runtime>
         <app.name>SessionsGuide</app.name>
+        <warContext>${app.name}</warContext>
+        <package.file>${project.build.directory}/${app.name}.zip</package.file>
+        <packaging.type>usr</packaging.type>
         <server1HttpPort>9080</server1HttpPort>
         <server1HttpsPort>9443</server1HttpsPort>
         <server2HttpPort>9081</server2HttpPort>
         <server2HttpsPort>9444</server2HttpsPort>
-        <warContext>${app.name}</warContext>
-        <package.file>${project.build.directory}/${app.name}.zip</package.file>
-        <packaging.type>usr</packaging.type>
-        <hazelcast.version>3.11.2</hazelcast.version>
     </properties>
 
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>io.openliberty.features</groupId>
+                <artifactId>features-bom</artifactId>
+                <version>RELEASE</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
     <dependencies>
+        <!-- Open Liberty features -->
+        <dependency>
+            <groupId>io.openliberty.features</groupId>
+            <artifactId>servlet-4.0</artifactId>
+            <type>esa</type>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.openliberty.features</groupId>
+            <artifactId>jaxrs-2.1</artifactId>
+            <type>esa</type>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.openliberty.features</groupId>
+            <artifactId>mpOpenAPI-1.0</artifactId>
+            <type>esa</type>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.openliberty.features</groupId>
+            <artifactId>cdi-2.0</artifactId>
+            <type>esa</type>
+            <scope>provided</scope>
+        </dependency>
+        <!-- For tests -->
         <dependency>
         <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -35,30 +86,7 @@
             <version>3.1.11</version>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <version>3.1.0</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>javax.ws.rs</groupId>
-            <artifactId>javax.ws.rs-api</artifactId>
-            <version>2.0</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.eclipse.microprofile.openapi</groupId>
-            <artifactId>microprofile-openapi-api</artifactId>
-            <version>1.0.1</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>javax.enterprise</groupId>
-            <artifactId>cdi-api</artifactId>
-            <version>1.2</version>
-            <scope>provided</scope>
-        </dependency>
+        <!-- Support for JDK 9+ -->
         <dependency>
             <groupId>javax.xml.bind</groupId>
             <artifactId>jaxb-api</artifactId>
@@ -92,7 +120,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
-                <version>3.2.2</version>
+                <version>${version.maven-war-plugin}</version>
                 <configuration>
                     <failOnMissingWebXml>false</failOnMissingWebXml>
                     <packagingExcludes>pom.xml</packagingExcludes>
@@ -102,7 +130,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.0.0-M1</version>
+                <version>${version.maven-surefire-plugin}</version>
                 <executions>
                     <execution>
                         <phase>test</phase>
@@ -116,16 +144,15 @@
                     </execution>
                 </executions>
             </plugin>
-            <!-- Enable liberty-maven plugin -->
+            <!-- Enable Liberty Maven plugin -->
             <plugin>
                 <groupId>net.wasdev.wlp.maven.plugins</groupId>
                 <artifactId>liberty-maven-plugin</artifactId>
-                <version>2.6.3</version>
                 <configuration>
                     <assemblyArtifact>
                          <groupId>io.openliberty</groupId>
                          <artifactId>openliberty-runtime</artifactId>
-                         <version>RELEASE</version>
+                         <version>${version.openliberty-runtime}</version>
                         <type>zip</type>
                     </assemblyArtifact>
                     <configFile>src/main/liberty/config/server.xml</configFile>
@@ -245,7 +272,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>
-                <version>3.0.0-M1</version>
+                <version>${version.maven-failsafe-plugin}</version>
                 <executions>
                     <execution>
                         <phase>integration-test</phase>
