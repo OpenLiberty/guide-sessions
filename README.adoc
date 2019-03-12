@@ -252,7 +252,13 @@ https://docs.hazelcast.org/docs/latest/manual/html-single/#understanding-configu
 
 === Setting up multiple servers
 
-For testing, the `pom.xml` file has been configured for you to create two
+pom.xml
+[source, xml, linenums, indent=0, role="code_column"]
+----
+include::finish/pom.xml[tags=**]
+----
+
+For testing, the [hotspot=158-264]`pom.xml` file has been configured for you to create two
 local server instances that operate side-by-side using different ports `9080` and
 `9081`. The server instances will be a part of the same Hazelcast cluster.
 
