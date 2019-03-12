@@ -285,6 +285,23 @@ mvn liberty:start-server -DserverName=server2
 This goal starts an Open Liberty server instance. Your Maven `pom.xml` is already configured to start
 the application in this server instance.
 
+Point your browser to the link:http://localhost:9080/openapi/ui/[^] URL. This will
+display the available REST endpoints on the `server1` server.
+
+First, make a POST request to `/cart/{item}&{price}` by expanding the POST
+endpoint on the UI and clicking on the `Try it out` button.
+The POST request will add a user specified item and price to a session
+that represents data in a user's cart.
+
+Then, make a GET request to `/cart` by expanding the GET
+endpoint on the UI and clicking on the `Try it out` button. The GET request
+will return all the items from your session and display it as a string.
+
+You can also see the items from your session on the REST endpoints that are running on the `server2` server.
+Point your browser to the link:http://localhost:9081/openapi/ui/[^] URL.
+Make a GET request to `/cart` by expanding the GET
+endpoint on the UI and clicking on the `Try it out` button. 
+
 As a last step, verify the Hazelcast Cluster is running by checking the Open Liberty log located at
 `target/liberty/wlp/usr/servers/server1/logs/messages.log`. If you don't see a message similar to
 the one below in this log, you might need to check if multicast is enabled or any firewall is blocking
@@ -297,8 +314,14 @@ Members {size:2, ver:2} [
 ]
 ```
 
-[role='command']
-include::{common-includes}/mvncompile.adoc[]
+After you're done checking out the application, stop the Open Liberty server.
+
+[role="command"]
+```
+mvn liberty:stop-server -DserverName=server1
+mvn liberty:stop-server -DserverName=server2
+```
+
 
 == Testing your servers
 
