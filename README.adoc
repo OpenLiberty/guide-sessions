@@ -27,7 +27,7 @@ Learn how to create and work with session data that persists between servers usi
 
 You'll learn about session and session persistence theory. You'll also learn how to set
 and get session data in microservices. For security reasons, using
-`sessions` is preferred over using `cookies` for sensitive data. Sessions hide data
+sessions is preferred over using cookies for sensitive data. Sessions hide data
 from users. Cookies store data on the client's computer, and can be manipulated by a
 savvy user to make fake requests to your site.
 
@@ -42,7 +42,7 @@ same location.
 
 === What is a session?
 
-A `session` is a way to store information to be used across multiple pages.
+A session is a way to store information to be used across multiple pages.
 When you work with a local application (such as a word processor), you open it,
 make changes, and then you close it. The computer knows that you opened the app,
 made changes, and closed the app. On the internet, however, the web server doesn't
@@ -54,7 +54,7 @@ information, are maintained on a client's computer.
 
 === What is session persistence?
 
-The primary use case of `session persistence` is to be able to handle client requests
+The primary use case of session persistence is to be able to handle client requests
 being routed to different backends or to handle failover of the backend system.
 High traffic websites must support thousands of users in a fast and reliable way.
 Load balancing requires running several instances of the same service in parallel
@@ -65,7 +65,7 @@ then that server's session data will be lost.
 
 image::sessionCache.png[]
 
-`Session persistence` using a `session cache`, as illustrated, solves this
+Session persistence using a session cache, as illustrated, solves this
 problem by allowing all server instances to share caches among each other. This
 eliminates the need to always route a user to the same server instance, and also
 helps in failover situations by distributing the cache.
@@ -89,12 +89,13 @@ mvn install liberty:start-server -DserverName=server1
 Point your browser to the link:http://localhost:9080/openapi/ui/[^] URL. This will
 display the available REST endpoints on the `server1` server.
 
-First, make a POST request to `/cart/{item}&{price}` by expanding the POST 
+First, make a POST request to `/cart/{item}&{price}` by expanding the POST
 endpoint on the UI and clicking on the `Try it out` button.
 The POST request will add a user specified item and price to a session
 that represents data in a user's cart.
 
-Then, make a GET request to `/cart`. The GET request
+Then, make a GET request to `/cart` by expanding the GET
+endpoint on the UI and clicking on the `Try it out` button. The GET request
 will return all the items from your session and display it as a string.
 
 After you're done checking out the application, stop the Open Liberty server.
@@ -225,8 +226,8 @@ By default, all Open Liberty servers running [hotspot=5 file=1]`sessionCache`,
 the [hotspot file=0]`CartApplication` you have created,
 and Hazelcast will be connected using a peer-to-peer model.
 
-You can create a named cluster group to limit the Hazelcast instances which 
-automatically join the cluster. This is accomplished by creating a Hazelcast 
+You can create a named cluster group to limit the Hazelcast instances which
+automatically join the cluster. This is accomplished by creating a Hazelcast
 configuration file.
 
 [role="code_command hotspot", subs="quotes"]
@@ -251,7 +252,13 @@ https://docs.hazelcast.org/docs/latest/manual/html-single/#understanding-configu
 
 === Setting up multiple servers
 
-For testing, the `pom.xml` file has been configured for you to create two
+pom.xml
+[source, xml, linenums, indent=0, role="code_column"]
+----
+include::finish/pom.xml[tags=**]
+----
+
+For testing, the [hotspot=158-264]`pom.xml` file has been configured for you to create two
 local server instances that operate side-by-side using different ports `9080` and
 `9081`. The server instances will be a part of the same Hazelcast cluster.
 
@@ -276,11 +283,28 @@ mvn liberty:start-server -DserverName=server2
 ```
 
 This goal starts an Open Liberty server instance. Your Maven `pom.xml` is already configured to start
-the application in this server instance.
+the application in these two server instances.
 
-As a last step, verify the Hazelcast Cluster is running by checking the Open Liberty log located at 
-`target/liberty/wlp/usr/servers/server1/logs/messages.log`. If you don't see a message similar to 
-the one below in this log, you might need to check if multicast is enabled or any firewall is blocking 
+Point your browser to the link:http://localhost:9080/openapi/ui/[^] URL. This will
+display the available REST endpoints on the `server1` server.
+
+First, make a POST request to `/cart/{item}&{price}` by expanding the POST
+endpoint on the UI and clicking on the `Try it out` button.
+The POST request will add a user specified item and price to a session
+that represents data in a user's cart.
+
+Then, make a GET request to `/cart` by expanding the GET
+endpoint on the UI and clicking on the `Try it out` button. The GET request
+will return all the items from your session and display it as a string.
+
+You can also see the items from your session on the REST endpoints that are running on the `server2` server.
+Point your browser to the link:http://localhost:9081/openapi/ui/[^] URL.
+Make a GET request to `/cart` by expanding the GET
+endpoint on the UI and clicking on the `Try it out` button.
+
+As a last step, verify the Hazelcast Cluster is running by checking the Open Liberty log located at
+`target/liberty/wlp/usr/servers/server1/logs/messages.log`. If you don't see a message similar to
+the one below in this log, you might need to check if multicast is enabled or any firewall is blocking
 the multicast packages.
 
 ```
@@ -289,6 +313,15 @@ Members {size:2, ver:2} [
 	Member [172.31.98.59]:5702 - 29b4c11d-fa54-482e-a81d-807eef837249
 ]
 ```
+
+After you're done checking out the application, stop the Open Liberty servers.
+
+[role="command"]
+```
+mvn liberty:stop-server -DserverName=server1
+mvn liberty:stop-server -DserverName=server2
+```
+
 
 == Testing your servers
 
@@ -348,8 +381,5 @@ Tests run: 3, Failures: 0, Errors: 0, Skipped: 0
 
 You developed and tested a Java microservice using HTTP session caching and
 Open Liberty.
-
-[role="command"]
-include::{common-includes}/finish.adoc[]
 
 include::{common-includes}/attribution.adoc[subs="attributes"]
