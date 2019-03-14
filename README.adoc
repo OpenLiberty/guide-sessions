@@ -141,7 +141,7 @@ include::finish/src/main/java/io/openliberty/guides/cart/CartResource.java[tags=
 The [hotspot file=1]`CartResource` class defines the REST endpoints at which a user can make
 an HTTP request.
 
-The [hotspot=21-37 file=1]`addToCart` and [hotspot=39-56 file=1]`getCart` methods
+The [hotspot=26-37 file=1]`addToCart` and [hotspot=45-56 file=1]`getCart` methods
 have a number of annotations most of which
 are used by the `myOpenAPI` and `jaxrs` features to provide context to
 the user interface and map java objects to web resources.
@@ -155,11 +155,11 @@ The [hotspot=29 hotspot=32 file=1]`@PathParam` annotation injects a custom
 [hotspot=29 file=1]`item` and [hotspot=32 file=1]`price` from the POST
 request into the method parameter.
 
-The [hotspot=21-37 file=1]`addToCart` method gets the current session and sets a new attribute
+The [hotspot=26-37 file=1]`addToCart` method gets the current session and sets a new attribute
 stored as the key-value pair `{item}:{price}`. A response is then built and
 returned to confirm that an item has been added to your cart or session.
 
-The [hotspot=39-56 file=1]`getCart` method will get the current session. Iterate through all key-value
+The [hotspot=45-56 file=1]`getCart` method will get the current session. Iterate through all key-value
 pairs stored in the current session and create a `String` response that is returned
 to confirm the value of the item(s) in your cart or session.
 
@@ -307,12 +307,13 @@ As a last step, verify the Hazelcast Cluster is running by checking the Open Lib
 the one below in this log, you might need to check if multicast is enabled or any firewall is blocking
 the multicast packages.
 
-```
+[source, role="no_copy"]
+----
 Members {size:2, ver:2} [
 	Member [172.31.98.59]:5701 - fb4da600-ab54-44cc-bc4e-0fd65b4ee6da this
 	Member [172.31.98.59]:5702 - 29b4c11d-fa54-482e-a81d-807eef837249
 ]
-```
+----
 
 After you're done checking out the application, stop the Open Liberty servers.
 
@@ -337,22 +338,22 @@ CartSessionTest.java
 include::finish/src/test/java/it/io/openliberty/guides/cart/CartSessionTest.java[tags=**;!copyright;!comment]
 ----
 
-The [hotspot=36-48]`testEmptyCart` test makes sure that the `getCart` endpoint returns
+The [hotspot=37-48]`testEmptyCart` test makes sure that the `getCart` endpoint returns
 empty when you first start the application. Otherwise, additional tests may cause
 errors if you're unable to access this endpoint or if data is already stored in
 this session.
 
-The [hotspot=50-72]`testOneServer` test first makes a POST request to the `addToCart` endpoint
+The [hotspot=51-72]`testOneServer` test first makes a POST request to the `addToCart` endpoint
 and ensures that the expected response is returned. Then, it makes a GET request
 to the `getCart` endpoint and ensures that the expected response is returned.
 This test uses the same server.
 
-The [hotspot=74-96]`testTwoServers` test makes the same checks as the previous test, but the
+The [hotspot=75-96]`testTwoServers` test makes the same checks as the previous test, but the
 `addToCart` endpoint is on the server at port 9080, and the `getCart` endpoint
 is on the server at port 9081.
 
 Although REST endpoints are generally stateless, they're used for simplicity in
-this guide. The [hotspot=50-72]`testOneServer` and [hotspot=74-96]`testTwoServers` tests use a cookie
+this guide. The [hotspot=51-72]`testOneServer` and [hotspot=75-96]`testTwoServers` tests use a cookie
 to ensure that the same person's session data is being used for the `addToCart`
 and `getCart` requests.
 
@@ -365,7 +366,8 @@ mvn verify
 
 If the tests pass, you'll see a similar output to the following:
 
-```
+[source, role="no_copy"]
+----
 -------------------------------------------------------
  T E S T S
 -------------------------------------------------------
@@ -375,7 +377,7 @@ Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 10.259 sec
 Results :
 
 Tests run: 3, Failures: 0, Errors: 0, Skipped: 0
-```
+----
 
 == Great work! You're done!
 
