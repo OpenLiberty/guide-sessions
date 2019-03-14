@@ -230,7 +230,7 @@ You can create a named cluster group to limit the Hazelcast instances which
 automatically join the cluster. This is accomplished by creating a Hazelcast
 configuration file.
 
-[role="code_command hotspot", subs="quotes"]
+[role="code_command hotspot file=2", subs="quotes"]
 ----
 #Create a new `hazelcast-config.xml` config file.#
 `src/main/liberty/config/hazelcast-config.xml`
