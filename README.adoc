@@ -16,9 +16,9 @@
 :page-related-guides: ['rest-intro', 'microprofile-openapi']
 :page-permalink: /guides/{projectid}
 :common-includes: https://raw.githubusercontent.com/OpenLiberty/guides-common/master
+:imagesdir: /img/guide
 :page-seo-title: Caching HTTP session data in microservices
 :page-seo-description: Learn how to create and cache session data that persists between servers.
-:imagesdir: assets/
 = Caching HTTP sessions in microservices
 
 Learn how to create and work with session data that persists between servers using the `sessionCache` feature in Open Liberty.
@@ -63,7 +63,7 @@ This poses a problem when each server keeps an isolated copy of their session da
 In this case, a user is tied to a particular server, and if that server fails
 then that server's session data will be lost.
 
-image::sessionCache.png[]
+image::sessionCache.png[Session Cache,width=100%]
 
 Session persistence using a session cache, as illustrated, solves this
 problem by allowing all server instances to share caches among each other. This
