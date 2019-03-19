@@ -52,22 +52,22 @@ Load balancing requires running several instances of the same service in paralle
 so that traffic can be routed to servers to maximize speed and reliability.
 This poses a problem when each server keeps an isolated copy of their session data.
 In this case, a user is tied to a particular server, and if that server fails
-then that server's session data will be lost. Session persistence can be 
+then that server's session data will be lost. Session persistence can be
 achieved using a data store such as a relational database or in-memory cache.
 
-image::sessionCache.png[]
+image::sessionCache.svg[]
 
-Session persistence using JCache, as illustrated, solves this problem by allowing 
-all server instances to share caches among each other. This eliminates the need 
-to always route a user to the same server instance, and alsohelps in failover 
+Session persistence using JCache, as illustrated, solves this problem by allowing
+all server instances to share caches among each other. This eliminates the need
+to always route a user to the same server instance, and also helps in failover
 situations by distributing the cache.
 
 The microservice that you'll be working with is a shopping cart web service. You'll
-learn how to persist a user's shopping cart data between servers using the 
-`sessionCache` feature in Open Liberty. The `sessionCache` feature persists HTTP 
-sessions using JCache. You can have high performance HTTP session persistence 
-without the use of a relational database. Furthermore, failover of HTTP sessions 
-can be achieved by configuring multiple servers to persist data to the same 
+learn how to persist a user's shopping cart data between servers using the
+`sessionCache` feature in Open Liberty. The `sessionCache` feature persists HTTP
+sessions using JCache. You can have high performance HTTP session persistence
+without the use of a relational database. Furthermore, failover of HTTP sessions
+can be achieved by configuring multiple servers to persist data to the same
 location.
 
 [role="command"]
