@@ -21,24 +21,12 @@
 :page-seo-description: Learn how to create and cache session data that persists between servers.
 = Caching HTTP sessions in microservices
 
-Learn how to create and work with session data that persists between servers using the `sessionCache` feature in Open Liberty.
+Learn how to create and work with session data that persists between servers using Java Caching (JCache) in Open Liberty.
 
 == What you'll learn
 
 You'll learn about session and session persistence theory. You'll also learn how to set
-and get session data in microservices. For security reasons, using
-sessions is preferred over using cookies for sensitive data. Sessions hide data
-from users. Cookies store data on the client's computer, and can be manipulated by a
-savvy user to make fake requests to your site.
-
-The microservice that you'll be working with is a shopping cart web service. You'll
-learn how to persist a user's shopping cart data between servers using
-the `sessionCache` feature in Open Liberty.
-The `sessionCache` feature persists HTTP sessions using Java Caching (JCache).
-You can have high performance HTTP session persistence without the use of a
-relational database. Furthermore, failover of HTTP sessions can be achieved by
-configuring multiple servers to persist data to the
-same location.
+and get session data in microservices.
 
 === What is a session?
 
@@ -50,7 +38,10 @@ know who you are, or what you do, because it's just processing stateless HTTP
 requests. Session variables store user information like user names or items in a cart.
 By default, session variables will time out after 30 minutes of being unused.
 Session variables are maintained on a web server. `Cookies`, which also store user
-information, are maintained on a client's computer.
+information, are maintained on a client's computer. For security reasons, using
+sessions is preferred over using cookies for sensitive data. Sessions hide data
+from users. Cookies store data on the client's computer, and can be manipulated by a
+savvy user to make fake requests to your site.
 
 === What is session persistence?
 
@@ -61,14 +52,23 @@ Load balancing requires running several instances of the same service in paralle
 so that traffic can be routed to servers to maximize speed and reliability.
 This poses a problem when each server keeps an isolated copy of their session data.
 In this case, a user is tied to a particular server, and if that server fails
-then that server's session data will be lost.
+then that server's session data will be lost. Session persistence can be
+achieved using a data store such as a relational database or in-memory cache.
 
-image::sessionCache.png[Session Cache,width=100%]
+image::sessionCache.svg[Session Cache,width=100%]
 
-Session persistence using a session cache, as illustrated, solves this
-problem by allowing all server instances to share caches among each other. This
-eliminates the need to always route a user to the same server instance, and also
-helps in failover situations by distributing the cache.
+Session persistence using JCache, as illustrated, solves this problem by allowing
+all server instances to share caches among each other. This eliminates the need
+to always route a user to the same server instance, and also helps in failover
+situations by distributing the cache.
+
+The microservice that you'll be working with is a shopping cart web service. You'll
+learn how to persist a user's shopping cart data between servers using the
+`sessionCache` feature in Open Liberty. The `sessionCache` feature persists HTTP
+sessions using JCache. You can have high performance HTTP session persistence
+without the use of a relational database. Furthermore, failover of HTTP sessions
+can be achieved by configuring multiple servers to persist data to the same
+location.
 
 [role="command"]
 include::{common-includes}/gitclone.adoc[]
@@ -167,14 +167,14 @@ to confirm the value of the item(s) in your cart or session.
 
 === Using Client-Server vs Peer-to-Peer
 
-The `sessionCache` feature is only valuable when it's connected to at least
+Session caching is only valuable when it's connected to at least
 one other member. There are two different ways session caching can behave in a
 server environment:
 
 * Client-Server Model: A Liberty server can act as the JCache client and connect
 to a dedicated JCache server.
 * Peer-to-Peer Model: A Liberty server can connect with other Liberty servers
-that are also running with the `sessionCache` feature and configured to be
+that are also running with the session cache and configured to be
 part of the same cluster.
 
 You'll use the peer-to-peer model for this guide.
