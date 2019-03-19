@@ -16,9 +16,9 @@
 :page-related-guides: ['rest-intro', 'microprofile-openapi']
 :page-permalink: /guides/{projectid}
 :common-includes: https://raw.githubusercontent.com/OpenLiberty/guides-common/master
+:imagesdir: /img/guide
 :page-seo-title: Caching HTTP session data in microservices
 :page-seo-description: Learn how to create and cache session data that persists between servers.
-:imagesdir: assets/
 = Caching HTTP sessions in microservices
 
 Learn how to create and work with session data that persists between servers using Java Caching (JCache) in Open Liberty.
@@ -55,7 +55,7 @@ In this case, a user is tied to a particular server, and if that server fails
 then that server's session data will be lost. Session persistence can be
 achieved using a data store such as a relational database or in-memory cache.
 
-image::sessionCache.svg[]
+image::sessionCache.svg[Session Cache,width=100%]
 
 Session persistence using JCache, as illustrated, solves this problem by allowing
 all server instances to share caches among each other. This eliminates the need
