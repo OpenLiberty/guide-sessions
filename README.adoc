@@ -25,8 +25,7 @@ Learn how to create and work with session data that persists between microservic
 
 == What you'll learn
 
-You'll learn about session and session persistence theory. You'll also learn how to set
-and get session data in microservices.
+An advantage of using stateless microservice is the ability to scale rapidly. In practice, a microservice architectured application cannot only contain stateless microservices, but it also require stateful microservices. To persist data between those microservices, you can use the HTTP sessions. In this guide, you'll learn about session and session persistence theory. You'll also learn how to set and get session data in microservices.
 
 === What is a session?
 
