@@ -10,7 +10,7 @@
 :projectid: sessions
 :page-duration: 25 minutes
 :page-releasedate: 2019-03-01
-:page-description: Learn how to create and cache session data that persists between servers.
+:page-description: Learn how to create and cache session data that persists between microservices.
 :guide-author: Open Liberty
 :page-tags: ['Java EE', 'sessions', 'session persistence', 'sessionCache']
 :page-related-guides: ['rest-intro', 'microprofile-openapi']
@@ -18,10 +18,10 @@
 :common-includes: https://raw.githubusercontent.com/OpenLiberty/guides-common/master
 :imagesdir: /img/guide
 :page-seo-title: Caching HTTP session data in microservices
-:page-seo-description: Learn how to create and cache session data that persists between servers.
+:page-seo-description: Learn how to create and cache session data that persists between microservices.
 = Caching HTTP sessions in microservices
 
-Learn how to create and work with session data that persists between servers using Java Caching (JCache) in Open Liberty.
+Learn how to create and work with session data that persists between microservices using Java Caching (JCache) in Open Liberty.
 
 == What you'll learn
 
