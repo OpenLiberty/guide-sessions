@@ -9,12 +9,13 @@
 :page-layout: guide-multipane
 :projectid: sessions
 :page-duration: 25 minutes
-:page-releasedate: 2019-03-01
+:page-releasedate: 2019-04-01
 :page-description: Learn how to create and cache session data that persists between microservices.
 :guide-author: Open Liberty
-:page-tags: ['Java EE', 'sessions', 'session persistence', 'sessionCache']
+:page-tags: ['Java EE' ]
 :page-related-guides: ['rest-intro', 'microprofile-openapi']
 :page-permalink: /guides/{projectid}
+:page-search-keywords: ['sessions', 'session persistence', 'sessionCache', 'Hazelcast', 'JCache']
 :common-includes: https://raw.githubusercontent.com/OpenLiberty/guides-common/master
 :imagesdir: /img/guide
 :page-seo-title: Caching HTTP session data in microservices
@@ -25,33 +26,34 @@ Learn how to create and work with session data that persists between microservic
 
 == What you'll learn
 
-An advantage of using stateless microservice is the ability to scale rapidly. In practice, a microservice architectured application cannot only contain stateless microservices, but it also require stateful microservices. To persist data between those microservices, you can use the HTTP sessions. In this guide, you'll learn about session and session persistence theory. You'll also learn how to set and get session data in microservices.
+You'll learn about session and session persistence theory. You'll also learn how to set
+and get session data in microservices.
 
 === What is a session?
 
 A session is a way to store information to be used across multiple pages.
 When you work with a local application (such as a word processor), you open it,
-make changes, and then you close it. The computer knows that you opened the app,
-made changes, and closed the app. On the internet, however, the web server doesn't
+make changes, and then you close it. The computer knows that you opened the application,
+made changes, and closed the application. On the internet, however, the web server doesn't
 know who you are, or what you do, because it's just processing stateless HTTP
-requests. Session variables store user information like user names or items in a cart.
+requests. Session variables store user information like user name or items in a shopping cart.
 By default, session variables will time out after 30 minutes of being unused.
 Session variables are maintained on a web server. `Cookies`, which also store user
 information, are maintained on a client's computer. For security reasons, using
-sessions is preferred over using cookies for sensitive data. Sessions hide data
-from users. Cookies store data on the client's computer, and can be manipulated by a
+session is preferred over using cookies for sensitive data. Session hides data
+from users. Cookies store data on client's computer, and can be manipulated by a
 savvy user to make fake requests to your site.
 
 === What is session persistence?
 
 The primary use case of session persistence is to be able to handle client requests
-being routed to different backends or to handle failover of the backend system.
+being routed to different backend systems or to handle failover of the backend system.
 High traffic websites must support thousands of users in a fast and reliable way.
 Load balancing requires running several instances of the same service in parallel
 so that traffic can be routed to servers to maximize speed and reliability.
 This poses a problem when each server keeps an isolated copy of their session data.
-In this case, a user is tied to a particular server, and if that server fails
-then that server's session data will be lost. Session persistence can be
+In this case, a user is tied to a particular server. If the server fails,
+then the server session data will be lost. Session persistence can be
 achieved using a data store such as a relational database or in-memory cache.
 
 image::sessionCache.svg[Session Cache,width=100%]
