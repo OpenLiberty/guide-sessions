@@ -58,7 +58,7 @@ achieved using a data store such as a relational database or in-memory cache.
 
 image::sessionCache.svg[Session Cache,width=100%]
 
-Session persistence using JCache, as illustrated, solves this problem by allowing
+Session persistence using JCache, as illustrated, solves the above problem by allowing
 all server instances to share caches among each other. This eliminates the need
 to always route a user to the same server instance, and also helps in failover
 situations by distributing the cache.
