@@ -31,11 +31,9 @@ and get session data in microservices.
 
 === What is a session?
 
-When you work with a local application (such as a word processor), you open it,
-make changes, and then you close it. The computer knows that you opened the application,
-made changes, and closed the application. On the internet, however, the web server doesn't
-know who you are, or what you do, because it's just processing stateless HTTP
-requests. A session is a way to store information to be used across multiple requests.
+On the internet, the web server doesn't know who you are, or what you do, 
+because it's just processing stateless HTTP requests. A session is a way to store 
+information to be used across multiple requests.
 Session variables store user information like user name or items in a shopping cart.
 By default, session variables will time out after 30 minutes of being unused.
 Session variables are maintained on a web server. `Cookies`, which also store user
