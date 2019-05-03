@@ -88,7 +88,7 @@ include::{common-includes}/gitclone.adoc[]
 
 == Creating applications
 
-You'll create a `cart` and `checkout` applications to store and retrieve session data.
+You'll create a `cart` applications to store and retrieve session data.
 
 Navigate to the `start` directory to begin.
 
