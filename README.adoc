@@ -24,6 +24,9 @@
 
 Learn how to create and work with user session data between containerized applications using Java Caching (JCache) in Open Liberty.
 
+// =================================================================================================
+// Introduction
+// =================================================================================================
 == What you'll learn
 
 You'll learn about session and session caching. You'll also learn how to set
@@ -36,7 +39,7 @@ because it's just processing stateless HTTP requests. A session is a way to stor
 information to be used across multiple requests.
 Session variables store user information like user name or items in a shopping cart.
 By default, session variables will time out after 30 minutes of being unused.
-Session variables are maintained on a web server. `Cookies`, which also store user
+Session variables are maintained on a web server. Cookies, which also store user
 information, are maintained on a client's computer. For security reasons, using
 session is preferred over using cookies for sensitive data. Session hides data
 from users. Cookies store data on client's computer, and can be manipulated by a
@@ -65,10 +68,21 @@ You'll learn how to persist a user's shopping cart data between servers using th
 sessions using JCache. You can have high performance HTTP session persistence
 without the use of a relational database.
 
-You will use a local Kubernetes cluster to run the containerized application. 
+You will use a local https://openliberty.io/guides/kubernetes-intro.html#what-is-kubernetes[Kubernetes^] 
+cluster to run the containerized application. 
 However, you can deploy this application on any kubernetes distributions 
 such as IBM Cloud or IBM Cloud Private.
 
+
+// =================================================================================================
+// Prerequisites
+// =================================================================================================
+[role='command']
+include::{common-includes}/kube-prereq.adoc[]
+
+// =================================================================================================
+// Getting Started
+// =================================================================================================
 [role="command"]
 include::{common-includes}/gitclone.adoc[]
 
