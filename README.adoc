@@ -9,25 +9,25 @@
 :page-layout: guide-multipane
 :projectid: sessions
 :page-duration: 25 minutes
-:page-releasedate: 2019-04-01
-:page-description: Learn how to create and cache session data that persists between microservices.
+:page-releasedate: 2019-07-01
+:page-description: Learn how to create and cache non-persistent user session data between containerized applications.
 :guide-author: Open Liberty
 :page-tags: ['Java EE' ]
-:page-related-guides: ['rest-intro', 'microprofile-openapi']
+:page-related-guides: ['rest-intro', 'microprofile-openapi', 'kubernetes-intro']
 :page-permalink: /guides/{projectid}
 :page-search-keywords: ['sessions', 'session persistence', 'sessionCache', 'Hazelcast', 'JCache']
 :common-includes: https://raw.githubusercontent.com/OpenLiberty/guides-common/master
 :imagesdir: /img/guide
-:page-seo-title: Caching HTTP session data in microservices
-:page-seo-description: Learn how to create and cache session data that persists between microservices.
-= Caching HTTP sessions in microservices
+:page-seo-title: Caching HTTP session data in containerized applications
+:page-seo-description: Learn how to create and cache non-persistent user session data between containerized applications.
+= Caching HTTP session data in containerized applications
 
-Learn how to create and work with session data that persists between microservices using Java Caching (JCache) in Open Liberty.
+Learn how to create and work with non-persistent user session data between containerized applications using Java Caching (JCache) in Open Liberty.
 
 == What you'll learn
 
 You'll learn about session and session persistence theory. You'll also learn how to set
-and get session data in microservices.
+and get session data in containerized applications.
 
 === What is a session?
 
@@ -61,7 +61,7 @@ all server instances to share caches among each other. This eliminates the need
 to always route a user to the same server instance, and also helps in failover
 situations by distributing the cache.
 
-The microservice that you'll be working with is a shopping cart web service. You'll
+The containerized application that you'll be working with is a shopping cart web service. You'll
 learn how to persist a user's shopping cart data between servers using the
 `sessionCache` feature in Open Liberty. The `sessionCache` feature persists HTTP
 sessions using JCache. You can have high performance HTTP session persistence
