@@ -10,7 +10,7 @@
 :projectid: sessions
 :page-duration: 25 minutes
 :page-releasedate: 2019-07-01
-:page-description: Learn how to create and cache non-persistent user session data between containerized applications.
+:page-description: Learn how to create and cache user session data between containerized applications.
 :guide-author: Open Liberty
 :page-tags: ['Java EE' ]
 :page-related-guides: ['rest-intro', 'microprofile-openapi', 'kubernetes-intro']
@@ -19,17 +19,17 @@
 :common-includes: https://raw.githubusercontent.com/OpenLiberty/guides-common/master
 :imagesdir: /img/guide
 :page-seo-title: Caching HTTP session data in containerized applications
-:page-seo-description: Learn how to create and cache non-persistent user session data between containerized applications.
+:page-seo-description: Learn how to create and cache user session data between containerized applications.
 = Caching HTTP session data in containerized applications
 
-Learn how to create and work with non-persistent user session data between containerized applications using Java Caching (JCache) in Open Liberty.
+Learn how to create and work with user session data between containerized applications using Java Caching (JCache) in Open Liberty.
 
 == What you'll learn
 
-You'll learn about session and session persistence theory. You'll also learn how to set
+You'll learn about session and session caching. You'll also learn how to set
 and get session data in containerized applications.
 
-=== What is a session?
+=== Session
 
 On the internet, the web server doesn't know who you are, or what you do, 
 because it's just processing stateless HTTP requests. A session is a way to store 
@@ -42,71 +42,39 @@ session is preferred over using cookies for sensitive data. Session hides data
 from users. Cookies store data on client's computer, and can be manipulated by a
 savvy user to make fake requests to your site.
 
-=== What is session persistence?
-
-The primary use case of session persistence is to be able to handle client requests
-being routed to different backend systems or to handle failover of the backend system.
+=== Session caching
 High traffic websites must support thousands of users in a fast and reliable way.
-Load balancing requires running several instances of the same service in parallel
-so that traffic can be routed to servers to maximize speed and reliability.
-This poses a problem when each server keeps an isolated copy of their session data.
-In this case, a user is tied to a particular server. If the server fails,
-then the server session data will be lost. Session persistence can be
-achieved using a data store such as a relational database or in-memory cache.
+Load balancing requires running several instances of the same application in parallel
+so that traffic can be routed to different servers to maximize speed and reliability.
+This poses an out-of-sync problem when each server keeps an isolated copy of their 
+session data, unless a user is tied to a particular server. Session caching can solve
+this problem by allowing all server instances to share caches among each other. 
+This eliminates the need to always route a user to the same server instance, 
+and also helps in failover situations by distributing the cache.
 
 image::sessionCache.svg[Session Cache,width=100%]
 
-Session persistence using JCache, as illustrated, solves the above problem by allowing
-all server instances to share caches among each other. This eliminates the need
-to always route a user to the same server instance, and also helps in failover
-situations by distributing the cache.
+=== Application Containerization
+Application containerization is to bundle an application with all of its required libraries,
+dependencies, and configuration files, so that it can run in Docker and any containerization 
+ecosystem.
 
-The containerized application that you'll be working with is a shopping cart web service. You'll
-learn how to persist a user's shopping cart data between servers using the
+The containerized application that you'll be working with is a shopping cart web service. 
+You'll learn how to persist a user's shopping cart data between servers using the
 `sessionCache` feature in Open Liberty. The `sessionCache` feature persists HTTP
 sessions using JCache. You can have high performance HTTP session persistence
-without the use of a relational database. Furthermore, failover of HTTP sessions
-can be achieved by configuring multiple servers to persist data to the same
-location.
+without the use of a relational database.
+
+You will use a local Kubernetes cluster to run the containerized application. 
+However, you can deploy this application on any kubernetes distributions 
+such as IBM Cloud or IBM Cloud Private.
 
 [role="command"]
 include::{common-includes}/gitclone.adoc[]
 
-=== Try what you’ll build
+== Creating applications
 
-The `finish` directory in the root of this guide contains the finished application.
-Give it a try before you proceed.
-
-To try out the application, first navigate to the `finish` directory and then run
-the following Maven goal to build the application and run it inside Open Liberty:
-
-[role="command"]
-```
-mvn install liberty:start-server -DserverName=server1
-```
-
-Point your browser to the link:http://localhost:9080/openapi/ui/[^] URL. This will
-display the available REST endpoints on the `server1` server.
-
-First, make a POST request to `/cart/{item}&{price}` by expanding the POST
-endpoint on the UI and clicking on the `Try it out` button.
-The POST request will add a user specified item and price to a session
-that represents data in a user's cart.
-
-Then, make a GET request to `/cart` by expanding the GET
-endpoint on the UI and clicking on the `Try it out` button. The GET request
-will return all the items from your session and display it as a string.
-
-After you're done checking out the application, stop the Open Liberty server.
-
-[role="command"]
-```
-mvn liberty:stop-server -DserverName=server1
-```
-
-== Creating the microservice
-
-You'll create a `cart` microservice to store and retrieve session data.
+You'll create a `cart` and `checkout` applications to store and retrieve session data.
 
 Navigate to the `start` directory to begin.
 
