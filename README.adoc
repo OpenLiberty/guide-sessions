@@ -57,6 +57,7 @@ and also helps in failover situations by distributing the cache.
 
 image::sessionCache.svg[Session Cache,width=100%]
 
++
 *Application Containerization* +
 Application containerization is to bundle an application with all of its required libraries,
 dependencies, and configuration files, so that it can run in Docker and any containerization 
@@ -78,16 +79,13 @@ include::{common-includes}/kube-prereq.adoc[]
 [role="command"]
 include::{common-includes}/gitclone.adoc[]
 
-== Creating applications
+== Creating application
 
-
-The containerized application that you'll be working with is a shopping cart web service. 
+The application that you'll be working with is a shopping cart web service. 
 You'll learn how to persist a user's shopping cart data between servers using the
 `sessionCache` feature in Open Liberty. The `sessionCache` feature persists HTTP
 sessions using JCache. You can have high performance HTTP session persistence
 without the use of a relational database.
-
-You'll create a `cart` applications to store and retrieve session data.
 
 Navigate to the `start` directory to begin.
 
