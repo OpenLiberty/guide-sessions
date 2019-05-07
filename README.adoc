@@ -33,7 +33,7 @@ You'll learn how to set and get session data which can be shared among server in
 To demostrate it, you'll also learn how to containerize and run an application in a local 
 Kubenetes cluster.
 
-*Session*+
+*Session* +
 On the internet, the web server doesn't know who you are, or what you do, 
 because it's just processing stateless HTTP requests. A session is a way to store 
 information to be used across multiple requests.
@@ -45,7 +45,7 @@ session is preferred over using cookies for sensitive data. Session hides data
 from users. Cookies store data on client's computer, and can be manipulated by a
 savvy user to make fake requests to your site.
 
-*Session caching*+
+*Session caching* +
 High traffic websites must support thousands of users in a fast and reliable way.
 Load balancing requires running several instances of the same application in parallel
 so that traffic can be routed to different servers to maximize speed and reliability.
@@ -57,12 +57,12 @@ and also helps in failover situations by distributing the cache.
 
 image::sessionCache.svg[Session Cache,width=100%]
 
-*Application Containerization*+
+*Application Containerization* +
 Application containerization is to bundle an application with all of its required libraries,
 dependencies, and configuration files, so that it can run in Docker and any containerization 
 ecosystem.
 
-*Kubernetes*+
+*Kubernetes* +
 Kubernetes is an open source container orchestrator that automates many tasks involved in deploying, managing, and scaling containerized applications. If you would like to learn more about Kubernetes, check out the https://openliberty.io/guides/kubernetes-intro.html[Deploying microservices to Kubernetes guide^].
 
 
