@@ -10,7 +10,7 @@
 :projectid: sessions
 :page-duration: 25 minutes
 :page-releasedate: 2019-07-01
-:page-description: Learn how to create and cache user session data between containerized applications.
+:page-description: Learn how to create and cache user session data which are shared among server instances.
 :guide-author: Open Liberty
 :page-tags: ['Java EE' ]
 :page-related-guides: ['rest-intro', 'microprofile-openapi', 'kubernetes-intro']
@@ -18,22 +18,22 @@
 :page-search-keywords: ['sessions', 'session persistence', 'sessionCache', 'Hazelcast', 'JCache']
 :common-includes: https://raw.githubusercontent.com/OpenLiberty/guides-common/master
 :imagesdir: /img/guide
-:page-seo-title: Caching HTTP session data in containerized applications
-:page-seo-description: Learn how to create and cache user session data between containerized applications.
-= Caching HTTP session data in containerized applications
+:page-seo-title: Caching HTTP session data to share among server instances
+:page-seo-description: Learn how to create and cache user session data which are shared among server instances.
+= Caching HTTP session data to share among server instances
 
-Learn how to create and work with user session data between containerized applications using Java Caching (JCache) in Open Liberty.
+Learn how to create and work with user session data which are shared among server instances by using Java Caching (JCache) in Open Liberty.
 
 // =================================================================================================
 // Introduction
 // =================================================================================================
 == What you'll learn
 
-You'll learn about session and session caching. You'll also learn how to set
-and get session data in containerized applications.
+You'll learn how to set and get session data which can be shared among server instances. 
+To demostrate it, you'll also learn how to containerize and run an application in a local 
+Kubenetes cluster.
 
-=== Session
-
+*Session*
 On the internet, the web server doesn't know who you are, or what you do, 
 because it's just processing stateless HTTP requests. A session is a way to store 
 information to be used across multiple requests.
@@ -45,7 +45,7 @@ session is preferred over using cookies for sensitive data. Session hides data
 from users. Cookies store data on client's computer, and can be manipulated by a
 savvy user to make fake requests to your site.
 
-=== Session caching
+*Session caching*
 High traffic websites must support thousands of users in a fast and reliable way.
 Load balancing requires running several instances of the same application in parallel
 so that traffic can be routed to different servers to maximize speed and reliability.
@@ -57,21 +57,13 @@ and also helps in failover situations by distributing the cache.
 
 image::sessionCache.svg[Session Cache,width=100%]
 
-=== Application Containerization
+*Application Containerization*
 Application containerization is to bundle an application with all of its required libraries,
 dependencies, and configuration files, so that it can run in Docker and any containerization 
 ecosystem.
 
-The containerized application that you'll be working with is a shopping cart web service. 
-You'll learn how to persist a user's shopping cart data between servers using the
-`sessionCache` feature in Open Liberty. The `sessionCache` feature persists HTTP
-sessions using JCache. You can have high performance HTTP session persistence
-without the use of a relational database.
-
-You will use a local https://openliberty.io/guides/kubernetes-intro.html#what-is-kubernetes[Kubernetes^] 
-cluster to run the containerized application. 
-However, you can deploy this application on any kubernetes distributions 
-such as IBM Cloud or IBM Cloud Private.
+*Kubernetes*
+Kubernetes is an open source container orchestrator that automates many tasks involved in deploying, managing, and scaling containerized applications. If you would like to learn more about Kubernetes, check out the https://openliberty.io/guides/kubernetes-intro.html[Deploying microservices to Kubernetes guide^].
 
 
 // =================================================================================================
@@ -87,6 +79,13 @@ include::{common-includes}/kube-prereq.adoc[]
 include::{common-includes}/gitclone.adoc[]
 
 == Creating applications
+
+
+The containerized application that you'll be working with is a shopping cart web service. 
+You'll learn how to persist a user's shopping cart data between servers using the
+`sessionCache` feature in Open Liberty. The `sessionCache` feature persists HTTP
+sessions using JCache. You can have high performance HTTP session persistence
+without the use of a relational database.
 
 You'll create a `cart` applications to store and retrieve session data.
 
