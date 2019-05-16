@@ -14,6 +14,12 @@ package io.openliberty.guides.cart;
 
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.Properties;
+
+import javax.json.Json;
+import javax.json.JsonArrayBuilder;
+import javax.json.JsonObject;
+import javax.json.JsonObjectBuilder;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.ws.rs.GET;
@@ -23,6 +29,8 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.parameters.Parameter;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
@@ -50,20 +58,34 @@ public class CartResource {
 
     @GET
     @Path("cart")
-    @Produces(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
     @APIResponse(responseCode = "200",
-        description = "Item successfully retrieved from cart.")
-    @Operation(summary = "Return list of items in your cart.")
-    public String getCart(@Context HttpServletRequest request) {
+        description = "Items successfully retrieved from your cart.")
+    @Operation(summary = "Return an JsonObject instance which contains " +
+                         "the items in your cart and the subtotal.")
+    public JsonObject getCart(@Context HttpServletRequest request) {
         HttpSession sess = request.getSession();
         Enumeration<String> names = sess.getAttributeNames();
-        ArrayList<String> results = new ArrayList<>();
-
+        JsonObjectBuilder builder = Json.createObjectBuilder();
+        builder.add("pod-name", getHostname());
+        builder.add("session-id", sess.getId());
+        JsonArrayBuilder arrayBuilder = Json.createArrayBuilder();
+        Double subtotal = 0.0;
         while (names.hasMoreElements()) {
             String name = names.nextElement();
             String price = sess.getAttribute(name).toString();
-            results.add(name + " | $" + price);
+            arrayBuilder.add(name + " | $" + price);
+            subtotal += Double.valueOf(price).doubleValue();
         }
-        return results.toString();
+        builder.add("cart", arrayBuilder);
+        builder.add("subtotal", subtotal);
+        return builder.build();
     }
+
+	private String getHostname() {
+        String hostname = System.getenv("HOSTNAME");
+        if (hostname == null)
+        	hostname = "localhost";
+		return hostname;
+	}
 }
