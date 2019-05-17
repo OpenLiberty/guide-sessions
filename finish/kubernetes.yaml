@@ -26,7 +26,7 @@ spec:
             topologyKey: kubernetes.io/hostname
       containers:
       - name: cart-container
-        image: guide-sessions:1.0-SNAPSHOT
+        image: cart-app:1.0-SNAPSHOT
         ports:
         - containerPort: 9080
 ---
