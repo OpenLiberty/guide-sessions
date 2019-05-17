@@ -295,19 +295,20 @@ docker images
 
 Verify that the `cart-app:1.0-SNAPSHOT` image is listed among them, for example:
 ----
-REPOSITORY        TAG          
-cart-app          1.0-SNAPSHOT
-open-liberty      latest
+REPOSITORY           TAG          
+cart-app             1.0-SNAPSHOT
+open-liberty         latest
 ----
 
 == Deploying the containized application
 
-Now that the containized application is built, deploy it using a Kubernetes resource definition,
-which is provided in the `kubernetes.yaml` file at the start directory.
+Now that the containized application is built, deploy it to a local Kubenetes cluster by using 
+a Kubernetes resource definition, which is provided in the `kubernetes.yaml` file 
+at the start directory.
 
-To demostrate how session data can be shared among server instances, the kubernetes cluster will start
-three instances by [hotspot=replicas file=0]`replicas`, and will not route to the same instance by 
-anti-affinity configration at the [hotspot=affinity file=0]`affinity` section.
+To demostrate how session data can be shared among server instances, the Kubernetes cluster will start
+three instances by [hotspot=replicas file=0]`replicas` definition, and the client request will not route 
+to the same instance by anti-affinity configration at the [hotspot=affinity file=0]`affinity` section.
 
 kubernetes.yaml
 [source, yaml, linenums, role="code_column hide_tags=comment"]
@@ -331,11 +332,25 @@ You'll see an output similar to the following if all the pods are healthy and ru
 
 [source, role="no_copy"]
 ----
-NAME                               READY   STATUS    RESTARTS   AGE
-cart-deployment-6bd97d9bf6-4ccds   1/1     Running   0          15s
-cart-deployment-645767664f-nbtd9   1/1     Running   0          15s
-cart-deployment-645767664f-nbtd9   1/1     Running   0          15s
+NAME                             READY  STATUS   RESTARTS  AGE
+cart-deployment-98f4ff789-2xlhs  1/1    Running  0         17s
+cart-deployment-98f4ff789-6rvfj  1/1    Running  0         17s
+cart-deployment-98f4ff789-qrh45  1/1    Running  0         17s
 ----
+
+Point your browser to the link:http://localhost:31000/openapi/ui/[^] URL. This will
+display the available REST endpoints.
+
+Make a POST request to `/cart/{item}&{price}` by expanding the POST
+endpoint on the UI and clicking on the `Try it out` button.
+The POST request will add a user specified item and price to a session
+that represents data in a user's cart.
+
+Then, make a GET request to `/cart` by expanding the GET
+endpoint on the UI and clicking on the `Try it out` button. The GET request
+will return a pod-name, a session id, and all the items from your session.
+Repeat the GET request several times. You'll find out the 
+
 
 
 You can also see the items from your session on the REST endpoints that are running on the `server2` server.
@@ -419,6 +434,24 @@ Results :
 
 Tests run: 3, Failures: 0, Errors: 0, Skipped: 0
 ----
+
+// =================================================================================================
+// Tear Down
+// =================================================================================================
+
+== Tearing down the environment
+
+When you no longer need your deployed application, you can delete all {kube} resources 
+by running the `kubectl delete` command:
+
+[role='command']
+```
+kubectl delete -f kubernetes.yaml
+```
+
+[role='command']
+include::{common-includes}/kube-minikube-teardown.adoc[]
+
 
 == Great work! You're done!
 
