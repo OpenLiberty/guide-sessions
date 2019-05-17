@@ -112,7 +112,7 @@ application.
 CartResource.java
 [source, Java, linenums, indent=0, role="code_column hide_tags=comment"]
 ----
-include::finish/src/main/java/io/openliberty/guides/cart/CartResource.java[tags=**;!copyright]
+include::finish/src/main/java/io/openliberty/guides/cart/CartResource.java[]
 ----
 
 The [hotspot file=1]`CartResource` class defines the REST endpoints at which a user can make
