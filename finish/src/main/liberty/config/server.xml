@@ -8,7 +8,9 @@
 
     <featureManager>
         <feature>servlet-4.0</feature>
+        <!-- tag::sessionCache[] -->
         <feature>sessionCache-1.0</feature>
+        <!-- end::sessionCache[] -->
         <feature>jaxrs-2.1</feature>
         <feature>jsonp-1.1</feature>
         <feature>mpOpenAPI-1.1</feature>
@@ -16,11 +18,17 @@
 
     <httpEndpoint httpPort="${default.http.port}" httpsPort="${default.https.port}"
         id="defaultHttpEndpoint" host="*" />
+    <!-- tag::httpSessionCache[] -->
     <httpSessionCache libraryRef="jCacheVendorLib"
         uri="file:${shared.config.dir}/hazelcast-config.xml" />
+    <!-- end::httpSessionCache[] -->
+    <!-- tag::library[] -->
     <library id="jCacheVendorLib">
+    	  <!-- tag::hazelcastjar[] -->
         <file name="${shared.resource.dir}/hazelcast.jar" />
+        <!-- end::hazelcastjar[] -->
     </library>
+    <!-- end::library[] -->
 
     <webApplication location="guide-sessions.war" contextRoot="${app.context.root}" />
 
