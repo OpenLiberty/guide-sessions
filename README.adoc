@@ -349,8 +349,12 @@ that represents data in a user's cart.
 Then, make a GET request to `/cart` by expanding the GET
 endpoint on the UI and clicking on the `Try it out` button. The GET request
 will return a pod-name, a session id, and all the items from your session.
-Repeat the GET request several times. You'll find out the 
-
+Repeat the GET request several times. You'll see the `session-id` should be same 
+but the `pod-name` can be different, which means the session data is sharing among those pod instances.
+----
+  "pod-name": "cart-deployment-98f4ff789-blj8z",
+  "session-id": "z0mlIZ3t9mMOg2Oe1yiSUr8",
+----
 
 
 You can also see the items from your session on the REST endpoints that are running on the `server2` server.
