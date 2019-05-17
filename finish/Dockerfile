@@ -6,7 +6,7 @@ COPY --chown=1001:0 target/liberty/wlp/usr/servers/defaultServer/server.env /con
 COPY --chown=1001:0 src/main/liberty/config/server.xml /config
 
 # Set up the application
-COPY --chown=1001:0 target/*.war /config/apps/guide-sessions.war
+COPY --chown=1001:0 target/*.war /config/apps/cart-app.war
 
 # Set up the required shared bundle
 USER root
