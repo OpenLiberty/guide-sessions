@@ -43,18 +43,23 @@ public class CartResource {
     @Produces(MediaType.TEXT_PLAIN)
     @APIResponse(responseCode = "200", description = "Item successfully added to cart.")
     @Operation(summary = "Add a new item to cart.")
+    // tag::addToCart[]
     public String addToCart(@Context HttpServletRequest request,
                     @Parameter(description = "Item you need for intergalatic travel.",
-                               required = true) 
+                               required = true)
+                    // tag::item[]
                     @PathParam("item") String item,
+                    // end::item[]
                     @Parameter(description = "Price for this item.",
-                               required = true) 
+                               required = true)
+                    // tag::price[]
                     @PathParam("price") double price) {
-
+                    // end::price[]
         HttpSession sess = request.getSession();
         sess.setAttribute(item, price);
         return item + " added to your cart and costs $" + price;
     }
+    // end::addToCart[]
 
     @GET
     @Path("cart")
@@ -63,6 +68,7 @@ public class CartResource {
         description = "Items successfully retrieved from your cart.")
     @Operation(summary = "Return an JsonObject instance which contains " +
                          "the items in your cart and the subtotal.")
+    // tag::getCart[]
     public JsonObject getCart(@Context HttpServletRequest request) {
         HttpSession sess = request.getSession();
         Enumeration<String> names = sess.getAttributeNames();
@@ -81,11 +87,12 @@ public class CartResource {
         builder.add("subtotal", subtotal);
         return builder.build();
     }
+    // end::getCart[]
 
-	private String getHostname() {
+    private String getHostname() {
         String hostname = System.getenv("HOSTNAME");
         if (hostname == null)
         	hostname = "localhost";
-		return hostname;
-	}
+		    return hostname;
+    }
 }
