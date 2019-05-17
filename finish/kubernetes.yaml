@@ -5,7 +5,9 @@ metadata:
   labels:
     app: cart
 spec:
+  # tag::replicas[]
   replicas: 3
+  # end::replicas[]
   selector:
     matchLabels:
       app: cart
@@ -14,6 +16,7 @@ spec:
       labels:
         app: cart
     spec:
+      # tag::affinity[]
       affinity:
         podAntiAffinity:                                 
           preferredDuringSchedulingIgnoredDuringExecution:
@@ -24,6 +27,7 @@ spec:
                 values:
                 - cart
             topologyKey: kubernetes.io/hostname
+      # tag::affinity[]
       containers:
       - name: cart-container
         image: cart-app:1.0-SNAPSHOT
