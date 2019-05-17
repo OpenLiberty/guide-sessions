@@ -112,7 +112,7 @@ application.
 CartResource.java
 [source, Java, linenums, indent=0, role="code_column hide_tags=comment"]
 ----
-include::finish/src/main/java/io/openliberty/guides/cart/CartResource.java[tags=!copyright]
+include::finish/src/main/java/io/openliberty/guides/cart/CartResource.java[]
 ----
 
 The [hotspot file=1]`CartResource` class defines the REST endpoints at which a user can make
@@ -138,7 +138,8 @@ returned to confirm that an item has been added to your cart or session.
 
 The [hotspot=getCart file=1]`getCart` method will get the current session. Iterate through all key-value
 pairs stored in the current session and create a `JsonObject` response that is returned
-to confirm the server instance, the session, and the item(s) in your cart.
+to confirm the server instance by [hotspot=podname file=1]`pod-name`, the session by [hotspot=sessionid file=1]`session-id`, 
+and the item(s) in your cart by [hotspot=cart file=1]`cart`.
 
 == Configuring session persistence
 

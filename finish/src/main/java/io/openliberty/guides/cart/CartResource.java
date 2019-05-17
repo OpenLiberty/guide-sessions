@@ -73,8 +73,12 @@ public class CartResource {
         HttpSession sess = request.getSession();
         Enumeration<String> names = sess.getAttributeNames();
         JsonObjectBuilder builder = Json.createObjectBuilder();
+        // tag::podname[]
         builder.add("pod-name", getHostname());
+        // end::podname[]
+        // tag::sessionid[]
         builder.add("session-id", sess.getId());
+        // end::sessionid[]
         JsonArrayBuilder arrayBuilder = Json.createArrayBuilder();
         Double subtotal = 0.0;
         while (names.hasMoreElements()) {
@@ -83,7 +87,9 @@ public class CartResource {
             arrayBuilder.add(name + " | $" + price);
             subtotal += Double.valueOf(price).doubleValue();
         }
+        // tag::cart[]
         builder.add("cart", arrayBuilder);
+        // end::cart[]
         builder.add("subtotal", subtotal);
         return builder.build();
     }
