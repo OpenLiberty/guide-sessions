@@ -176,31 +176,31 @@ HazelCast once the `sessionCache` feature is enabled.
 ----
 
 server.xml
-[source, xml, linenums, indent=0, role="code_column"]
+[source, xml, linenums, indent=0, role="code_column hide_tags=comment"]
 ----
-include::finish/src/main/liberty/config/server.xml[tags=!copyright;]
+include::finish/src/main/liberty/config/server.xml[]
 ----
 
-The [hotspot=14-16]`library` tag lets the server know where the Hazelcast implementation of
+The [hotspot=library]`library` tag lets the server know where the Hazelcast implementation of
 JCache is located by including a library reference. When the maven build is run
-the [hotspot=15]`hazelcast.jar` file is downloaded as a dependency and then copied to the
+the [hotspot=hazelcastjar]`hazelcast.jar` file is downloaded as a dependency and then copied to the
 predefined `{shared.resource.dir}` directory.
 
 === Configuring HazelCast
 
 CartApplication.java
-[source, Java, linenums, indent=0, role="code_column"]
+[source, Java, linenums, indent=0, role="code_column hide_tags=comment"]
 ----
-include::finish/src/main/java/io/openliberty/guides/cart/CartApplication.java[tags=!copyright]
+include::finish/src/main/java/io/openliberty/guides/cart/CartApplication.java[]
 ----
 
 server.xml
-[source, xml, linenums, indent=0, role="code_column"]
+[source, xml, linenums, indent=0, role="code_column hide_tags=comment"]
 ----
-include::finish/src/main/liberty/config/server.xml[tags=!copyright;]
+include::finish/src/main/liberty/config/server.xml[]
 ----
 
-By default, all Open Liberty servers running [hotspot=5 file=1]`sessionCache`,
+By default, all Open Liberty servers running [hotspot=sessionCache file=1]`sessionCache`,
 the [hotspot file=0]`CartApplication` you have created,
 and Hazelcast will be connected using a peer-to-peer model.
 
@@ -215,30 +215,19 @@ configuration file.
 ----
 
 hazelcast-config.xml
-[source, xml, linenums, indent=0, role="code_column"]
+[source, xml, linenums, indent=0, role="code_column hide_tags=comment"]
 ----
-include::finish/src/main/liberty/config/hazelcast-config.xml[tags=!copyright]
+include::finish/src/main/liberty/config/hazelcast-config.xml[]
 ----
 
 In the [hotspot file=1]`server.xml` file a reference to the Hazelcast config file is made using
-the [hotspot=12-13 file=1]`httpSessionCache` tag. When the maven build is run
+the [hotspot=httpSessionCache file=1]`httpSessionCache` tag. When the maven build is run
 the [hotspot file=2]`hazelcast-config.xml`
 file is copied to the predefined `{shared.resource.dir}` directory.
 
 There are more configuration settings you can explore in the
 https://docs.hazelcast.org/docs/latest/manual/html-single/#understanding-configuration[Hazelcast Documentation^].
 
-=== Setting up multiple servers
-
-pom.xml
-[source, xml, linenums, indent=0, role="code_column"]
-----
-include::finish/pom.xml[tags=**]
-----
-
-For testing, the [hotspot=158-264]`pom.xml` file has been configured for you to create two
-local server instances that operate side-by-side using different ports `9080` and
-`9081`. The server instances will be a part of the same Hazelcast cluster.
 
 == Building and running the application
 
@@ -252,19 +241,15 @@ mvn install
 This command builds the application and creates a `.war` file in the target directory. It also
 configures and installs Open Liberty into the `target/liberty/wlp` directory.
 
-Next, run the Maven `liberty:start-server` goal for both servers:
+Next, run the Maven `liberty:start-server` goal to start an Open Liberty server instance:
 
 [role="command"]
 ```
-mvn liberty:start-server -DserverName=server1
-mvn liberty:start-server -DserverName=server2
+mvn liberty:start-server
 ```
 
-This goal starts an Open Liberty server instance. Your Maven `pom.xml` is already configured to start
-the application in these two server instances.
-
 Point your browser to the link:http://localhost:9080/openapi/ui/[^] URL. This will
-display the available REST endpoints on the `server1` server.
+display the available REST endpoints.
 
 First, make a POST request to `/cart/{item}&{price}` by expanding the POST
 endpoint on the UI and clicking on the `Try it out` button.
@@ -273,7 +258,76 @@ that represents data in a user's cart.
 
 Then, make a GET request to `/cart` by expanding the GET
 endpoint on the UI and clicking on the `Try it out` button. The GET request
-will return all the items from your session and display it as a string.
+will return a pod-name, a session id, and all the items from your session.
+
+After you're done checking out the application, stop the Open Liberty server.
+
+[role="command"]
+```
+mvn liberty:stop-server
+```
+== Containize the application
+
+The first step of deploying the application to Kubernetes is to containerize it with Docker.
+
+If you're unfamiliar with Dockerfiles, check out the
+https://openliberty.io/guides/docker.html[Using Docker containers to develop microservices^] guide,
+which covers Dockerfiles in depth.
+
+The Dockerfile is provided at the start directory
+
+Navigate to the `start` directory and run the following command:
+[role='command']
+```
+docker build -t guide-sessions:1.0-SNAPSHOT .
+```
+
+When the build finishes, run the following command to list all local Docker images:
+[role='command']
+```
+docker images
+```
+
+Verify that the `guide-sessions:1.0-SNAPSHOT` image is listed among them, for example:
+----
+REPOSITORY        TAG             IMAGE ID   
+guide-sessions    1.0-SNAPSHOT    d28d25834149
+open-liberty      latest          b23e29fb15e3
+----
+
+== Deploying the containized application
+
+Now that the containized application is built, deploy it using a Kubernetes resource definition,
+which is provided in the `kubernetes.yaml` file at the start directory.
+
+kubernetes.yaml
+[source, yaml, linenums, role="code_column hide_tags=comment"]
+----
+include::finish/kubernetes.yaml[]
+----
+
+Run the following commands to deploy the resources as defined in kubernetes.yaml:
+[role='command']
+```
+kubectl apply -f kubernetes.yaml
+```
+
+When the application is deployed, run the following command to check the status of your pods:
+[role='command']
+```
+kubectl get pods
+```
+
+You'll see an output similar to the following if all the pods are healthy and running:
+
+[source, role="no_copy"]
+----
+NAME                                  READY   STATUS    RESTARTS   AGE
+session-deployment-6bd97d9bf6-4ccds   1/1     Running   0          15s
+session-deployment-645767664f-nbtd9   1/1     Running   0          15s
+session-deployment-645767664f-nbtd9   1/1     Running   0          15s
+----
+
 
 You can also see the items from your session on the REST endpoints that are running on the `server2` server.
 Point your browser to the link:http://localhost:9081/openapi/ui/[^] URL.
