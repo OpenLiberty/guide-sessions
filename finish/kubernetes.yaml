@@ -19,7 +19,7 @@ spec:
       # tag::affinity[]
       affinity:
         podAntiAffinity:                                 
-          preferredDuringSchedulingIgnoredDuringExecution:
+          requiredDuringSchedulingIgnoredDuringExecution:
           - labelSelector:
               matchExpressions:
               - key: service-type
@@ -27,7 +27,7 @@ spec:
                 values:
                 - cart
             topologyKey: kubernetes.io/hostname
-      # tag::affinity[]
+      # end::affinity[]
       containers:
       - name: cart-container
         image: cart-app:1.0-SNAPSHOT
