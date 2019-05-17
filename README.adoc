@@ -270,16 +270,16 @@ mvn liberty:stop-server
 
 The first step of deploying the application to Kubernetes is to containerize it with Docker.
 
+The Dockerfile is provided at the start directory
+
 If you're unfamiliar with Dockerfiles, check out the
 https://openliberty.io/guides/docker.html[Using Docker containers to develop microservices^] guide,
 which covers Dockerfiles in depth.
 
-The Dockerfile is provided at the start directory
-
 Navigate to the `start` directory and run the following command:
 [role='command']
 ```
-docker build -t guide-sessions:1.0-SNAPSHOT .
+docker build -t cart-app:1.0-SNAPSHOT .
 ```
 
 When the build finishes, run the following command to list all local Docker images:
@@ -288,10 +288,10 @@ When the build finishes, run the following command to list all local Docker imag
 docker images
 ```
 
-Verify that the `guide-sessions:1.0-SNAPSHOT` image is listed among them, for example:
+Verify that the `cart-app:1.0-SNAPSHOT` image is listed among them, for example:
 ----
 REPOSITORY        TAG             IMAGE ID   
-guide-sessions    1.0-SNAPSHOT    d28d25834149
+cart-app          1.0-SNAPSHOT    d28d25834149
 open-liberty      latest          b23e29fb15e3
 ----
 
@@ -322,10 +322,10 @@ You'll see an output similar to the following if all the pods are healthy and ru
 
 [source, role="no_copy"]
 ----
-NAME                                  READY   STATUS    RESTARTS   AGE
-session-deployment-6bd97d9bf6-4ccds   1/1     Running   0          15s
-session-deployment-645767664f-nbtd9   1/1     Running   0          15s
-session-deployment-645767664f-nbtd9   1/1     Running   0          15s
+NAME                               READY   STATUS    RESTARTS   AGE
+cart-deployment-6bd97d9bf6-4ccds   1/1     Running   0          15s
+cart-deployment-645767664f-nbtd9   1/1     Running   0          15s
+cart-deployment-645767664f-nbtd9   1/1     Running   0          15s
 ----
 
 

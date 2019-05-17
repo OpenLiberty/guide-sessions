@@ -30,6 +30,6 @@
     </library>
     <!-- end::library[] -->
 
-    <webApplication location="guide-sessions.war" contextRoot="${app.context.root}" />
+    <webApplication location="cart-app.war" contextRoot="${app.context.root}" />
 
 </server>
