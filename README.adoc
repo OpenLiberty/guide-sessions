@@ -24,6 +24,11 @@
 
 Learn how to create and work with user session data which are shared among server instances by using Java Caching (JCache) in Open Liberty.
 
+:kube: Kubernetes
+:win: WINDOWS
+:mac: MAC
+:linux: LINUX
+
 // =================================================================================================
 // Introduction
 // =================================================================================================
@@ -270,7 +275,7 @@ mvn liberty:stop-server
 
 The first step of deploying the application to Kubernetes is to containerize it with Docker.
 
-The Dockerfile is provided at the start directory
+The Dockerfile is provided at the start directory.
 
 If you're unfamiliar with Dockerfiles, check out the
 https://openliberty.io/guides/docker.html[Using Docker containers to develop microservices^] guide,
@@ -290,15 +295,19 @@ docker images
 
 Verify that the `cart-app:1.0-SNAPSHOT` image is listed among them, for example:
 ----
-REPOSITORY        TAG             IMAGE ID   
-cart-app          1.0-SNAPSHOT    d28d25834149
-open-liberty      latest          b23e29fb15e3
+REPOSITORY        TAG          
+cart-app          1.0-SNAPSHOT
+open-liberty      latest
 ----
 
 == Deploying the containized application
 
 Now that the containized application is built, deploy it using a Kubernetes resource definition,
 which is provided in the `kubernetes.yaml` file at the start directory.
+
+To demostrate how session data can be shared among server instances, the kubernetes cluster will start
+three instances by [hotspot=replicas file=0]`replicas`, and will not route to the same instance by 
+anti-affinity configration at the [hotspot=affinity file=0]`affinity` section.
 
 kubernetes.yaml
 [source, yaml, linenums, role="code_column hide_tags=comment"]
