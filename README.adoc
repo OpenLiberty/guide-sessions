@@ -64,8 +64,8 @@ image::sessionCache.svg[Session Cache,width=100%]
 
 *Application Containerization* +
 Application containerization is to bundle an application with all of its required libraries,
-dependencies, and configuration files, so that it can run in Docker and any containerization 
-ecosystem.
+dependencies, and configuration files, so that it can run in any containerization ecosystem, 
+such as https://www.docker.com/[Docker^].
 
 *Kubernetes* +
 Kubernetes is an open source container orchestrator that automates many tasks involved in deploying, 
@@ -277,10 +277,8 @@ mvn liberty:stop-server
 
 The first step of deploying the application to Kubernetes is to containerize it with Docker.
 
-The Dockerfile is provided at the start directory.
-
-If you're unfamiliar with Dockerfiles, check out the
-https://openliberty.io/guides/docker.html[Using Docker containers to develop microservices^] guide,
+The Dockerfile is provided at the start directory. If you're unfamiliar with Dockerfiles, 
+check out the https://openliberty.io/guides/docker.html[Using Docker containers to develop microservices^] guide,
 which covers Dockerfiles in depth.
 
 Navigate to the `start` directory and run the following command:
@@ -308,7 +306,7 @@ Now that the containized application is built, deploy it to a local Kubenetes cl
 a Kubernetes resource definition, which is provided in the `kubernetes.yaml` file 
 at the start directory.
 
-Run the following commands to deploy the applications into 3 pods as defined in kubernetes.yaml:
+Run the following commands to deploy the application into three pods as defined in kubernetes.yaml:
 [role='command']
 ```
 kubectl apply -f kubernetes.yaml
@@ -352,22 +350,24 @@ will return a pod-name, a session id, and all the items from your session.
 }
 ----
 
-Pause the pod for the GET request by the following command after replace the `[pod-name]`
+Pause the pod for the GET request which you just ran by the following command 
+after replacing the `[pod-name]`:
 [role='command']
 ```
-kubectl exec -it [pod-name] /opt/ol/wlp/bin/server pause defaultServer
+kubectl exec -it #[pod-name]# /opt/ol/wlp/bin/server pause defaultServer
 ```
 
 Repeat the GET request. You'll see the `session-id` should be same 
-but the `pod-name` is different because the session data is sharing among those pods.
+but the `pod-name` is different because the same session data is sharing 
+among those pods.
 
 Verify the Hazelcast Cluster is running by checking the Open Liberty log. 
-Run the following command.
+Run the following command:
 [role='command']
 ```
 kubectl exec -it [pod-name] cat /logs/messages.log
 ```
-You'll see the following message.
+You'll see the following message:
 [source, role="no_copy"]
 ----
 Members {size:3, ver:3} [
@@ -377,7 +377,7 @@ Members {size:3, ver:3} [
 ]
 ----
 
-You may resume the pod by the following command.
+You may resume the pod by the following command:
 [role='command']
 ```
 kubectl exec -it [pod-name] /opt/ol/wlp/bin/server resume defaultServer
