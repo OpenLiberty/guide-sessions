@@ -2,34 +2,16 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: cart-deployment
-  labels:
-    app: cart
 spec:
-  # tag::replicas[]
-  replicas: 3
-  # end::replicas[]
   selector:
     matchLabels:
       app: cart
+  replicas: 3
   template:
     metadata:
       labels:
         app: cart
     spec:
-      # tag::affinity[]
-      affinity:
-        podAntiAffinity:                                 
-          preferredDuringSchedulingIgnoredDuringExecution:
-          - weight: 100
-            podAffinityTerm:
-              labelSelector:
-                matchExpressions:
-                - key: service-type
-                  operator: In
-                  values:
-                  - cart
-              topologyKey: kubernetes.io/hostname
-      # end::affinity[]
       containers:
       - name: cart-container
         image: cart-app:1.0-SNAPSHOT

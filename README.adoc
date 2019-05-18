@@ -10,7 +10,7 @@
 :projectid: sessions
 :page-duration: 25 minutes
 :page-releasedate: 2019-07-01
-:page-description: Learn how to create and cache user session data which are shared among server instances.
+:page-description: Learn how to create and cache HTTP session data which are shared among server instances.
 :guide-author: Open Liberty
 :page-tags: ['Java EE' ]
 :page-related-guides: ['rest-intro', 'microprofile-openapi', 'kubernetes-intro']
@@ -19,10 +19,10 @@
 :common-includes: https://raw.githubusercontent.com/OpenLiberty/guides-common/master
 :imagesdir: /img/guide
 :page-seo-title: Caching HTTP session data to share among server instances
-:page-seo-description: Learn how to create and cache user session data which are shared among server instances.
+:page-seo-description: Learn how to create and cache HTTP session data which are shared among server instances.
 = Caching HTTP session data to share among server instances
 
-Learn how to create and work with user session data which are shared among server instances by using Java Caching (JCache) in Open Liberty.
+Learn how to create and work with HTTP session data which are shared among server instances by using Java Caching (JCache) in Open Liberty.
 
 :kube: Kubernetes
 :win: WINDOWS
@@ -68,7 +68,9 @@ dependencies, and configuration files, so that it can run in Docker and any cont
 ecosystem.
 
 *Kubernetes* +
-Kubernetes is an open source container orchestrator that automates many tasks involved in deploying, managing, and scaling containerized applications. If you would like to learn more about Kubernetes, check out the https://openliberty.io/guides/kubernetes-intro.html[Deploying microservices to Kubernetes guide^].
+Kubernetes is an open source container orchestrator that automates many tasks involved in deploying, 
+managing, and scaling containerized applications. If you would like to learn more about Kubernetes, 
+check out the https://openliberty.io/guides/kubernetes-intro.html[Deploying microservices to Kubernetes guide^].
 
 
 // =================================================================================================
@@ -271,7 +273,7 @@ After you're done checking out the application, stop the Open Liberty server.
 ```
 mvn liberty:stop-server
 ```
-== Containizing the application
+== Containerizing the application
 
 The first step of deploying the application to Kubernetes is to containerize it with Docker.
 
@@ -300,23 +302,13 @@ cart-app             1.0-SNAPSHOT
 open-liberty         latest
 ----
 
-== Deploying the containized application
+== Deploying and running the containized application
 
 Now that the containized application is built, deploy it to a local Kubenetes cluster by using 
 a Kubernetes resource definition, which is provided in the `kubernetes.yaml` file 
 at the start directory.
 
-To demostrate how session data can be shared among server instances, the Kubernetes cluster will start
-three instances by [hotspot=replicas file=0]`replicas` definition, and the client request will not route 
-to the same instance by anti-affinity configration at the [hotspot=affinity file=0]`affinity` section.
-
-kubernetes.yaml
-[source, yaml, linenums, role="code_column hide_tags=comment"]
-----
-include::finish/kubernetes.yaml[]
-----
-
-Run the following commands to deploy the resources as defined in kubernetes.yaml:
+Run the following commands to deploy the applications into 3 pods as defined in kubernetes.yaml:
 [role='command']
 ```
 kubectl apply -f kubernetes.yaml
@@ -348,96 +340,48 @@ that represents data in a user's cart.
 
 Then, make a GET request to `/cart` by expanding the GET
 endpoint on the UI and clicking on the `Try it out` button. The GET request
-will return a pod-name, a session id, and all the items from your session.
-Repeat the GET request several times. You'll see the `session-id` should be same 
-but the `pod-name` can be different, which means the session data is sharing among those pod instances.
+will return a pod-name, a session id, and all the items from your session. 
 ----
-  "pod-name": "cart-deployment-98f4ff789-blj8z",
-  "session-id": "z0mlIZ3t9mMOg2Oe1yiSUr8",
+{
+  "pod-name": "cart-deployment-98f4ff789-2xlhs",
+  "session-id": "RyJKzmka6Yc-ZCMzEA8-uPq",
+  "cart": [
+    "eggs | $2.89"
+  ],
+  "subtotal": 2.89
+}
 ----
 
+Pause the pod for the GET request by the following command after replace the `[pod-name]`
+[role='command']
+```
+kubectl exec -it [pod-name] /opt/ol/wlp/bin/server pause defaultServer
+```
 
-You can also see the items from your session on the REST endpoints that are running on the `server2` server.
-Point your browser to the link:http://localhost:9081/openapi/ui/[^] URL.
-Make a GET request to `/cart` by expanding the GET
-endpoint on the UI and clicking on the `Try it out` button.
+Repeat the GET request. You'll see the `session-id` should be same 
+but the `pod-name` is different because the session data is sharing among those pods.
 
-As a last step, verify the Hazelcast Cluster is running by checking the Open Liberty log located at
-`target/liberty/wlp/usr/servers/server1/logs/messages.log`. If you don't see a message similar to
-the one below in this log, you might need to check if multicast is enabled or any firewall is blocking
-the multicast packages.
-
+Verify the Hazelcast Cluster is running by checking the Open Liberty log. 
+Run the following command.
+[role='command']
+```
+kubectl exec -it [pod-name] cat /logs/messages.log
+```
+You'll see the following message.
 [source, role="no_copy"]
 ----
-Members {size:2, ver:2} [
-	Member [172.31.98.59]:5701 - fb4da600-ab54-44cc-bc4e-0fd65b4ee6da this
-	Member [172.31.98.59]:5702 - 29b4c11d-fa54-482e-a81d-807eef837249
+Members {size:3, ver:3} [
+	Member [10.1.0.40]:5701 - 01227d80-501e-4789-ae9d-6fb348d794ea
+	Member [10.1.0.41]:5701 - a68d0ed1-f50e-4a4c-82b0-389f356b8c73 this
+	Member [10.1.0.42]:5701 - b0dfa05a-c110-45ed-9424-adb1b2896a3d
 ]
 ----
 
-After you're done checking out the application, stop the Open Liberty servers.
-
-[role="command"]
+You may resume the pod by the following command.
+[role='command']
 ```
-mvn liberty:stop-server -DserverName=server1
-mvn liberty:stop-server -DserverName=server2
+kubectl exec -it [pod-name] /opt/ol/wlp/bin/server resume defaultServer
 ```
-
-
-== Testing your servers
-
-[role="code_command hotspot", subs="quotes"]
-----
-#Create a `CartSessionTest` class.#
-`src/test/java/it/io/openliberty/guides/cart/CartSessionTest.java`
-----
-
-CartSessionTest.java
-[source, Java, linenums, indent=0, role="code_column"]
-----
-include::finish/src/test/java/it/io/openliberty/guides/cart/CartSessionTest.java[tags=**;!copyright;!comment]
-----
-
-The [hotspot=37-48]`testEmptyCart` test makes sure that the `getCart` endpoint returns
-empty when you first start the application. Otherwise, additional tests may cause
-errors if you're unable to access this endpoint or if data is already stored in
-this session.
-
-The [hotspot=51-72]`testOneServer` test first makes a POST request to the `addToCart` endpoint
-and ensures that the expected response is returned. Then, it makes a GET request
-to the `getCart` endpoint and ensures that the expected response is returned.
-This test uses the same server.
-
-The [hotspot=75-96]`testTwoServers` test makes the same checks as the previous test, but the
-`addToCart` endpoint is on the server at port 9080, and the `getCart` endpoint
-is on the server at port 9081.
-
-Although REST endpoints are generally stateless, they're used for simplicity in
-this guide. The [hotspot=51-72]`testOneServer` and [hotspot=75-96]`testTwoServers` tests use a cookie
-to ensure that the same person's session data is being used for the `addToCart`
-and `getCart` requests.
-
-Verify that the tests pass using the Maven `verify` goal:
-
-[role="command"]
-```
-mvn verify
-```
-
-If the tests pass, you'll see a similar output to the following:
-
-[source, role="no_copy"]
-----
--------------------------------------------------------
- T E S T S
--------------------------------------------------------
-Running it.io.openliberty.guides.cart.CartSessionTest
-Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 10.259 sec
-
-Results :
-
-Tests run: 3, Failures: 0, Errors: 0, Skipped: 0
-----
 
 // =================================================================================================
 // Tear Down
@@ -459,7 +403,6 @@ include::{common-includes}/kube-minikube-teardown.adoc[]
 
 == Great work! You're done!
 
-You developed and tested a Java microservice using HTTP session caching and
-Open Liberty.
+You developed an application which can share HTTP session data among server instances.
 
 include::{common-includes}/attribution.adoc[subs="attributes"]
