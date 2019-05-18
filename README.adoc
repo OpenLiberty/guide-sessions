@@ -354,7 +354,7 @@ Pause the pod for the GET request which you just ran by the following command
 after replacing the `[pod-name]`:
 [role='command']
 ```
-kubectl exec -it #[pod-name]# /opt/ol/wlp/bin/server pause defaultServer
+kubectl exec -it [pod-name] /opt/ol/wlp/bin/server pause defaultServer
 ```
 
 Repeat the GET request. You'll see the `session-id` should be same 
