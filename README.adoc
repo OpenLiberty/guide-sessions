@@ -10,7 +10,7 @@
 :projectid: sessions
 :page-duration: 25 minutes
 :page-releasedate: 2019-07-01
-:page-description: Learn how to cache HTTP session data which are shared among pods inside Kubernetes cluster.
+:page-description: Learn how to cache HTTP session data that is shared among pods inside Kubernetes cluster.
 :guide-author: Open Liberty
 :page-tags: ['Java EE' ]
 :page-related-guides: ['rest-intro', 'microprofile-openapi', 'kubernetes-intro']
@@ -19,10 +19,10 @@
 :common-includes: https://raw.githubusercontent.com/OpenLiberty/guides-common/master
 :imagesdir: /img/guide
 :page-seo-title: Caching HTTP session data
-:page-seo-description: Learn how to cache HTTP session data which are shared among pods inside Kubernetes cluster.
+:page-seo-description: Learn how to cache HTTP session data that is shared among pods inside Kubernetes cluster.
 = Caching HTTP session data
 
-Learn how to create and work with HTTP session data which are shared among pods inside Kubernetes cluster by using Java Caching (JCache) in Open Liberty.
+Learn how to create and work with HTTP session data that is shared among pods inside Kubernetes cluster by using Java Caching (JCache) in Open Liberty.
 
 :kube: Kubernetes
 :win: WINDOWS
@@ -90,10 +90,10 @@ include::{common-includes}/gitclone.adoc[]
 The application that you'll be working with is a shopping cart web service. 
 You'll learn how to persist a user's shopping cart data between servers using the
 `sessionCache` feature in Open Liberty. The `sessionCache` feature persists HTTP
-sessions using JCache. You can have high performance HTTP session persistence
+sessions using JCache. You can have high-performance HTTP session persistence
 without the use of a relational database.
 
-Navigate to the `start` directory to begin.
+Go to the `start` directory to begin.
 
 [role="code_command hotspot", subs="quotes"]
 ----
@@ -127,7 +127,7 @@ an HTTP request.
 
 The [hotspot=addToCart file=1]`addToCart` and [hotspot=getCart file=1]`getCart` methods
 have a number of annotations most of which
-are used by the `myOpenAPI` and `jaxrs` features to provide context to
+are used by the `mpOpenAPI` and `jaxrs` features to provide context to
 the user interface and map java objects to web resources.
 More information about these annotations can be found in the
 https://openliberty.io/guides/microprofile-openapi.html#augmenting-the-existing-jax-rs-annotations-with-openapi-annotations[Documenting RESTful APIs^]
@@ -143,10 +143,10 @@ The [hotspot=addToCart file=1]`addToCart` method gets the current session and se
 stored as the key-value pair `{item}:{price}`. A response is then built and
 returned to confirm that an item has been added to your cart or session.
 
-The [hotspot=getCart file=1]`getCart` method will get the current session. Iterate through all key-value
-pairs stored in the current session and create a `JsonObject` response that is returned
+The [hotspot=getCart file=1]`getCart` method will get the current session, iterate through all key-value
+pairs stored in the current session, and create a `JsonObject` response that is returned
 to confirm the server instance by [hotspot=podname file=1]`pod-name`, the session by [hotspot=sessionid file=1]`session-id`, 
-and the item(s) in your cart by [hotspot=cart file=1]`cart`.
+and the items in your cart by [hotspot=cart file=1]`cart`.
 
 == Configuring session persistence
 
@@ -168,7 +168,7 @@ You'll use the peer-to-peer model for this guide.
 
 JCache stands for Java Caching and is an interface
 to standardize distributed caching on the Java platform.
-The `sessionCache` feature makes use of JCache which allows for session
+The `sessionCache` feature makes use of JCache that allows for session
 persistence by providing a common cache of session data between servers.
 This feature doesn't include a JCache implementation.
 For this guide, you'll use Hazelcast as an open source JCache provider.
@@ -188,8 +188,8 @@ server.xml
 include::finish/src/main/liberty/config/server.xml[]
 ----
 
-The [hotspot=library]`library` tag lets the server know where the Hazelcast implementation of
-JCache is located by including a library reference. When the maven build is run
+The [hotspot=library]`library` tag makes the server know where the Hazelcast implementation of
+JCache is located by including a library reference. When the maven build is run,
 the [hotspot=hazelcastjar]`hazelcast.jar` file is downloaded as a dependency and then copied to the
 predefined `{shared.resource.dir}` directory.
 
@@ -211,7 +211,7 @@ By default, all Open Liberty servers running [hotspot=sessionCache file=1]`sessi
 the [hotspot file=0]`CartApplication` you have created,
 and Hazelcast will be connected using a peer-to-peer model.
 
-You can create a named cluster group to limit the Hazelcast instances which
+You can create a named cluster group to limit the Hazelcast instances that
 automatically join the cluster. This is accomplished by creating a Hazelcast
 configuration file.
 
@@ -227,10 +227,9 @@ hazelcast-config.xml
 include::finish/src/main/liberty/config/hazelcast-config.xml[]
 ----
 
-In the [hotspot file=1]`server.xml` file a reference to the Hazelcast config file is made using
-the [hotspot=httpSessionCache file=1]`httpSessionCache` tag. When the maven build is run
-the [hotspot file=2]`hazelcast-config.xml`
-file is copied to the predefined `{shared.resource.dir}` directory.
+In the [hotspot file=1]`server.xml` file, a reference to the Hazelcast config file is made using
+the [hotspot=httpSessionCache file=1]`httpSessionCache` tag. When the maven build is run,
+the [hotspot file=2]`hazelcast-config.xml` file is copied to the predefined `{shared.resource.dir}` directory.
 
 There are more configuration settings you can explore in the
 https://docs.hazelcast.org/docs/latest/manual/html-single/#understanding-configuration[Hazelcast Documentation^].
@@ -259,12 +258,12 @@ Point your browser to the link:http://localhost:9080/openapi/ui/[^] URL. This wi
 display the available REST endpoints.
 
 First, make a POST request to `/cart/{item}&{price}` by expanding the POST
-endpoint on the UI and clicking on the `Try it out` button.
+endpoint on the UI and clicking the `Try it out` button.
 The POST request will add a user specified item and price to a session
 that represents data in a user's cart.
 
 Then, make a GET request to `/cart` by expanding the GET
-endpoint on the UI and clicking on the `Try it out` button. The GET request
+endpoint on the UI and clicking the `Try it out` button. The GET request
 will return a pod-name, a session id, and all the items from your session.
 
 After you're done checking out the application, stop the Open Liberty server.
@@ -277,11 +276,11 @@ mvn liberty:stop-server
 
 The first step of deploying the application to Kubernetes is to containerize it with Docker.
 
-The Dockerfile is provided at the start directory. If you're unfamiliar with Dockerfiles, 
+The Dockerfile is provided at the start directory. If you're unfamiliar with Dockerfile, 
 check out the https://openliberty.io/guides/docker.html[Using Docker containers to develop microservices^] guide,
-which covers Dockerfiles in depth.
+which covers Dockerfile in depth.
 
-Navigate to the `start` directory and run the following command:
+Go to the `start` directory and run the following command:
 [role='command']
 ```
 docker build -t cart-app:1.0-SNAPSHOT .
@@ -302,11 +301,11 @@ open-liberty         latest
 
 == Deploying and running the containized application
 
-Now that the containized application is built, deploy it to a local Kubenetes cluster by using 
+Now that the containerized application is built, deploy it to a local Kubernetes cluster by using 
 a Kubernetes resource definition, which is provided in the `kubernetes.yaml` file 
 at the start directory.
 
-Run the following commands to deploy the application into three pods as defined in kubernetes.yaml:
+Run the following command to deploy the application into three pods as defined in kubernetes.yaml:
 [role='command']
 ```
 kubectl apply -f kubernetes.yaml
@@ -318,7 +317,7 @@ When the application is deployed, run the following command to check the status 
 kubectl get pods
 ```
 
-You'll see an output similar to the following if all the pods are healthy and running:
+You'll see an output similar to the following if all the pods are working correctly:
 
 [source, role="no_copy"]
 ----
@@ -332,12 +331,12 @@ Point your browser to the link:http://localhost:31000/openapi/ui/[^] URL. This w
 display the available REST endpoints.
 
 Make a POST request to `/cart/{item}&{price}` by expanding the POST
-endpoint on the UI and clicking on the `Try it out` button.
+endpoint on the UI and clicking the `Try it out` button.
 The POST request will add a user specified item and price to a session
 that represents data in a user's cart.
 
 Then, make a GET request to `/cart` by expanding the GET
-endpoint on the UI and clicking on the `Try it out` button. The GET request
+endpoint on the UI and clicking the `Try it out` button. The GET request
 will return a pod-name, a session id, and all the items from your session. 
 ----
 {
@@ -350,7 +349,7 @@ will return a pod-name, a session id, and all the items from your session.
 }
 ----
 
-Pause the pod for the GET request which you just ran by the following command 
+Pause the pod for the GET request that you just ran by the following command 
 after replacing the `[pod-name]`:
 [role='command']
 ```
