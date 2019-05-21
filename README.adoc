@@ -68,9 +68,9 @@ Kubernetes is an open source container orchestrator that automates many tasks in
 managing, and scaling containerized applications. If you would like to learn more about Kubernetes, 
 check out the https://openliberty.io/guides/kubernetes-intro.html[Deploying microservices to Kubernetes guide^].
 
-You'll learn how to build an application which requires to use session. Beside to containerize 
-and run the application in a local Kubenetes cluster, you'll also learn the Open Liberty `sessionCache`
-feature to persist HTTP sessions using JCache, so that the session data can be shared among pods 
+You'll learn how to build an application that requires to use session. Beside to containerize 
+and run the application in a local Kubernetes cluster, you'll also learn the Open Liberty `sessionCache`
+feature to persist HTTP sessions using JCache. You'll see the session data can be shared among pods 
 inside the Kubernetes cluster.
 
 // =================================================================================================
