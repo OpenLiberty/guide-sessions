@@ -18,9 +18,9 @@
 :page-search-keywords: ['sessions', 'session persistence', 'sessionCache', 'Hazelcast', 'JCache']
 :common-includes: https://raw.githubusercontent.com/OpenLiberty/guides-common/master
 :imagesdir: /img/guide
-:page-seo-title: Caching HTTP session data to share among pods inside Kubernetes cluster
+:page-seo-title: Caching HTTP session data
 :page-seo-description: Learn how to cache HTTP session data which are shared among pods inside Kubernetes cluster.
-= Caching HTTP session data to share among pods inside Kubernetes cluster
+= Caching HTTP session data
 
 Learn how to create and work with HTTP session data which are shared among pods inside Kubernetes cluster by using Java Caching (JCache) in Open Liberty.
 
