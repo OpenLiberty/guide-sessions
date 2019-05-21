@@ -10,7 +10,7 @@
 :projectid: sessions
 :page-duration: 25 minutes
 :page-releasedate: 2019-07-01
-:page-description: Learn how to create and cache HTTP session data which are shared among server instances.
+:page-description: Learn how to cache HTTP session data which are shared among pods inside Kubernetes cluster.
 :guide-author: Open Liberty
 :page-tags: ['Java EE' ]
 :page-related-guides: ['rest-intro', 'microprofile-openapi', 'kubernetes-intro']
@@ -18,11 +18,11 @@
 :page-search-keywords: ['sessions', 'session persistence', 'sessionCache', 'Hazelcast', 'JCache']
 :common-includes: https://raw.githubusercontent.com/OpenLiberty/guides-common/master
 :imagesdir: /img/guide
-:page-seo-title: Caching HTTP session data to share among server instances
-:page-seo-description: Learn how to create and cache HTTP session data which are shared among server instances.
-= Caching HTTP session data to share among server instances
+:page-seo-title: Caching HTTP session data to share among pods inside Kubernetes cluster
+:page-seo-description: Learn how to cache HTTP session data which are shared among pods inside Kubernetes cluster.
+= Caching HTTP session data to share among pods inside Kubernetes cluster
 
-Learn how to create and work with HTTP session data which are shared among server instances by using Java Caching (JCache) in Open Liberty.
+Learn how to create and work with HTTP session data which are shared among pods inside Kubernetes cluster by using Java Caching (JCache) in Open Liberty.
 
 :kube: Kubernetes
 :win: WINDOWS
@@ -33,10 +33,6 @@ Learn how to create and work with HTTP session data which are shared among serve
 // Introduction
 // =================================================================================================
 == What you'll learn
-
-You'll learn how to set and get session data which can be shared among server instances. 
-To demostrate it, you'll also learn how to containerize and run an application in a local 
-Kubenetes cluster.
 
 *Session* +
 On the internet, the web server doesn't know who you are, or what you do, 
@@ -53,11 +49,11 @@ savvy user to make fake requests to your site.
 *Session caching* +
 High traffic websites must support thousands of users in a fast and reliable way.
 Load balancing requires running several instances of the same application in parallel
-so that traffic can be routed to different servers to maximize speed and reliability.
-This poses an out-of-sync problem when each server keeps an isolated copy of their 
-session data, unless a user is tied to a particular server. Session caching can solve
-this problem by allowing all server instances to share caches among each other. 
-This eliminates the need to always route a user to the same server instance, 
+so that traffic can be routed to different instances to maximize speed and reliability.
+This poses an out-of-sync problem when each instance keeps an isolated copy of their 
+session data, unless a user is tied to a particular instance. Session caching can solve
+this problem by allowing all instances to share caches among each other. 
+This eliminates the need to always route a user to the same instance, 
 and also helps in failover situations by distributing the cache.
 
 image::sessionCache.svg[Session Cache,width=100%]
@@ -65,13 +61,17 @@ image::sessionCache.svg[Session Cache,width=100%]
 *Application Containerization* +
 Application containerization is to bundle an application with all of its required libraries,
 dependencies, and configuration files, so that it can run in any containerization ecosystem, 
-such as https://www.docker.com/[Docker^].
+such as https://www.docker.com/[Docker^], and it can be deployed to Kubernetes.
 
 *Kubernetes* +
 Kubernetes is an open source container orchestrator that automates many tasks involved in deploying, 
 managing, and scaling containerized applications. If you would like to learn more about Kubernetes, 
 check out the https://openliberty.io/guides/kubernetes-intro.html[Deploying microservices to Kubernetes guide^].
 
+You'll learn how to build an application which requires to use session. Beside to containerize 
+and run the application in a local Kubenetes cluster, you'll also learn the Open Liberty `sessionCache`
+feature to persist HTTP sessions using JCache, so that the session data can be shared among pods 
+inside the Kubernetes cluster.
 
 // =================================================================================================
 // Prerequisites
@@ -403,6 +403,6 @@ include::{common-includes}/kube-minikube-teardown.adoc[]
 
 == Great work! You're done!
 
-You developed an application which can share HTTP session data among server instances.
+You developed an application which can share HTTP session data among pods inside Kubernetes cluster.
 
 include::{common-includes}/attribution.adoc[subs="attributes"]
