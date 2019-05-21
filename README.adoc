@@ -300,7 +300,7 @@ cart-app             1.0-SNAPSHOT
 open-liberty         latest
 ----
 
-== Deploying and running the containized application
+== Deploying and running the containerized application
 
 Now that the containerized application is built, deploy it to a local Kubernetes cluster by using 
 a Kubernetes resource definition, which is provided in the `kubernetes.yaml` file 
