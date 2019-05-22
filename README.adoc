@@ -100,7 +100,6 @@ Go to the `start` directory to begin.
 #Create the `CartApplication` class.#
 `src/main/java/io/openliberty/guides/cart/CartApplication.java`
 ----
-
 CartApplication.java
 [source, Java, linenums, indent=0, role="code_column"]
 ----
@@ -115,7 +114,6 @@ application.
 #Create the `CartResource` class.#
 `src/main/java/io/openliberty/guides/cart/CartResource.java`
 ----
-
 CartResource.java
 [source, Java, linenums, indent=0, role="code_column hide_tags=comment"]
 ----
