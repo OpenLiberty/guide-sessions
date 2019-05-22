@@ -95,27 +95,27 @@ without the use of a relational database.
 
 Go to the `start` directory to begin.
 
-[role="code_command hotspot", subs="quotes"]
+[role="code_command hotspot file=0", subs="quotes"]
 ----
 #Create the `CartApplication` class.#
 `src/main/java/io/openliberty/guides/cart/CartApplication.java`
 ----
 CartApplication.java
-[source, Java, linenums, indent=0, role="code_column"]
+[source, Java, linenums, indent=0, role="code_column hide_tags=copyright"]
 ----
-include::finish/src/main/java/io/openliberty/guides/cart/CartApplication.java[tags=!copyright]
+include::finish/src/main/java/io/openliberty/guides/cart/CartApplication.java[]
 ----
 
 The [hotspot file=0]`CartApplication` class extends the generic JAX-RS application class needed to run the
 application.
 
-[role="code_command hotspot", subs="quotes"]
+[role="code_command hotspot file=1", subs="quotes"]
 ----
 #Create the `CartResource` class.#
 `src/main/java/io/openliberty/guides/cart/CartResource.java`
 ----
 CartResource.java
-[source, Java, linenums, indent=0, role="code_column hide_tags=comment"]
+[source, Java, linenums, indent=0, role="code_column hide_tags=copyright"]
 ----
 include::finish/src/main/java/io/openliberty/guides/cart/CartResource.java[]
 ----
@@ -181,7 +181,7 @@ HazelCast once the `sessionCache` feature is enabled.
 ----
 
 server.xml
-[source, xml, linenums, indent=0, role="code_column hide_tags=comment"]
+[source, xml, linenums, indent=0, role="code_column hide_tags=copyright"]
 ----
 include::finish/src/main/liberty/config/server.xml[]
 ----
@@ -194,13 +194,13 @@ predefined `{shared.resource.dir}` directory.
 === Configuring HazelCast
 
 CartApplication.java
-[source, Java, linenums, indent=0, role="code_column hide_tags=comment"]
+[source, Java, linenums, indent=0, role="code_column hide_tags=copyright"]
 ----
 include::finish/src/main/java/io/openliberty/guides/cart/CartApplication.java[]
 ----
 
 server.xml
-[source, xml, linenums, indent=0, role="code_column hide_tags=comment"]
+[source, xml, linenums, indent=0, role="code_column hide_tags=copyright"]
 ----
 include::finish/src/main/liberty/config/server.xml[]
 ----
@@ -220,7 +220,7 @@ configuration file.
 ----
 
 hazelcast-config.xml
-[source, xml, linenums, indent=0, role="code_column hide_tags=comment"]
+[source, xml, linenums, indent=0, role="code_column hide_tags=copyright"]
 ----
 include::finish/src/main/liberty/config/hazelcast-config.xml[]
 ----
