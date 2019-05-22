@@ -56,7 +56,13 @@ this problem by allowing all instances to share caches among each other.
 This eliminates the need to always route a user to the same instance, 
 and also helps in failover situations by distributing the cache.
 
-image::sessionCache.svg[Session Cache,width=100%]
+image::sessionCache.png[Session Cache,width=100%]
+
+To demostrate how HTTP session data can be shared in multiple instances of the same application,
+this guide will show you to build an application that requires to use session data, to containerize 
+, and to run it in a local Kubernetes cluster. You'll also learn the Open Liberty `sessionCache` 
+feature to persist HTTP sessions using JCache. You'll see the session data can be shared among pods 
+inside the Kubernetes cluster.
 
 *Application Containerization* +
 Application containerization is to bundle an application with all of its required libraries,
@@ -68,10 +74,6 @@ Kubernetes is an open source container orchestrator that automates many tasks in
 managing, and scaling containerized applications. If you would like to learn more about Kubernetes, 
 check out the https://openliberty.io/guides/kubernetes-intro.html[Deploying microservices to Kubernetes guide^].
 
-You'll learn how to build an application that requires to use session. Beside to containerize 
-and run the application in a local Kubernetes cluster, you'll also learn the Open Liberty `sessionCache`
-feature to persist HTTP sessions using JCache. You'll see the session data can be shared among pods 
-inside the Kubernetes cluster.
 
 // =================================================================================================
 // Prerequisites
