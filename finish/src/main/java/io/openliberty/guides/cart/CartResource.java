@@ -79,7 +79,7 @@ public class CartResource {
     // tag::getCart[]
     public JsonObject getCart(@Context HttpServletRequest request) {
         HttpSession session = request.getSession();
-        Enumeration<String> names = sess.getAttributeNames();
+        Enumeration<String> names = session.getAttributeNames();
         JsonObjectBuilder builder = Json.createObjectBuilder();
         // tag::podname[]
         builder.add("pod-name", getHostname());

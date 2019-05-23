@@ -370,9 +370,11 @@ Run the following command:
 ```
 kubectl exec -it [pod-name] cat /logs/messages.log
 ```
-You'll see the following message:
+You'll see a message similar to the following:
 [source, role="no_copy"]
 ----
+... I [10.1.0.46]:5701 [CartCluster] [3.11.2] 
+
 Members {size:3, ver:3} [
 	Member [10.1.0.40]:5701 - 01227d80-501e-4789-ae9d-6fb348d794ea
 	Member [10.1.0.41]:5701 - a68d0ed1-f50e-4a4c-82b0-389f356b8c73 this
