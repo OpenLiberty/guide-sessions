@@ -12,7 +12,7 @@
 :page-releasedate: 2019-07-01
 :page-description: Learn how to cache HTTP session data that is shared among pods inside Kubernetes cluster.
 :guide-author: Open Liberty
-:page-tags: ['Java EE' ]
+:page-tags: ['Java EE']
 :page-related-guides: ['rest-intro', 'microprofile-openapi', 'kubernetes-intro']
 :page-permalink: /guides/{projectid}
 :page-search-keywords: ['sessions', 'session persistence', 'sessionCache', 'Hazelcast', 'JCache']
@@ -34,7 +34,7 @@ Learn how to create and work with HTTP session data that is shared among pods in
 // =================================================================================================
 == What you'll learn
 
-*Session* +
+// *Session* +
 On the internet, the web server doesn't know who you are, or what you do, 
 because it's just processing stateless HTTP requests. A session is a way to store 
 information to be used across multiple requests.
@@ -46,7 +46,7 @@ session is preferred over using cookies for sensitive data. Session hides data
 from users. Cookies store data on client's computer, and can be manipulated by a
 savvy user to make fake requests to your site.
 
-*Session caching* +
+// *Session caching* +
 High traffic websites must support thousands of users in a fast and reliable way.
 Load balancing requires running several instances of the same application in parallel
 so that traffic can be routed to different instances to maximize speed and reliability.
@@ -58,18 +58,18 @@ and also helps in failover situations by distributing the cache.
 
 image::sessionCache.png[Session Cache,width=100%]
 
-To demostrate how HTTP session data can be shared in multiple instances of the same application,
-this guide will show you to build an application that requires to use session data, to containerize 
-, and to run it in a local Kubernetes cluster. You'll also learn the Open Liberty `sessionCache` 
-feature to persist HTTP sessions using JCache. You'll see the session data can be shared among pods 
-inside the Kubernetes cluster.
+To demonstrate how HTTP session data can be shared in multiple instances of the same application, 
+this guide will show you to build an application using session data, containerize, and run it in 
+a local Kubernetes cluster. 
+Youll also learn the Open Liberty `sessionCache` feature to persist HTTP sessions using JCache. 
+Youll see the session data can be shared among pods inside the Kubernetes cluster.
 
-*Application Containerization* +
+// *Application Containerization* +
 Application containerization is to bundle an application with all of its required libraries,
 dependencies, and configuration files, so that it can run in any containerization ecosystem, 
 such as https://www.docker.com/[Docker^], and it can be deployed to Kubernetes.
 
-*Kubernetes* +
+// *Kubernetes* +
 Kubernetes is an open source container orchestrator that automates many tasks involved in deploying, 
 managing, and scaling containerized applications. If you would like to learn more about Kubernetes, 
 check out the https://openliberty.io/guides/kubernetes-intro.html[Deploying microservices to Kubernetes guide^].
@@ -87,7 +87,7 @@ include::{common-includes}/kube-prereq.adoc[]
 [role="command"]
 include::{common-includes}/gitclone.adoc[]
 
-== Creating application
+== Creating the application
 
 The application that you'll be working with is a shopping cart web service. 
 You'll learn how to persist a user's shopping cart data between servers using the
@@ -135,14 +135,15 @@ and
 https://openliberty.io/guides/rest-intro.html#creating-a-jax-rs-application[Creating a RESTful web service^]
 guides.
 
-The [hotspot=item hotspot=price file=1]`@PathParam` annotation injects a custom
-[hotspot=item file=1]`item` and [hotspot=price file=1]`price` from the POST
-request into the method parameter.
 
-The [hotspot=addToCart file=1]`addToCart` method gets the current session and sets a new attribute
-stored as the key-value pair `{item}:{price}`. A response is then built and
-returned to confirm that an item has been added to your cart or session.
+The endpoint [hotspot=endpointCartItemPrice file=1]`cart/{item}&{price}` demonstrates how to set session data.
+The [hotspot=item hotspot=price file=1]`@PathParam` annotation injects a custom [hotspot=item file=1]`item` and 
+[hotspot=price file=1]`price` from the POST request into the method parameter.
+The [hotspot=addToCart file=1]`addToCart` method gets the current [hotspot=getSession file=1]`session` and binds
+the key-value pair `{item}:{price}` into the session by [hotspot=setAttribute file=1]`setAttribute()`. 
+A response is then built and returned to confirm that an item has been added to your cart and session.
 
+The endpoint [hotspot=endpointCart file=1]`cart` demonstrates how to get session data.
 The [hotspot=getCart file=1]`getCart` method will get the current session, iterate through all key-value
 pairs stored in the current session, and create a `JsonObject` response that is returned
 to confirm the server instance by [hotspot=podname file=1]`pod-name`, the session by [hotspot=sessionid file=1]`session-id`, 
@@ -174,11 +175,11 @@ This feature doesn't include a JCache implementation.
 For this guide, you'll use Hazelcast as an open source JCache provider.
 
 Hazelcast is a JCache provider. Open Liberty needs to be configured to use
-HazelCast once the `sessionCache` feature is enabled.
+Hazelcast once the `sessionCache` feature is enabled.
 
 [role="code_command hotspot", subs="quotes"]
 ----
-#Create the `server.xml` config file.#
+#Create the `server.xml` file.#
 `src/main/liberty/config/server.xml`
 ----
 
@@ -193,7 +194,7 @@ JCache is located by including a library reference. When the maven build is run,
 the [hotspot=hazelcastjar]`hazelcast.jar` file is downloaded as a dependency and then copied to the
 predefined `{shared.resource.dir}` directory.
 
-=== Configuring HazelCast
+=== Configuring Hazelcast
 
 CartApplication.java
 [source, Java, linenums, indent=0, role="code_column hide_tags=copyright"]
@@ -207,17 +208,15 @@ server.xml
 include::finish/src/main/liberty/config/server.xml[]
 ----
 
-By default, all Open Liberty servers running [hotspot=sessionCache file=1]`sessionCache`,
-the [hotspot file=0]`CartApplication` you have created,
+By default, all Open Liberty servers running [hotspot=sessionCache file=1]`sessionCache` 
 and Hazelcast will be connected using a peer-to-peer model.
 
-You can create a named cluster group to limit the Hazelcast instances that
-automatically join the cluster. This is accomplished by creating a Hazelcast
-configuration file.
+To limit the session cache being shared only among certain Hazelcast instances, you can 
+set the `<group/>` in a Hazelcast configuration file.
 
 [role="code_command hotspot file=2", subs="quotes"]
 ----
-#Create a new `hazelcast-config.xml` config file.#
+#Create the `hazelcast-config.xml` configuration file.#
 `src/main/liberty/config/hazelcast-config.xml`
 ----
 
@@ -227,7 +226,9 @@ hazelcast-config.xml
 include::finish/src/main/liberty/config/hazelcast-config.xml[]
 ----
 
-In the [hotspot file=1]`server.xml` file, a reference to the Hazelcast config file is made using
+The cluster group [hotspot=group file=2]`CartCluster` is specified in the `hazelcast-config.xml` file.
+
+In the [hotspot file=1]`server.xml` file, a reference to the Hazelcast configuration file is made using
 the [hotspot=httpSessionCache file=1]`httpSessionCache` tag. When the maven build is run,
 the [hotspot file=2]`hazelcast-config.xml` file is copied to the predefined `{shared.resource.dir}` directory.
 

@@ -39,7 +39,9 @@ import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 public class CartResource {
 
     @POST
+    // tag::endpointCartItemPrice[]
     @Path("cart/{item}&{price}")
+    // end::endpointCartItemPrice[]
     @Produces(MediaType.TEXT_PLAIN)
     @APIResponse(responseCode = "200", description = "Item successfully added to cart.")
     @Operation(summary = "Add a new item to cart.")
@@ -55,14 +57,20 @@ public class CartResource {
                     // tag::price[]
                     @PathParam("price") double price) {
                     // end::price[]
-        HttpSession sess = request.getSession();
-        sess.setAttribute(item, price);
+        // tag::getSession[]
+        HttpSession session = request.getSession();
+        // end::getSession[]
+        // tag::setAttribute[]
+        session.setAttribute(item, price);
+        // end::setAttribute[]
         return item + " added to your cart and costs $" + price;
     }
     // end::addToCart[]
 
     @GET
+    // tag::endpointCart[]
     @Path("cart")
+    // end::endpointCart[]
     @Produces(MediaType.APPLICATION_JSON)
     @APIResponse(responseCode = "200",
         description = "Items successfully retrieved from your cart.")
@@ -70,20 +78,20 @@ public class CartResource {
                          "the items in your cart and the subtotal.")
     // tag::getCart[]
     public JsonObject getCart(@Context HttpServletRequest request) {
-        HttpSession sess = request.getSession();
+        HttpSession session = request.getSession();
         Enumeration<String> names = sess.getAttributeNames();
         JsonObjectBuilder builder = Json.createObjectBuilder();
         // tag::podname[]
         builder.add("pod-name", getHostname());
         // end::podname[]
         // tag::sessionid[]
-        builder.add("session-id", sess.getId());
+        builder.add("session-id", session.getId());
         // end::sessionid[]
         JsonArrayBuilder arrayBuilder = Json.createArrayBuilder();
         Double subtotal = 0.0;
         while (names.hasMoreElements()) {
             String name = names.nextElement();
-            String price = sess.getAttribute(name).toString();
+            String price = session.getAttribute(name).toString();
             arrayBuilder.add(name + " | $" + price);
             subtotal += Double.valueOf(price).doubleValue();
         }
