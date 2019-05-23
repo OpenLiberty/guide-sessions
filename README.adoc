@@ -196,25 +196,19 @@ predefined `{shared.resource.dir}` directory.
 
 === Configuring Hazelcast
 
-CartApplication.java
-[source, Java, linenums, indent=0, role="code_column hide_tags=copyright"]
-----
-include::finish/src/main/java/io/openliberty/guides/cart/CartApplication.java[]
-----
-
 server.xml
 [source, xml, linenums, indent=0, role="code_column hide_tags=copyright"]
 ----
 include::finish/src/main/liberty/config/server.xml[]
 ----
 
-By default, all Open Liberty servers running [hotspot=sessionCache file=1]`sessionCache` 
+By default, all Open Liberty servers running [hotspot=sessionCache file=0]`sessionCache` 
 and Hazelcast will be connected using a peer-to-peer model.
 
-To limit the session cache being shared only among certain Hazelcast instances, you can 
-set the `<group/>` in a Hazelcast configuration file.
+You can limit the session cache being shared only among certain Hazelcast instances 
+through the `<group/>` configuration element in Hazelcast configuration file.
 
-[role="code_command hotspot file=2", subs="quotes"]
+[role="code_command hotspot file=1", subs="quotes"]
 ----
 #Create the `hazelcast-config.xml` configuration file.#
 `src/main/liberty/config/hazelcast-config.xml`
@@ -226,11 +220,11 @@ hazelcast-config.xml
 include::finish/src/main/liberty/config/hazelcast-config.xml[]
 ----
 
-The cluster group [hotspot=group file=2]`CartCluster` is specified in the `hazelcast-config.xml` file.
+The cluster group [hotspot=group file=1]`CartCluster` is specified in the `hazelcast-config.xml`.
 
 In the [hotspot file=1]`server.xml` file, a reference to the Hazelcast configuration file is made using
-the [hotspot=httpSessionCache file=1]`httpSessionCache` tag. When the maven build is run,
-the [hotspot file=2]`hazelcast-config.xml` file is copied to the predefined `{shared.resource.dir}` directory.
+the [hotspot=httpSessionCache file=0]`httpSessionCache` tag. When the maven build is run,
+the [hotspot file=1]`hazelcast-config.xml` file is copied to the predefined `{shared.resource.dir}` directory.
 
 There are more configuration settings you can explore in the
 https://docs.hazelcast.org/docs/latest/manual/html-single/#understanding-configuration[Hazelcast Documentation^].
