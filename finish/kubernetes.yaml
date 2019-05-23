@@ -6,7 +6,9 @@ spec:
   selector:
     matchLabels:
       app: cart
+  # tag::replicas[]
   replicas: 3
+  # end::replicas[]
   template:
     metadata:
       labels:

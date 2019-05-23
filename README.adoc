@@ -206,7 +206,7 @@ By default, all Open Liberty servers running [hotspot=sessionCache file=0]`sessi
 and Hazelcast will be connected using a peer-to-peer model.
 
 You can limit the session cache being shared only among certain Hazelcast instances 
-through the `<group/>` configuration element in Hazelcast configuration file.
+through the `<group/>` configuration tag in Hazelcast configuration file.
 
 [role="code_command hotspot file=1", subs="quotes"]
 ----
@@ -220,9 +220,9 @@ hazelcast-config.xml
 include::finish/src/main/liberty/config/hazelcast-config.xml[]
 ----
 
-The cluster group [hotspot=group file=1]`CartCluster` is specified in the `hazelcast-config.xml`.
+The cluster group [hotspot=group file=1]`CartCluster` is defined in the `hazelcast-config.xml`.
 
-In the [hotspot file=1]`server.xml` file, a reference to the Hazelcast configuration file is made using
+In the [hotspot file=0]`server.xml` file, a reference to the Hazelcast configuration file is made by using
 the [hotspot=httpSessionCache file=0]`httpSessionCache` tag. When the maven build is run,
 the [hotspot file=1]`hazelcast-config.xml` file is copied to the predefined `{shared.resource.dir}` directory.
 
@@ -297,11 +297,18 @@ open-liberty         latest
 
 == Deploying and running the containerized application
 
+kubernetes.yaml
+[source, yaml, linenums, role='code_column']
+----
+include::finish/kubernetes.yaml[]
+----
+
 Now that the containerized application is built, deploy it to a local Kubernetes cluster by using 
-a Kubernetes resource definition, which is provided in the `kubernetes.yaml` file 
+a Kubernetes resource definition, which is provided in the [hotspot file=0]`kubernetes.yaml` file 
 at the start directory.
 
-Run the following command to deploy the application into three pods as defined in kubernetes.yaml:
+Run the following command to deploy the application into [hotspot=replicas file=0]`three` pods as defined 
+in kubernetes.yaml:
 [role='command']
 ```
 kubectl apply -f kubernetes.yaml
