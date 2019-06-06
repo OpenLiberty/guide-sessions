@@ -59,10 +59,9 @@ and also helps in failover situations by distributing the cache.
 image::sessionCache.png[Session Cache,width=100%]
 
 To demonstrate how HTTP session data can be shared in multiple instances of the same application, 
-this guide will show you to build an application using session data, containerize, and run it in 
+this guide will show you how to build an application using session data, containerize the application, and run it in 
 a local Kubernetes cluster. 
-Youll also learn the Open Liberty `sessionCache` feature to persist HTTP sessions using JCache. 
-Youll see the session data can be shared among pods inside the Kubernetes cluster.
+You'll also learn about the Open Liberty `sessionCache` feature to persist HTTP sessions using JCache and understand that the session data can be shared among pods inside the Kubernetes cluster.
 
 // *Application Containerization* +
 Application containerization is to bundle an application with all of its required libraries,
@@ -93,7 +92,7 @@ The application that you'll be working with is a shopping cart web service.
 You'll learn how to persist a user's shopping cart data between servers using the
 `sessionCache` feature in Open Liberty. The `sessionCache` feature persists HTTP
 sessions using JCache. You can have high-performance HTTP session persistence
-without the use of a relational database.
+without using a relational database.
 
 Go to the `start` directory to begin.
 
