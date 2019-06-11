@@ -59,10 +59,9 @@ and also helps in failover situations by distributing the cache.
 image::sessionCache.png[Session Cache,width=100%]
 
 To demonstrate how HTTP session data can be shared in multiple instances of the same application, 
-this guide will show you to build an application using session data, containerize, and run it in 
+this guide will show you how to build an application using session data, containerize the application, and run it in 
 a local Kubernetes cluster. 
-Youll also learn the Open Liberty `sessionCache` feature to persist HTTP sessions using JCache. 
-Youll see the session data can be shared among pods inside the Kubernetes cluster.
+You'll also learn about the Open Liberty `sessionCache` feature to persist HTTP sessions using JCache and understand that the session data can be shared among pods inside the Kubernetes cluster.
 
 // *Application Containerization* +
 Application containerization is to bundle an application with all of its required libraries,
@@ -93,7 +92,7 @@ The application that you'll be working with is a shopping cart web service.
 You'll learn how to persist a user's shopping cart data between servers using the
 `sessionCache` feature in Open Liberty. The `sessionCache` feature persists HTTP
 sessions using JCache. You can have high-performance HTTP session persistence
-without the use of a relational database.
+without using a relational database.
 
 Go to the `start` directory to begin.
 
@@ -136,14 +135,14 @@ https://openliberty.io/guides/rest-intro.html#creating-a-jax-rs-application[Crea
 guides.
 
 
-The endpoint [hotspot=endpointCartItemPrice file=1]`cart/{item}&{price}` demonstrates how to set session data.
+The [hotspot=endpointCartItemPrice file=1]`cart/{item}&{price}` endpoint demonstrates how to set session data.
 The [hotspot=item hotspot=price file=1]`@PathParam` annotation injects a custom [hotspot=item file=1]`item` and 
 [hotspot=price file=1]`price` from the POST request into the method parameter.
 The [hotspot=addToCart file=1]`addToCart` method gets the current [hotspot=getSession file=1]`session` and binds
 the key-value pair `{item}:{price}` into the session by [hotspot=setAttribute file=1]`setAttribute()`. 
 A response is then built and returned to confirm that an item has been added to your cart and session.
 
-The endpoint [hotspot=endpointCart file=1]`cart` demonstrates how to get session data.
+The [hotspot=endpointCart file=1] `cart` endpoint demonstrates how to get session data.
 The [hotspot=getCart file=1]`getCart` method will get the current session, iterate through all key-value
 pairs stored in the current session, and create a `JsonObject` response that is returned
 to confirm the server instance by [hotspot=podname file=1]`pod-name`, the session by [hotspot=sessionid file=1]`session-id`, 
@@ -189,7 +188,7 @@ server.xml
 include::finish/src/main/liberty/config/server.xml[]
 ----
 
-The [hotspot=library]`library` tag makes the server know where the Hazelcast implementation of
+The [hotspot=library]`library` tag lets the server know where the Hazelcast implementation of
 JCache is located by including a library reference. When the maven build is run,
 the [hotspot=hazelcastjar]`hazelcast.jar` file is downloaded as a dependency and then copied to the
 predefined `{shared.resource.dir}` directory.
