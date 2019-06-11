@@ -321,7 +321,7 @@ kubectl get pods
 
 You'll see an output similar to the following if all the pods are working correctly:
 
-[source, role="no_copy"]
+[role="no_copy"]
 ----
 NAME                             READY  STATUS   RESTARTS  AGE
 cart-deployment-98f4ff789-2xlhs  1/1    Running  0         17s
@@ -340,7 +340,7 @@ that represents data in a user's cart.
 Then, make a GET request to `/cart` by expanding the GET
 endpoint on the UI and clicking the `Try it out` button. The GET request
 will return a pod-name, a session id, and all the items from your session.
-[source, role="no_copy"]
+[role="no_copy"]
 ----
 {
   "pod-name": "cart-deployment-98f4ff789-2xlhs",
@@ -370,7 +370,7 @@ Run the following command:
 kubectl exec -it [pod-name] cat /logs/messages.log
 ```
 You'll see a message similar to the following:
-[source, role="no_copy"]
+[role="no_copy"]
 ----
 ... I [10.1.0.46]:5701 [CartCluster] [3.11.2] 
 
