@@ -19,7 +19,7 @@
 :common-includes: https://raw.githubusercontent.com/OpenLiberty/guides-common/master
 :imagesdir: /img/guide
 :page-seo-title: Caching HTTP session data
-:page-seo-description: Learn how to cache HTTP session data that is shared among pods inside Kubernetes cluster.
+:page-seo-description: A tutorial on how to cache HTTP session data that is shared among pods inside Kubernetes cluster by using Hazelcast as the Java Caching (JCache) provider.
 = Caching HTTP session data
 
 Learn how to create and work with HTTP session data that is shared among pods inside Kubernetes cluster by using Java Caching (JCache) in Open Liberty.
@@ -94,7 +94,7 @@ You'll learn how to persist a user's shopping cart data between servers using th
 sessions using JCache. You can have high-performance HTTP session persistence
 without using a relational database.
 
-Go to the `start` directory to begin.
+Navigate to the `start` directory to begin.
 
 [role="code_command hotspot file=0", subs="quotes"]
 ----
@@ -274,7 +274,7 @@ The Dockerfile is provided at the start directory. If you're unfamiliar with Doc
 check out the https://openliberty.io/guides/docker.html[Using Docker containers to develop microservices^] guide,
 which covers Dockerfile in depth.
 
-Go to the `start` directory and run the following command:
+Navigate to the `start` directory and run the following command:
 [role='command']
 ```
 docker build -t cart-app:1.0-SNAPSHOT .
@@ -321,7 +321,7 @@ kubectl get pods
 
 You'll see an output similar to the following if all the pods are working correctly:
 
-[source, role="no_copy"]
+[role="no_copy"]
 ----
 NAME                             READY  STATUS   RESTARTS  AGE
 cart-deployment-98f4ff789-2xlhs  1/1    Running  0         17s
@@ -340,7 +340,7 @@ that represents data in a user's cart.
 Then, make a GET request to `/cart` by expanding the GET
 endpoint on the UI and clicking the `Try it out` button. The GET request
 will return a pod-name, a session id, and all the items from your session.
-[source, role="no_copy"]
+[role="no_copy"]
 ----
 {
   "pod-name": "cart-deployment-98f4ff789-2xlhs",
@@ -363,14 +363,14 @@ Repeat the GET request. You'll see the `session-id` should be same
 but the `pod-name` is different because the same session data is sharing 
 among those pods.
 
-Verify the Hazelcast Cluster is running by checking the Open Liberty log. 
+Verify the Hazelcast cluster is running by checking the Open Liberty log. 
 Run the following command:
 [role='command']
 ```
 kubectl exec -it [pod-name] cat /logs/messages.log
 ```
 You'll see a message similar to the following:
-[source, role="no_copy"]
+[role="no_copy"]
 ----
 ... I [10.1.0.46]:5701 [CartCluster] [3.11.2] 
 
