@@ -38,12 +38,12 @@ Learn how to create and work with HTTP session data that is shared among pods in
 On the internet, the web server doesn't know who you are, or what you do, 
 because it's just processing stateless HTTP requests. A session is a way to store 
 information to be used across multiple requests.
-Session variables store user information like user name or items in a shopping cart.
-By default, session variables will time out after 30 minutes of being unused.
-Session variables are maintained on a web server. Cookies, which also store user
-information, are maintained on a client's computer. For security reasons, using
+Session variables store user information like username, or items in a shopping cart.
+ By default, session variables will time out after 30 minutes of being unused.
+Cookies, which also store user
+information, are maintained on a client's computer, whereas session variables are maintained on a web server. For security reasons, using
 session is preferred over using cookies for sensitive data. Session hides data
-from users. Cookies store data on client's computer, and can be manipulated by a
+from users. Cookies can be manipulated by a
 savvy user to make fake requests to your site.
 
 // *Session caching* +
@@ -66,7 +66,7 @@ You'll also learn about the Open Liberty `sessionCache` feature to persist HTTP
 // *Application Containerization* +
 Application containerization is to bundle an application with all of its required libraries,
 dependencies, and configuration files, so that it can run in any containerization ecosystem, 
-such as https://www.docker.com/[Docker^], and it can be deployed to Kubernetes.
+such as https://www.docker.com/[Docker^], where it can be deployed to Kubernetes.
 
 // *Kubernetes* +
 Kubernetes is an open source container orchestrator that automates many tasks involved in deploying, 
@@ -125,7 +125,7 @@ The [hotspot file=1]`CartResource` class defines the REST endpoints at which a u
 an HTTP request.
 
 The [hotspot=addToCart file=1]`addToCart` and [hotspot=getCart file=1]`getCart` methods
-have a number of annotations most of which
+have a number of annotations; most of which
 are used by the `mpOpenAPI` and `jaxrs` features to provide context to
 the user interface and map java objects to web resources.
 More information about these annotations can be found in the
