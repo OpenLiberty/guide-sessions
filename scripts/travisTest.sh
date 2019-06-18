@@ -39,4 +39,4 @@ echo "$getStatus"
 #     exit 1
 # fi
 
-kubectl logs $(kubectl get pods -o jsonpath='{range .items[*]}{.metadata.name}{"\n"}' | grep cart)
+kubectl logs $(kubectl get pods -o jsonpath='{range .items[*]}{.metadata.name}{"\n"}' | grep cart)[0]
