@@ -21,14 +21,18 @@ kubectl get pods
 
 echo `minikube ip`
 
-cartStatus="$(curl --write-out "%{http_code}\n" --silent --output /dev/null "http://`minikube ip`:31000/openapi/ui/")"
+postStatus="$(curl -X POST "http://localhost:31000/SessionsGuide/cart/eggs&2.29" --cookie "c.txt" --cookie-jar "c.txt")"
+getStatus="$(curl --write-out "%{http_code}\n" --silent --output /dev/null "http://`minikube ip`:31000/SessionsGuide/cart" --cookie "c.txt" --cookie-jar "c.txt")"
 
-if [ "$cartStatus" == "200" ] 
+
+if [ "$postStatus" == "eggs added to your cart and costs $2.29" ] && [ "$getStatus" == "200" ]
 then
-    echo ENDPOINT OK
+    echo POST/GET OK
 else
-    echo cart status:
-    echo "$cartStatus"
+    echo post status:
+    echo "$postStatus"
+    echo get status:
+    echo "$getStatus"
     exit 1
 fi
 
