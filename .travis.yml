@@ -1,21 +1,22 @@
+sudo: required
 language: java
+services:
+- docker
+env:
+- CHANGE_MINIKUBE_NONE_USER=true
 before_script:
 - unset _JAVA_OPTIONS
 - cd finish
-script:
-- mvn -q clean install
-- serverName=$(target/liberty/wlp/bin/server list | cut -d '.' -f2| tr -d '\n');
-- build=$(grep "Open Liberty" target/liberty/wlp/usr/servers/"$serverName"/logs/console.log
-  | cut -d' ' -f5 | cut -d')' -f1 ); release=$( echo "$build" | cut -d'/' -f1); number=$(
-  echo "$build" | cut -d'/' -f2); ol_jv=$(grep -i "on java" target/liberty/wlp/usr/servers/"$serverName"/logs/console.log);
-  jv=$(printf '%s\n' "${ol_jv//$' on '/$'\n'}" | sed '2q;d'); echo -e "\n"; echo -e  "\033[1;34mOpen
-  Liberty release:\033[0m \033[1;36m$release\033[0m"; echo -e "\033[1;34mOpen Liberty
-  build number:\033[0m \033[1;36m$number\033[0m"; echo -e "\033[1;34mJava version:\033[0m
-  \033[1;36m$jv\033[0m";
-- cd target/liberty/wlp/usr/servers/"$serverName"/logs/; repo_name=$(echo "$TRAVIS_REPO_SLUG"
-  | sed -e "s/\//-/g"); if [ "$TRAVIS_TEST_RESULT" -eq 0 ]; then result="passed";
-  else result="failed"; fi; serverlogsarchive="$repo_name-$TRAVIS_BUILD_NUMBER-$result.zip";zip
-  -r "$serverlogsarchive" .; curl -H "$JFROG_TOKEN" -T "$serverlogsarchive" "https://na.artifactory.swg-devops.com/artifactory/hyc-openliberty-guides-files-generic-local/";
+- sudo mount --make-rshared /
+- curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
+- chmod +x kubectl
+- sudo ln -s $(pwd)/kubectl /usr/local/bin/kubectl
+- wget https://github.com/kubernetes/minikube/releases/download/v0.28.2/minikube-linux-amd64 -q -O minikube
+- chmod +x minikube
+- sudo ln -s $(pwd)/minikube /usr/local/bin/minikube
+- sudo minikube start --vm-driver=none --bootstrapper=localkube
+- chmod +x ../scripts/travisTest.sh
+script: ../scripts/travisTest.sh
 notifications:
   slack:
     template:
@@ -25,9 +26,10 @@ notifications:
     - 'Author: %{author}'
     - 'Summary: %{result} in %{duration}'
     rooms:
-      secure: doKR84X5pdlj9kPdwTXWf7cHuDBUJoG9qqFlhFGxi/e8aQ5jJ6HMer9wb8MwhYzJfaDRLNQtseX8bmot68igdAAGxGH5pCC5Kj+cNY7J2geKz3RuETskk13diXxcB2pztlYm9KjiQzg52wMeJ5A59uRkYGBGJGo0vW4+Ill5iPUeac4cNSKajxspdxHt/lKufjTb0GdhwUJYH3BMM46JeRb36HhRSHnwehPyYTF58q4SiJWebM7Y8e5rKNe/jEotjPVgkC/KUy1m1N2LP3yjouXKP3xHLs8Qtzabe59wUMjbGZP3Hse+V0fTeWSwvPldlC1zd3qynbjqkh7opV0JFL9XoCJiFDQhGM9c91c9vBz2+iBMJxWVXMnQ+d9/OBUen8YtPMBefuHflMlxYKRSjlShkX5ZzoOaqJhnL+60lRocM7Va/uPVcxSj8TiuFuI/8DWtpEq22GKOUBWj8Y5/7YepXMV7q8eyNuD3J0L2h4Pgvs9xu2pv7tEEgMRdGZ5nLXzkVoZjeHDUMGc6mZPGyff324ajnDlxifzm/5EWUjO2orWX/ic+ZiDkwMRwWx/EfmqjKzske7C631OkHwuodVvBfluYB6bJZzNP2bV5sb3trtFQYnP1Bqx2AJNlPQwZ2/Sm1VWWcHi0E97jriF07NNTB5pEJPwQCRQt0bq5rW4=
+      secure: e6hb1sp1y+ZLkwgK7cR++FLrRyM++mB1R+4VM3CI/qYbdN0A+n5swNzSSfb4FUP/n6i/3cbAN+lhJa5+9goUNg6pacjht42gCSchUkW+FPUS+LbKR2MKCBVBBbOrMa+5ZL3/0Yl+/xVzfLRFJVUc8TGMpEvKwnoPkiJhz+uGYDHLKKnRT6zsaSsJzDDCuQihBgKvF8lKooYZHUczglBTN8bqWDhoA7ZFxOf1kf8TBdE3P+BzcbOb+f22uO20sqAPcLkDbNFrJ3NjgZf+w3tZmIH4YNOje4dsWzXSagHelXO8+VGwuH0AIHglIJfp0LpD03ZMU+3dblVgtcDv/56URtPIOQ2pjUjheGtxX2khzP52WIvQtmaYZnEr/mSOY4WRc60z9Kw2GMiGEnD42CjYmbbH4cbXeacgTCPaxMKytdpydIkYFEG5O5sEli4/+tUMjRS1+s23dIqrmmrO53GSbO0RJAVZZqXIaOuqP3BVKksWiq7wN5ZH3jvlvz3/1SuOLOWndMfZx/YE6BCmzfKRGkXHkdMXbdw/wQTwvLDQkztgMkTaZlt47nI7yssZIs9QEvJB0yCcMxweF4dVbkHA+6z/Txam0ETVcZ39gRd2SPHOCgyRKlm7mNpkqY72w08MR8ozEdgF4RzG9MLBHbpPn/QtRzHvdEz5zRBhUa2jiHc=
     on_success: never
     on_failure: always
 branches:
   only:
   - master
+  - qa
