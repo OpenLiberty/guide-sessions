@@ -39,7 +39,7 @@ On the internet, the web server doesn't know who you are, or what you do,
 because it's just processing stateless HTTP requests. A session is a way to store 
 information to be used across multiple requests.
 Session variables store user information like username, or items in a shopping cart.
- By default, session variables will time out after 30 minutes of being unused.
+ By default, session variables will timeout after 30 minutes of being unused.
 Cookies, which also store user
 information, are maintained on a client's computer, whereas session variables are maintained on a web server. For security reasons, using
 session is preferred over using cookies for sensitive data. Session hides data
@@ -61,7 +61,7 @@ image::sessionCache.png[Session Cache,width=100%]
 To demonstrate how HTTP session data can be shared in multiple instances of the same application, 
 this guide shows you how to build an application that uses session data, containerizes the application, and runs it in 
 a local Kubernetes cluster. 
-You'll also learn about the Open Liberty `sessionCache` feature to persist HTTP sessions using JCache and understand that the session data can be shared among pods inside the Kubernetes cluster.
+You'll also learn about the Open Liberty `sessionCache` feature to persist HTTP sessions using JCache, the standard caching API for Java,  and understand that the session data can be shared among pods inside the Kubernetes cluster.
 
 // *Application Containerization* +
 Application containerization is to bundle an application with all of its required libraries,
@@ -88,7 +88,7 @@ include::{common-includes}/gitclone.adoc[]
 
 == Creating the application
 
-The application that you'll be working with is a shopping cart web service. 
+The application that you’ll be working with is a shopping cart web service which uses `jaxrs` which is a Java API for building RESTful web services.
 You'll learn how to persist a user's shopping cart data between servers using the
 `sessionCache` feature in Open Liberty. The `sessionCache` feature persists HTTP
 sessions using JCache. You can have high-performance HTTP session persistence
