@@ -59,7 +59,7 @@ and also helps in failover situations by distributing the cache.
 image::sessionCache.png[Session Cache,width=100%]
 
 To demonstrate how HTTP session data can be shared in multiple instances of the same application, 
-this guide will show you how to build an application using session data, containerize the application, and run it in 
+this guide shows you how to build an application that uses session data, containerizes the application, and runs it in 
 a local Kubernetes cluster. 
 You'll also learn about the Open Liberty `sessionCache` feature to persist HTTP sessions using JCache and understand that the session data can be shared among pods inside the Kubernetes cluster.
 
@@ -69,7 +69,7 @@ dependencies, and configuration files, so that it can run in any containerizatio
 such as https://www.docker.com/[Docker^], where it can be deployed to Kubernetes.
 
 // *Kubernetes* +
-Kubernetes is an open source container orchestrator that automates many tasks involved in deploying, 
+Kubernetes is an open source container orchestrator that automates many tasks that are involved in deploying, 
 managing, and scaling containerized applications. If you would like to learn more about Kubernetes, 
 check out the https://openliberty.io/guides/kubernetes-intro.html[Deploying microservices to Kubernetes guide^].
 
@@ -107,7 +107,7 @@ CartApplication.java
 include::finish/src/main/java/io/openliberty/guides/cart/CartApplication.java[]
 ----
 
-The [hotspot file=0]`CartApplication` class extends the generic JAX-RS application class needed to run the
+The [hotspot file=0]`CartApplication` class extends the generic JAX-RS application class that is needed to run the
 application.
 
 [role="code_command hotspot file=1", subs="quotes"]
@@ -144,7 +144,7 @@ A response is then built and returned to confirm that an item has been added to 
 
 The [hotspot=endpointCart file=1] `cart` endpoint demonstrates how to get session data.
 The [hotspot=getCart file=1]`getCart` method will get the current session, iterate through all key-value
-pairs stored in the current session, and create a `JsonObject` response that is returned
+pairs that are stored in the current session, and create a `JsonObject` response that is returned
 to confirm the server instance by [hotspot=podname file=1]`pod-name`, the session by [hotspot=sessionid file=1]`session-id`, 
 and the items in your cart by [hotspot=cart file=1]`cart`.
 
@@ -225,7 +225,7 @@ In the [hotspot file=0]`server.xml` file, a reference to the Hazelcast configura
 the [hotspot=httpSessionCache file=0]`httpSessionCache` tag. When the maven build is run,
 the [hotspot file=1]`hazelcast-config.xml` file is copied to the predefined `{shared.resource.dir}` directory.
 
-There are more configuration settings you can explore in the
+There are more configuration settings that you can explore in the
 https://docs.hazelcast.org/docs/latest/manual/html-single/#understanding-configuration[Hazelcast Documentation^].
 
 
@@ -248,17 +248,17 @@ Next, run the Maven `liberty:start-server` goal to start an Open Liberty server 
 mvn liberty:start-server
 ```
 
-Point your browser to the link:http://localhost:9080/openapi/ui/[^] URL. This will
-display the available REST endpoints.
+Point your browser to the link:http://localhost:9080/openapi/ui/[^] URL. This 
+displays the available REST endpoints.
 
 First, make a POST request to `/cart/{item}&{price}` by expanding the POST
 endpoint on the UI and clicking the `Try it out` button.
-The POST request will add a user specified item and price to a session
+The POST request adds a user specified item and price to a session
 that represents data in a user's cart.
 
 Then, make a GET request to `/cart` by expanding the GET
 endpoint on the UI and clicking the `Try it out` button. The GET request
-will return a pod-name, a session id, and all the items from your session.
+returns a pod-name, a session id, and all the items from your session.
 
 After you're done checking out the application, stop the Open Liberty server.
 
@@ -329,17 +329,17 @@ cart-deployment-98f4ff789-6rvfj  1/1    Running  0         17s
 cart-deployment-98f4ff789-qrh45  1/1    Running  0         17s
 ----
 
-Point your browser to the link:http://localhost:31000/openapi/ui/[^] URL. This will
-display the available REST endpoints.
+Point your browser to the link:http://localhost:31000/openapi/ui/[^] URL. This
+displays the available REST endpoints.
 
 Make a POST request to `/cart/{item}&{price}` by expanding the POST
 endpoint on the UI and clicking the `Try it out` button.
-The POST request will add a user specified item and price to a session
+The POST request adds a user specified item and price to a session
 that represents data in a user's cart.
 
 Then, make a GET request to `/cart` by expanding the GET
 endpoint on the UI and clicking the `Try it out` button. The GET request
-will return a pod-name, a session id, and all the items from your session.
+returns a pod-name, a session id, and all the items from your session.
 [role="no_copy"]
 ----
 {
@@ -363,7 +363,7 @@ Repeat the GET request. You'll see the `session-id` should be same
 but the `pod-name` is different because the same session data is sharing 
 among those pods.
 
-Verify the Hazelcast cluster is running by checking the Open Liberty log. 
+Verify that the Hazelcast cluster is running by checking the Open Liberty log. 
 Run the following command:
 [role='command']
 ```
