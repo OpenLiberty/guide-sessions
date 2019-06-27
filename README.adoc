@@ -142,7 +142,7 @@ The [hotspot=addToCart file=1]`addToCart` method gets the current [hotspot=getSe
 the key-value pair `{item}:{price}` into the session by [hotspot=setAttribute file=1]`setAttribute()`. 
 A response is then built and returned to confirm that an item has been added to your cart and session.
 
-The [hotspot=endpointCart file=1] `cart` endpoint demonstrates how to get session data.
+The [hotspot=endpointCart file=1]`cart` endpoint demonstrates how to get session data.
 The [hotspot=getCart file=1]`getCart` method will get the current session, iterate through all key-value
 pairs that are stored in the current session, and create a `JsonObject` response that is returned
 to confirm the server instance by [hotspot=podname file=1]`pod-name`, the session by [hotspot=sessionid file=1]`session-id`, 
@@ -205,7 +205,7 @@ By default, all Open Liberty servers running [hotspot=sessionCache file=0]`sessi
 and Hazelcast will be connected using a peer-to-peer model.
 
 You can limit the session cache being shared only among certain Hazelcast instances 
-through the `<group/>` configuration tag in Hazelcast configuration file.
+through the [hotspot=group file=1]`<group/>` configuration tag in Hazelcast configuration file.
 
 [role="code_command hotspot file=1", subs="quotes"]
 ----
@@ -219,7 +219,7 @@ hazelcast-config.xml
 include::finish/src/main/liberty/config/hazelcast-config.xml[]
 ----
 
-The cluster group [hotspot=group file=1]`CartCluster` is defined in the `hazelcast-config.xml`.
+The cluster group [hotspot=cartCluster file=1]`CartCluster` is defined in the `hazelcast-config.xml`.
 
 In the [hotspot file=0]`server.xml` file, a reference to the Hazelcast configuration file is made by using
 the [hotspot=httpSessionCache file=0]`httpSessionCache` tag. When the maven build is run,

@@ -16,7 +16,9 @@
        https://hazelcast.com/schema/config/hazelcast-config.xsd">
     <!-- tag::group[] -->
     <group>
+    <!-- tag::cartCluster[] -->
         <name>CartCluster</name>
+    <!-- end::cartCluster[] -->
     </group>
     <!-- end::group[] -->
 </hazelcast>
