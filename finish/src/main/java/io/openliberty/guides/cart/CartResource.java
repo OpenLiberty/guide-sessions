@@ -107,6 +107,6 @@ public class CartResource {
         String hostname = System.getenv("HOSTNAME");
         if (hostname == null)
         	hostname = "localhost";
-		    return hostname;
+        	return hostname;
     }
 }
