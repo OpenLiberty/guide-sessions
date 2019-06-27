@@ -12,7 +12,7 @@
 :page-releasedate: 2019-07-01
 :page-description: Learn how to cache HTTP session data that is shared among pods inside Kubernetes cluster.
 :guide-author: Open Liberty
-:page-tags: ['Java EE']
+:page-tags: ['Java EE', 'Docker', 'Microprofile']
 :page-related-guides: ['rest-intro', 'microprofile-openapi', 'kubernetes-intro']
 :page-permalink: /guides/{projectid}
 :page-search-keywords: ['sessions', 'session persistence', 'sessionCache', 'Hazelcast', 'JCache']
@@ -61,9 +61,9 @@ image::sessionCache.png[Session Cache,width=100%]
 To demonstrate how HTTP session data can be shared in multiple instances of the same application, 
 this guide shows you how to build an application that uses session data, containerizes the application, and runs it in 
 a local Kubernetes cluster. 
-You'll also learn about the Open Liberty `sessionCache` feature to persist HTTP sessions using JCache, the standard caching API for Java,  and understand that the session data can be shared among pods inside the Kubernetes cluster.
+You'll also learn about the Open Liberty `sessionCache` feature to persist HTTP sessions using JCache, the standard caching API for Java,  and understand that the session data can be shared among pods inside the Kubernetes cluster.
 
-// *Application Containerization* +
+// *Application Containerization* 
 Application containerization is to bundle an application with all of its required libraries,
 dependencies, and configuration files, so that it can run in any containerization ecosystem, 
 such as https://www.docker.com/[Docker^], where it can be deployed to Kubernetes.
@@ -359,7 +359,7 @@ after replacing the `[pod-name]`:
 kubectl exec -it [pod-name] /opt/ol/wlp/bin/server pause defaultServer
 ```
 
-Repeat the GET request. You'll see the `session-id` should be same 
+Repeat the GET request. You'll see the `session-id` should be the same 
 but the `pod-name` is different because the same session data is sharing 
 among those pods.
 
