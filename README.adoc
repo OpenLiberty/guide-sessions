@@ -64,11 +64,13 @@ a local Kubernetes cluster.
 You'll also learn about the Open Liberty `sessionCache` feature to persist HTTP sessions using JCache, the standard caching API for Java,  and understand that the session data can be shared among pods inside the Kubernetes cluster.
 
 // *Application Containerization* 
+You'll learn about Application Containerization. 
 Application containerization is to bundle an application with all of its required libraries,
 dependencies, and configuration files, so that it can run in any containerization ecosystem, 
 such as https://www.docker.com/[Docker^], where it can be deployed to Kubernetes.
 
 // *Kubernetes* +
+Finally, you'll learn about Kubernetes.
 Kubernetes is an open source container orchestrator that automates many tasks that are involved in deploying, 
 managing, and scaling containerized applications. If you would like to learn more about Kubernetes, 
 check out the https://openliberty.io/guides/kubernetes-intro.html[Deploying microservices to Kubernetes guide^].
