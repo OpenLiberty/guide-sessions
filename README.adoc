@@ -65,13 +65,12 @@ this guide shows you how to build an application that uses session data, contain
 a local Kubernetes cluster. 
 You'll also learn about the Open Liberty `sessionCache` feature to persist HTTP sessions using JCache, the standard caching API for Java,  and understand that the session data can be shared among pods inside the Kubernetes cluster.
 
-=== What is application containerization?
 // *Application Containerization* 
+You will learn about application containerization because the session caching model that will be demonstrated focuses on connectivity between servers. 
 Application containerization is to bundle an application with all of its required libraries,
 dependencies, and configuration files, so that it can run in any containerization ecosystem, 
 such as https://www.docker.com/[Docker^], where it can be deployed to Kubernetes.
 
-=== What is Kubernetes?
 // *Kubernetes* +
 Kubernetes is an open source container orchestrator that automates many tasks that are involved in deploying, 
 managing, and scaling containerized applications. If you would like to learn more about Kubernetes, 
