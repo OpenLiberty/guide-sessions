@@ -158,7 +158,7 @@ and the items in your cart by [hotspot=cart file=1]`cart`.
 
 Session caching is only valuable when it's connected to at least
 one other member. There are two different ways session caching can behave in a
-server environment:
+cluster environment:
 
 * Client-Server Model: A Liberty server can act as the JCache client and connect
 to a dedicated JCache server.
