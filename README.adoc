@@ -33,6 +33,7 @@ Learn how to create and work with HTTP session data that is shared among pods in
 // Introduction
 // =================================================================================================
 == What you'll learn
+
 === What is a session?
 // *Session* +
 On the internet, the web server doesn't know who you are, or what you do, 
@@ -45,6 +46,7 @@ information, are maintained on a client's computer, whereas session variables ar
 session is preferred over using cookies for sensitive data. Session hides data
 from users. Cookies can be manipulated by a
 savvy user to make fake requests to your site.
+
 === What is session caching?
 // *Session caching* +
 High traffic websites must support thousands of users in a fast and reliable way.
@@ -62,11 +64,13 @@ To demonstrate how HTTP session data can be shared in multiple instances of the 
 this guide shows you how to build an application that uses session data, containerizes the application, and runs it in 
 a local Kubernetes cluster. 
 You'll also learn about the Open Liberty `sessionCache` feature to persist HTTP sessions using JCache, the standard caching API for Java,  and understand that the session data can be shared among pods inside the Kubernetes cluster.
+
 === What is application containerization?
 // *Application Containerization* 
 Application containerization is to bundle an application with all of its required libraries,
 dependencies, and configuration files, so that it can run in any containerization ecosystem, 
 such as https://www.docker.com/[Docker^], where it can be deployed to Kubernetes.
+
 === What is Kubernetes?
 // *Kubernetes* +
 Kubernetes is an open source container orchestrator that automates many tasks that are involved in deploying, 
