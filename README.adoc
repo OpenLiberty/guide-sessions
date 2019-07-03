@@ -162,7 +162,7 @@ to a dedicated JCache server.
 that are also running with the session cache and configured to be
 part of the same cluster.
 
-You'll use the peer-to-peer model for this guide.
+You'll use the peer-to-peer model for this guide with Kubernetes as this model is focused on connectivity between servers. 
 
 === Configuring Session Persistence with JCache in Open Liberty
 
