@@ -33,7 +33,7 @@ Learn how to create and work with HTTP session data that is shared among pods in
 // Introduction
 // =================================================================================================
 == What you'll learn
-
+=== What is a session?
 // *Session* +
 On the internet, the web server doesn't know who you are, or what you do, 
 because it's just processing stateless HTTP requests. A session is a way to store 
@@ -45,7 +45,7 @@ information, are maintained on a client's computer, whereas session variables ar
 session is preferred over using cookies for sensitive data. Session hides data
 from users. Cookies can be manipulated by a
 savvy user to make fake requests to your site.
-
+=== What is session caching?
 // *Session caching* +
 High traffic websites must support thousands of users in a fast and reliable way.
 Load balancing requires running several instances of the same application in parallel
@@ -62,15 +62,13 @@ To demonstrate how HTTP session data can be shared in multiple instances of the 
 this guide shows you how to build an application that uses session data, containerizes the application, and runs it in 
 a local Kubernetes cluster. 
 You'll also learn about the Open Liberty `sessionCache` feature to persist HTTP sessions using JCache, the standard caching API for Java,  and understand that the session data can be shared among pods inside the Kubernetes cluster.
-
+=== What is application containerization?
 // *Application Containerization* 
-You'll learn about Application Containerization. 
 Application containerization is to bundle an application with all of its required libraries,
 dependencies, and configuration files, so that it can run in any containerization ecosystem, 
 such as https://www.docker.com/[Docker^], where it can be deployed to Kubernetes.
-
+=== What is Kubernetes?
 // *Kubernetes* +
-Finally, you'll learn about Kubernetes.
 Kubernetes is an open source container orchestrator that automates many tasks that are involved in deploying, 
 managing, and scaling containerized applications. If you would like to learn more about Kubernetes, 
 check out the https://openliberty.io/guides/kubernetes-intro.html[Deploying microservices to Kubernetes guide^].
@@ -190,7 +188,7 @@ server.xml
 include::finish/src/main/liberty/config/server.xml[]
 ----
 
-The [hotspot=library]`library` tag lets the server know where the Hazelcast implementation of
+The [hotspot=library]`<library />` tag lets the server know where the Hazelcast implementation of
 JCache is located by including a library reference. When the maven build is run,
 the [hotspot=hazelcastjar]`hazelcast.jar` file is downloaded as a dependency and then copied to the
 predefined `{shared.resource.dir}` directory.
@@ -207,7 +205,7 @@ By default, all Open Liberty servers running [hotspot=sessionCache file=0]`sessi
 and Hazelcast will be connected using a peer-to-peer model.
 
 You can limit the session cache being shared only among certain Hazelcast instances 
-through the [hotspot=group file=1]`<group/>` configuration tag in Hazelcast configuration file.
+through the [hotspot=group file=1]`<group />` configuration tag in Hazelcast configuration file.
 
 [role="code_command hotspot file=1", subs="quotes"]
 ----
@@ -221,7 +219,7 @@ hazelcast-config.xml
 include::finish/src/main/liberty/config/hazelcast-config.xml[]
 ----
 
-The cluster group [hotspot=cartCluster file=1]`CartCluster` is defined in the `hazelcast-config.xml`.
+The cluster group [hotspot=cartCluster file=1]`CartCluster` is defined in the [hotspot  file=1]`hazelcast-config.xml`.
 
 In the [hotspot file=0]`server.xml` file, a reference to the Hazelcast configuration file is made by using
 the [hotspot=httpSessionCache file=0]`httpSessionCache` tag. When the maven build is run,
