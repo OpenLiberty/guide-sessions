@@ -12,7 +12,7 @@
 :page-releasedate: 2019-07-01
 :page-description: Learn how to cache HTTP session data that is shared among pods inside Kubernetes cluster.
 :guide-author: Open Liberty
-:page-tags: ['Java EE', 'Docker', 'Microprofile']
+:page-tags: ['Docker', 'Microprofile']
 :page-related-guides: ['rest-intro', 'microprofile-openapi', 'kubernetes-intro']
 :page-permalink: /guides/{projectid}
 :page-search-keywords: ['sessions', 'session persistence', 'sessionCache', 'Hazelcast', 'JCache']
