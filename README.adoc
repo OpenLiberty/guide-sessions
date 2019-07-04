@@ -34,19 +34,7 @@ Learn how to create and work with HTTP session data that is shared among pods in
 // =================================================================================================
 == What you'll learn
 
-=== What is containerization?
-Application containerization is to bundle an application with all of its required libraries,
-dependencies, and configuration files, so that it can run in any containerization ecosystem, 
-such as https://www.docker.com/[Docker^], where it can be deployed to Kubernetes.
-
-=== What is kubernetes?
-Kubernetes is an open source container orchestrator that automates many tasks that are involved in deploying, 
-managing, and scaling containerized applications. If you would like to learn more about Kubernetes, 
-check out the https://openliberty.io/guides/kubernetes-intro.html[Deploying microservices to Kubernetes guide^].
-
-When your application runs in the Kubernetes cluster environment, the application session data has to be in-sync among all instances. 
-Even if an application instance is down, the other instances can work and handle the session from the same user connection.
-
+=== What is a session?
 // *Session* +
 On the internet, the web server doesn't know who you are, or what you do, 
 because it's just processing stateless HTTP requests. A session is a way to store 
@@ -59,6 +47,7 @@ session is preferred over using cookies for sensitive data. Session hides data
 from users. Cookies can be manipulated by a
 savvy user to make fake requests to your site.
 
+=== What is session persistence? 
 // *Session caching* +
 High traffic websites must support thousands of users in a fast and reliable way.
 Load balancing requires running several instances of the same application in parallel
@@ -73,18 +62,10 @@ image::sessionCache.png[Session Cache,width=100%]
 
 To demonstrate how HTTP session data can be shared in multiple instances of the same application, 
 this guide shows you how to build an application that uses session data, containerizes the application, and runs it in 
-a local Kubernetes cluster. 
-You'll also learn about the Open Liberty `sessionCache` feature to persist HTTP sessions using JCache, the standard caching API for Java,  and understand that the session data can be shared among pods inside the Kubernetes cluster.
+a local Kubernetes cluster. When your application runs in the Kubernetes cluster environment, the application session data has to be in-sync among all instances. 
+Even if an application instance is down, the other instances can work and handle the session from the same user connection.
 
-// *Application Containerization* 
-You will learn about application containerization because the session caching model that will be demonstrated focuses on connectivity between servers. 
-Application containerization is to bundle an application with all of its required libraries,
-dependencies, and configuration files, so that it can run in any containerization ecosystem, 
-such as https://www.docker.com/[Docker^], where it can be deployed to Kubernetes.
-// *Kubernetes* +
-Kubernetes is an open source container orchestrator that automates many tasks that are involved in deploying, 
-managing, and scaling containerized applications. If you would like to learn more about Kubernetes, 
-check out the https://openliberty.io/guides/kubernetes-intro.html[Deploying microservices to Kubernetes guide^].
+You'll also learn about the Open Liberty `sessionCache` feature to persist HTTP sessions using JCache, the standard caching API for Java,  and understand that the session data can be shared among pods inside the Kubernetes cluster.
 
 
 // =================================================================================================
