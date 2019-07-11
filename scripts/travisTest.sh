@@ -7,7 +7,7 @@ set -euxo pipefail
 ##
 ##############################################################################
 
-mvn -q package
+mvn -q install
 
 docker build -t cart-app:1.0-SNAPSHOT .
 
