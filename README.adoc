@@ -265,7 +265,7 @@ mvn liberty:stop-server
 The first step of deploying the application to Kubernetes is to containerize it with Docker.
 
 The Dockerfile is provided at the start directory. If you're unfamiliar with Dockerfile, 
-check out the https://openliberty.io/guides/docker.html[Using Docker containers to develop microservices^] guide,
+check out the https://openliberty.io/guides/microservices-docker.html[Containerizing microservices^] guide,
 which covers Dockerfile in depth.
 
 Navigate to the `start` directory and run the following command:
