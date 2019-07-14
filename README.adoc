@@ -334,7 +334,7 @@ Point your browser to the link:http://localhost:31000/openapi/ui/[^] URL. This
 displays the available REST endpoints.
 
 Make a POST request to `/cart/{item}&{price}` by expanding the POST
-endpoint on the UI and clicking the `Try it out` button.
+endpoint on the UI, providing an item and a price, and then clicking the `Try it out` button.
 The POST request adds a user specified item and price to a session
 that represents data in a user's cart.
 
