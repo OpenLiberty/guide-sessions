@@ -10,7 +10,7 @@
 :projectid: sessions
 :page-duration: 25 minutes
 :page-releasedate: 2019-07-18
-:page-description: Learn how to create, use and cache HTTP session data
+:page-description: Learn how to create, use and cache HTTP session data.
 :guide-author: Open Liberty
 :page-tags: ['Docker', 'MicroProfile']
 :page-related-guides: ['rest-intro', 'microprofile-openapi', 'kubernetes-intro']
@@ -22,7 +22,7 @@
 :page-seo-description: A tutorial on how to create, use and cache HTTP session data for an enterprise Java application 
 = Caching HTTP session data
 
-Learn how to create, use and cache HTTP session data for your application
+Learn how to create, use and cache HTTP session data for your application.
 
 :kube: Kubernetes
 :win: WINDOWS
