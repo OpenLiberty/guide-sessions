@@ -250,12 +250,14 @@ Point your browser to the link:http://localhost:9080/openapi/ui/[^] URL. This
 displays the available REST endpoints.
 
 First, make a POST request to `/cart/{item}&{price}` by expanding the POST
-endpoint on the UI, providing an item and a price, and then clicking the `Try it out` button.
+endpoint on the UI, clicking the `Try it out` button, providing an item and a price, 
+and then clicking the `Execute` button.
 The POST request adds a user specified item and price to a session
 that represents data in a user's cart.
 
 Then, make a GET request to `/cart` by expanding the GET
-endpoint on the UI and clicking the `Try it out` button. The GET request
+endpoint on the UI, clicking the `Try it out` button, 
+and then clicking the `Execute` button. The GET request
 returns a pod name, a session id, and all the items from your session.
 
 After you're done checking out the application, stop the Open Liberty server.
@@ -334,13 +336,14 @@ Point your browser to the link:http://localhost:31000/openapi/ui/[^] URL. This
 displays the available REST endpoints.
 
 Make a POST request to `/cart/{item}&{price}` by expanding the POST
-endpoint on the UI, providing an item and a price, and then clicking the `Try it out` button.
+endpoint on the UI, clicking the `Try it out` button, providing an item and a price, 
+and then clicking the `Execute` button.
 The POST request adds a user specified item and price to a session
 that represents data in a user's cart.
 
 Then, make a GET request to `/cart` by expanding the GET
-endpoint on the UI and clicking the `Try it out` button. The GET request
-returns a pod name, a session id, and all the items from your session.
+endpoint on the UI, clicking the `Try it out` button, and then clicking the `Execute` button.
+The GET request returns a pod name, a session id, and all the items from your session.
 
 [role="no_copy"]
 ----
