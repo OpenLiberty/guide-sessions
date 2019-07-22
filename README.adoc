@@ -9,7 +9,7 @@
 :page-layout: guide-multipane
 :projectid: sessions
 :page-duration: 25 minutes
-:page-releasedate: 2019-07-18
+:page-releasedate: 2019-07-23
 :page-description: Learn how to create, use and cache HTTP session data.
 :guide-author: Open Liberty
 :page-tags: ['Docker', 'MicroProfile']
@@ -43,7 +43,7 @@ Session variables store user information like user name or items in a shopping c
 By default, session variables will timeout after 30 minutes of being unused.
 Cookies, which also store user information, are maintained on a client's computer,
 whereas session variables are maintained on a web server. For security reasons,
-an HTTP session is preferred over cookies when use with sensitive data.
+an HTTP session is preferred over cookies when used with sensitive data.
 A session hides data from users.
 Cookies can be manipulated by a savvy user to make fake requests to your site.
 
