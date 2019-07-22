@@ -421,7 +421,7 @@ include::{common-includes}/kube-minikube-teardown.adoc[]
 
 == Great work! You're done!
 
-You created, used, and cached HTTP session data for an application that was running on Open Liberty server
+You have created, used, and cached HTTP session data for an application that was running on Open Liberty server
 and deployed in a Kubernetes cluster.
 
 
