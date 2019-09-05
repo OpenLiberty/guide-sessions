@@ -16,7 +16,7 @@
 :page-related-guides: ['rest-intro', 'microprofile-openapi', 'kubernetes-intro']
 :page-permalink: /guides/{projectid}
 :page-search-keywords: ['sessions', 'session persistence', 'sessionCache', 'Hazelcast', 'JCache']
-:common-includes: https://raw.githubusercontent.com/OpenLiberty/guides-common/master
+:common-includes: ../guides-common/
 :imagesdir: /img/guide
 :page-seo-title: Caching HTTP session data
 :page-seo-description: A tutorial on how to create, use and cache HTTP session data for an enterprise Java application
