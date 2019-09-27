@@ -103,7 +103,7 @@ Navigate to the `start` directory to begin.
 CartApplication.java
 [source, Java, linenums, indent=0, role="code_column"]
 ----
-include::finish/src/main/java/io/openliberty/guides/cart/CartApplication.java[][tags=**;!copyright;]
+include::finish/src/main/java/io/openliberty/guides/cart/CartApplication.java[tags=**;!copyright;]
 ----
 
 The [hotspot file=0]`CartApplication` class extends the generic JAX-RS application class that is needed to run the
@@ -117,7 +117,7 @@ application.
 CartResource.java
 [source, Java, linenums, indent=0, role="code_column"]
 ----
-include::finish/src/main/java/io/openliberty/guides/cart/CartResource.java[][tags=**;!copyright;]
+include::finish/src/main/java/io/openliberty/guides/cart/CartResource.java[tags=**;!copyright;]
 ----
 
 The [hotspot file=1]`CartResource` class defines the REST endpoints at which a user can make
@@ -184,7 +184,7 @@ Hazelcast after the `sessionCache` feature is enabled.
 server.xml
 [source, xml, linenums, indent=0, role="code_column"]
 ----
-include::finish/src/main/liberty/config/server.xml[][tags=**;!copyright;]
+include::finish/src/main/liberty/config/server.xml[tags=**;!copyright;]
 ----
 
 The [hotspot=library]`<library />` tag includes the library reference that indicates
@@ -198,7 +198,7 @@ provided Maven POM file.
 server.xml
 [source, xml, linenums, indent=0, role="code_column"]
 ----
-include::finish/src/main/liberty/config/server.xml[][tags=**;!copyright;]
+include::finish/src/main/liberty/config/server.xml[tags=**;!copyright;]
 ----
 
 By default, all Open Liberty servers that run the [hotspot=sessionCache file=0]`sessionCache`
@@ -216,7 +216,7 @@ by using the [hotspot=group file=1]`<group />` configuration tag in the Hazelcas
 hazelcast-config.xml
 [source, xml, linenums, indent=0, role="code_column"]
 ----
-include::finish/src/main/liberty/config/hazelcast-config.xml[][tags=**;!copyright;]
+include::finish/src/main/liberty/config/hazelcast-config.xml[tags=**;!copyright;]
 ----
 
 The cluster group [hotspot=cartCluster file=1]`CartCluster` is defined in the [hotspot file=1]`hazelcast-config.xml`.
