@@ -12,7 +12,7 @@
 :page-releasedate: 2019-07-23
 :page-description: Learn how to create, use and cache HTTP session data.
 :guide-author: Open Liberty
-:page-tags: ['Docker', 'MicroProfile']
+:page-tags: ['Docker']
 :page-related-guides: ['rest-intro', 'microprofile-openapi', 'kubernetes-intro']
 :page-permalink: /guides/{projectid}
 :page-search-keywords: ['sessions', 'session persistence', 'sessionCache', 'Hazelcast', 'JCache']
