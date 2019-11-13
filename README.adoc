@@ -182,7 +182,7 @@ Hazelcast after the `sessionCache` feature is enabled.
 ----
 
 server.xml
-[source, xml, linenums, indent=0, role="code_column hide_tags=copyright"]
+[source, xml, linenums, indent=0, role="code_column hide_tags=copyright, cloneID"]
 ----
 include::finish/src/main/liberty/config/server.xml[]
 ----
@@ -229,6 +229,19 @@ when a Maven build runs. This goal is defined in the provided Maven POM file.
 There are more configuration settings that you can explore in the
 https://docs.hazelcast.org/docs/latest/manual/html-single/#understanding-configuration[Hazelcast documentation^].
 
+=== Configuring the clone ID
+
+To ensure the persistence in using Hazelcast as the JCache provider, we can manually define the clone ID that the HTTP server plug-in uses. When using the `Liberty` server, it is good practice to manually assign the `clone ID`, since the ID is regenerated if the server is started with the `--clean` option. 
+
+The [hotspot=cloneID]`clone ID` must be unique for each server and consists of alphanumeric characters.
+
+For instance,
+----
+httpPort=9081
+cloneId=s1
+----
+
+This will ensure that the ID is stable and that that request affinity is maintained.
 
 == Building and running the application
 
