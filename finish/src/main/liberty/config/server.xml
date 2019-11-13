@@ -36,6 +36,13 @@
     </library>
     <!-- end::library[] -->
 
+    <httpSessionCache libraryRef="jCacheVendorLib"
+                    uri="file:${shared.resource.dir}/hazelcast/hazelcast.xml"/>
+    <!-- tag::cloneID[] -->
+    <httpSession cloneId="${cloneId}"/>
+    <!-- end::cloneID[] -->
+    <application location="${shared.app.dir}/test.ear"/>
+
     <webApplication location="cart-app.war" contextRoot="${app.context.root}" />
 
 </server>
