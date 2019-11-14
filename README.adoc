@@ -233,8 +233,6 @@ https://docs.hazelcast.org/docs/latest/manual/html-single/#understanding-configu
 
 To ensure the persistence in using Hazelcast as the JCache provider, we can manually define the clone ID that the HTTP server plug-in uses. When using the `Liberty` server, it is good practice to manually assign the `clone ID`, since the ID is regenerated if the server is started with the `--clean` option. 
 
-The [hotspot=cloneID]`clone ID` must be unique for each server and consists of alphanumeric characters. You can modify the [hotspot=bootstrapProperties]`<bootstrap.properties\>` in the [hotspot file=2]`pom.xml` to add the required vairables in order to manually declare the cloneID. 
-
 [role="code_command hotspot file=2", subs="quotes"]
 ----
 #Update the `pom.xml` file.#
@@ -242,10 +240,12 @@ The [hotspot=cloneID]`clone ID` must be unique for each server and consists of a
 ----
 
 pom.xml
-[source, xml, linenums, indent=0, role="code_column hide_tags=copyright"]
+[source, xml, linenums, role="code_column"]
 ----
 include::start/pom.xml[]
 ----
+
+The [hotspot=cloneID file=1]`clone ID` must be unique for each server and consists of alphanumeric characters. You can modify the [hotspot=bootstrapProperties file=2]`<bootstrap.properties\>` in the [hotspot file=2]`pom.xml` to add the required vairables in order to manually declare the cloneID. 
 
 For instance,
 ----
