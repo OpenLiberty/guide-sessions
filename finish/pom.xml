@@ -238,11 +238,13 @@
                     <configFile>src/main/liberty/config/server.xml</configFile>
                     <packageFile>${package.file}</packageFile>
                     <include>${packaging.type}</include>
+                    <!-- tag::bootstrapProperties[] -->
                     <bootstrapProperties>
                         <app.context.root>${warContext}</app.context.root>
                         <default.http.port>${testServerHttpPort}</default.http.port>
                         <default.https.port>${testServerHttpsPort}</default.https.port>
                     </bootstrapProperties>
+                    <!-- end::bootstrapProperties[] -->
                 </configuration>
                 <executions>
                     <execution>
