@@ -35,6 +35,9 @@
         <!-- end::hazelcastjar[] -->
     </library>
     <!-- end::library[] -->
+    <!-- tag::cloneID[] -->
+    <httpSession cloneId="${cloneId}"/>
+    <!-- end::cloneID[] -->
 
     <webApplication location="cart-app.war" contextRoot="${app.context.root}" />
 

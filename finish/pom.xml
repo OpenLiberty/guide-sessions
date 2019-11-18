@@ -12,6 +12,7 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
 
+    <!-- tag:: Properties[] -->
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -31,9 +32,15 @@
         <warContext>${app.name}</warContext>
         <package.file>${project.build.directory}/${app.name}.tar.gz</package.file>
         <packaging.type>usr</packaging.type>
+        <!-- tag::port-property[] -->
         <testServerHttpPort>9080</testServerHttpPort>
         <testServerHttpsPort>9443</testServerHttpsPort>
+        <!-- end::port-property[] -->
+        <!-- tag::cloneId-property[] -->
+        <testcloneID>s1</testcloneID>
+        <!-- end::cloneId-property[] -->
     </properties>
+    <!-- end::Properties[] -->
 
     <dependencyManagement>
         <dependencies>
@@ -238,11 +245,14 @@
                     <configFile>src/main/liberty/config/server.xml</configFile>
                     <packageFile>${package.file}</packageFile>
                     <include>${packaging.type}</include>
+                    <!-- tag::bootstrapProperties[] -->
                     <bootstrapProperties>
                         <app.context.root>${warContext}</app.context.root>
                         <default.http.port>${testServerHttpPort}</default.http.port>
                         <default.https.port>${testServerHttpsPort}</default.https.port>
+                        <cloneId>${cloneId}</cloneId>
                     </bootstrapProperties>
+                    <!-- end::bootstrapProperties[] -->
                 </configuration>
                 <executions>
                     <execution>

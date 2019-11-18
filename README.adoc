@@ -182,7 +182,7 @@ Hazelcast after the `sessionCache` feature is enabled.
 ----
 
 server.xml
-[source, xml, linenums, indent=0, role="code_column hide_tags=copyright"]
+[source, xml, linenums, indent=0, role="code_column hide_tags=copyright,cloneID"]
 ----
 include::finish/src/main/liberty/config/server.xml[]
 ----
@@ -229,6 +229,38 @@ when a Maven build runs. This goal is defined in the provided Maven POM file.
 There are more configuration settings that you can explore in the
 https://docs.hazelcast.org/docs/latest/manual/html-single/#understanding-configuration[Hazelcast documentation^].
 
+=== Configuring the clone ID
+
+server.xml
+[source, xml, linenums, indent=0, role='code_column hide_tags=copyright']
+----
+include::finish /src/main/liberty/config/server.xml
+----
+
+To ensure the persistence in using Hazelcast as the JCache provider, we can manually define the clone ID that the HTTP server plug-in uses. When using the `Liberty` server, it is good practice to manually assign the `clone ID`, since the ID is regenerated if the server is started with the `--clean` option. 
+
+[role="code_command hotspot file=0", subs="quotes"]
+----
+#Update the `pom.xml` file.#
+`start/pom.xml`
+----
+
+pom.xml
+[source, xml, linenums, indent=0, role='code_column']
+----
+include::finish/pom.xml[]
+----
+
+The [hotspot=cloneID file=1]`clone ID` must be unique for each server and consists of alphanumeric characters. Notice the `cloneId` variable in the [hotspot=bootstrapProperties file=0]`<bootstrap.properties\>`, located in the [hotspot file=0]`pom.xml`. Refer to the [hotspot=Properties]`<Properties/>` to section manually declare the cloneID.  `cloneId`, and other properties, such as the port number; [hotspot=cloneId-property[] file=0]`cloneId` and the [hotspot=port-property]`port number`, respectivley. 
+
+For instance,
+[source, role="no copy"]
+----
+httpPort=9081
+cloneId=s1
+----
+
+This will ensure that the ID is stable and that that request affinity is maintained.
 
 == Building and running the application
 
