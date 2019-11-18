@@ -251,7 +251,7 @@ pom.xml
 include::finish/pom.xml[]
 ----
 
-The [hotspot=cloneID file=0]`clone ID` must be unique for each server and consists of alphanumeric characters. Notice the `cloneId` variable in the [hotspot=bootstrapProperties file=1]`<bootstrap.properties\>`, located in the [hotspot file=1]`pom.xml`. Refer to the [hotspot=Properties file=1]`<Properties/>` to section manually declare the cloneID.  `cloneId`, and other properties, such as the port number; [hotspot=cloneId-property file=1]`cloneId` and the [hotspot=port-property file=1]`port number`, respectivley. 
+The [hotspot=cloneID file=0]`clone ID` must be unique for each server and consists of alphanumeric characters. Notice the `cloneId` configured in the [hotspot=bootstrapProperties file=1]`<bootstrap.properties\>`, located in the [hotspot file=1]`pom.xml`. Refer to the [hotspot=Properties file=1]`<Properties/>` to section manually declare the cloneID.  `cloneId`, and other properties, such as the port number; [hotspot=cloneId-property file=1]`cloneId` and the [hotspot=port-property file=1]`port number`, respectivley. 
 
 For instance,
 [source, role="no copy"]
