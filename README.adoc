@@ -229,7 +229,7 @@ when a Maven build runs. This goal is defined in the provided Maven POM file.
 There are more configuration settings that you can explore in the
 https://docs.hazelcast.org/docs/latest/manual/html-single/#understanding-configuration[Hazelcast documentation^].
 
-=== Configuring the clone ID
+== Configuring the clone ID
 
 server.xml
 [source, xml, linenums, indent=0, role="code_column hide_tags=copyright"]
@@ -250,17 +250,12 @@ pom.xml
 ----
 include::finish/pom.xml[]
 ----
+[role="edit_command_text"]
+The `clone ID` must be unique for each server and consists of alphanumeric characters. Notice the `cloneId` configured in the [hotspot=bootstrapProperties file=1]`<bootstrap.properties\>`, located in the [hotspot file=1]`pom.xml`. Update the `pom.xml` to parameters of your choosing. Refer to the [hotspot=Properties file=1]`<Properties/>` section to manually declare the `cloneId`, along with other properties, such as the port number; [hotspot=cloneId-property file=1]`cloneId` and the [hotspot=port-property file=1]`port number`, respectively. 
 
-The [hotspot=cloneID file=0]`clone ID` must be unique for each server and consists of alphanumeric characters. Notice the `cloneId` configured in the [hotspot=bootstrapProperties file=1]`<bootstrap.properties\>`, located in the [hotspot file=1]`pom.xml`. Refer to the [hotspot=Properties file=1]`<Properties/>` section to manually declare the `cloneId`, along with other properties, such as the port number; [hotspot=cloneId-property file=1]`cloneId` and the [hotspot=port-property file=1]`port number`, respectivley. 
+For instance, [hotspot=cloneId-property file=1]`cloneId` can be set to `s1`, and the [hotspot=port-property file=1]`port number` can be set to `9081`.
 
-For instance,
-[source, role="no copy"]
-----
-httpPort=9081
-cloneId=s1
-----
-
-This will ensure that the ID is stable and that that request affinity is maintained.
+This will ensure that the ID is stable and that the request affinity is maintained.
 
 == Building and running the application
 
