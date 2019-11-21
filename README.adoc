@@ -237,7 +237,7 @@ server.xml
 include::finish/src/main/liberty/config/server.xml[]
 ----
 
-To ensure the persistence in using Hazelcast as the JCache provider, we can manually define the clone ID that the HTTP server plug-in uses. When using the `Liberty` server, it is good practice to manually assign the `clone ID`, since the ID is regenerated if the server is started with the `--clean` option. 
+To ensure the persistence in using Hazelcast as the JCache provider, we can define the `clone ID`. When using the Open Liberty Liberty server, it is good practice to assign the `clone ID`, as the ID can change after the scaling of pods, since the ID is regenerated if there is a server restart, or the server is started with the `--clean` option. This will also ensure to alleviate sessions pile up in Hazelcast. To learn more about the clone ID, please visit: https://www.ibm.com/support/knowledgecenter/en/SSEQTP_liberty/com.ibm.websphere.wlp.doc/ae/twlp_admin_session_persistence_jcache.html
 
 [role="code_command hotspot file=0", subs="quotes"]
 ----
@@ -251,7 +251,7 @@ pom.xml
 include::finish/pom.xml[]
 ----
 [role="edit_command_text"]
-The `clone ID` must be unique for each server and consists of alphanumeric characters. Notice the `cloneId` configured in the [hotspot=bootstrapProperties file=1]`<bootstrap.properties\>`, located in the [hotspot file=1]`pom.xml`. Update the `pom.xml` to parameters of your choosing. Refer to the [hotspot=Properties file=1]`<Properties/>` section to manually declare the `cloneId`, along with other properties, such as the port number; [hotspot=cloneId-property file=1]`cloneId` and the [hotspot=port-property file=1]`port number`, respectively. 
+The `clone ID` must be unique for each server and consists of alphanumeric characters. Notice the `cloneId` configured in the [hotspot=bootstrapProperties file=1]`<bootstrap.properties\>`, located in the [hotspot file=1]`pom.xml`. Update the `pom.xml` to parameters of your choosing. Refer to the [hotspot=Properties file=1]`<Properties/>` section to declare the `cloneId`, along with other properties, such as the port number; [hotspot=cloneId-property file=1]`cloneId` and the [hotspot=port-property file=1]`port number`, respectively. 
 
 For instance, [hotspot=cloneId-property file=1]`cloneId` can be set to `s2`, and the [hotspot=port-property file=1]`port number` can be set to `9081`.
 
