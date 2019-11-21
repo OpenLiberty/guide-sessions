@@ -237,7 +237,9 @@ server.xml
 include::finish/src/main/liberty/config/server.xml[]
 ----
 
-To ensure the persistence in using Hazelcast as the JCache provider, we can define the `clone ID`. When using the Open Liberty Liberty server, it is good practice to assign the `clone ID`, as the ID can change after the scaling of pods, since the ID is regenerated if there is a server restart, or the server is started with the `--clean` option. This will also ensure to alleviate sessions pile up in Hazelcast. To learn more about the clone ID, please visit: https://www.ibm.com/support/knowledgecenter/en/SSEQTP_liberty/com.ibm.websphere.wlp.doc/ae/twlp_admin_session_persistence_jcache.html
+To ensure the persistence in using Hazelcast as the JCache provider, we can define the `clone ID`. When using the Open Liberty Liberty server, it is good practice to assign the `clone ID`, as the ID can change after the scaling of pods, since the ID is regenerated if there is a server restart, or the server is started with the `--clean` option. This will also ensure to alleviate sessions pile up in Hazelcast. 
+
+To learn more about the clone ID configuration, please visit: https://www.ibm.com/support/knowledgecenter/en/SSEQTP_liberty/com.ibm.websphere.wlp.doc/ae/twlp_admin_session_persistence_jcache.html[Configuring Liberty session persistence with JCache^]
 
 [role="code_command hotspot file=0", subs="quotes"]
 ----
