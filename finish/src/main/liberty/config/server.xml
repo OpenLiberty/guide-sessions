@@ -22,6 +22,10 @@
         <feature>mpOpenAPI-1.1</feature>
     </featureManager>
 
+    <variable name="default.http.port" defaultValue="9080"/>
+    <variable name="default.https.port" defaultValue="9443"/>
+    <variable name="app.context.root" defaultValue="guide-sessions"/>
+
     <httpEndpoint httpPort="${default.http.port}" httpsPort="${default.https.port}"
         id="defaultHttpEndpoint" host="*" />
     <!-- tag::httpSessionCache[] -->
@@ -36,6 +40,6 @@
     </library>
     <!-- end::library[] -->
 
-    <webApplication location="cart-app.war" contextRoot="${app.context.root}" />
+    <webApplication location="guide-sessions.war" contextRoot="${app.context.root}" />
 
 </server>

@@ -1,2 +1,2 @@
 FROM open-liberty
-ADD --chown=1001:0 target/SessionsGuide.tar.gz /opt/ol
+ADD --chown=1001:0 target/guide-sessions.tar.gz /opt/ol

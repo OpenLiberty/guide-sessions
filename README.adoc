@@ -95,6 +95,9 @@ without using a relational database.
 
 Navigate to the `start` directory to begin.
 
+[role='command']
+include::{common-includes}/devmode-start.adoc[]
+
 [role="code_command hotspot file=0", subs="quotes"]
 ----
 #Create the `CartApplication` class.#
@@ -190,8 +193,7 @@ include::finish/src/main/liberty/config/server.xml[]
 The [hotspot=library]`<library />` tag includes the library reference that indicates
 to the server where the Hazelcast implementation of JCache is located.
 The [hotspot=hazelcastjar]`hazelcast.jar` file is downloaded as a dependency and copied to the
-predefined `{shared.resource.dir}` directory when the Maven build runs. This goal is defined in the
-provided Maven POM file.
+predefined `{shared.resource.dir}` directory when the Maven build runs.
 
 === Configuring Hazelcast
 
@@ -229,25 +231,12 @@ when a Maven build runs. This goal is defined in the provided Maven POM file.
 There are more configuration settings that you can explore in the
 https://docs.hazelcast.org/docs/latest/manual/html-single/#understanding-configuration[Hazelcast documentation^].
 
-
-== Building and running the application
-
-To build the application, run the Maven `install` phase from the command line in the `start` directory:
-
-[role="command"]
-```
-mvn install
-```
-
-This command builds the application and creates a `.war` file in the target directory. It also
-configures and installs Open Liberty into the `target/liberty/wlp` directory.
-
-Next, run the Maven `liberty:start-server` goal to start an Open Liberty server instance:
+// =================================================================================================
+// Running the application
+// =================================================================================================
 
 [role="command"]
-```
-mvn liberty:start-server
-```
+include::{common-includes}/devmode-build.adoc[]
 
 Point your browser to the link:http://localhost:9080/openapi/ui/[^] URL. This URL
 displays the available REST endpoints.
@@ -263,13 +252,8 @@ endpoint on the UI, click the `Try it out` button,
 and then click the `Execute` button. The GET request
 returns a pod name, a session ID, and all the items from your session.
 
-After you're done checking out the application, stop the Open Liberty server:
-
-[role="command"]
-```
-mvn liberty:stop-server
-```
-
+[role='command']
+include::{common-includes}/devmode-quit.adoc[]
 
 == Containerizing the application
 
@@ -279,9 +263,14 @@ The Dockerfile is provided at the `start` directory. If you're unfamiliar with D
 check out the https://openliberty.io/guides/containerize.html[Containerizing microservices^] guide,
 which covers Dockerfile in depth.
 
+To build and containerize the application, start your Docker daemon and then run the
+following Docker build command in the `start` directory. Run the `mvn package` command from the `start` directory 
+so that the `.war` file resides in the `target` directory.
+
 Navigate to the `start` directory and run the following command:
 [role='command']
 ```
+mvn package
 docker build -t cart-app:1.0-SNAPSHOT .
 ```
 
