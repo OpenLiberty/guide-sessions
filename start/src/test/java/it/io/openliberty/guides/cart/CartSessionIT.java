@@ -59,7 +59,6 @@ public class CartSessionIT {
         assertResponse(getURL(GET, serverport), response);
 
         JsonObject obj = response.readEntity(JsonObject.class);
-        System.out.println(obj.getJsonArray("cart"));
         assertTrue(obj.getJsonArray("cart").isEmpty(), "The cart should be empty on application start but was not");
 
         response.close();
