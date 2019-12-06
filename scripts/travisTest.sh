@@ -7,7 +7,7 @@ set -euxo pipefail
 ##
 ##############################################################################
 
-# TEST 1: Building and running the applicatio
+# TEST 1: Building and running the application
 
 # LMP 3.0+ goals are listed here: https://github.com/OpenLiberty/ci.maven#goals
 
@@ -18,6 +18,7 @@ set -euxo pipefail
 #       liberty:deploy            - Copy applications to the Liberty server's dropins or apps directory. 
 mvn -q clean package liberty:create liberty:install-feature liberty:deploy
 
+mvn package
 
 ## Run the tests
 # These commands are separated because if one of the commands fail, the test script will fail and exit. 

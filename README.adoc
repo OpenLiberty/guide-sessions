@@ -95,9 +95,6 @@ without using a relational database.
 
 Navigate to the `start` directory to begin.
 
-[role='command']
-include::{common-includes}/devmode-start.adoc[]
-
 [role="code_command hotspot file=0", subs="quotes"]
 ----
 #Create the `CartApplication` class.#
@@ -187,6 +184,9 @@ include::finish/src/main/liberty/config/hazelcast-config.xml[]
 ----
 
 The cluster group [hotspot=cartCluster file=0]`CartCluster` is defined in the [hotspot file=0]`hazelcast-config.xml`.
+
+[role='command']
+include::{common-includes}/devmode-start.adoc[]
 
 === Copying Hazelcast configuration and JAR files to a shared directory
 
