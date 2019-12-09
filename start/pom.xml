@@ -175,8 +175,6 @@
                 <groupId>io.openliberty.tools</groupId>
                 <artifactId>liberty-maven-plugin</artifactId>
                 <version>${version.liberty-maven-plugin}</version>
-                <configuration>
-                </configuration>
                 <executions>
                     <execution>
                         <id>package-server</id>
