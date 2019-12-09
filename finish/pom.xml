@@ -82,13 +82,13 @@
         <dependency>
             <groupId>com.sun.xml.bind</groupId>
             <artifactId>jaxb-core</artifactId>
-            <version>2.2.11</version>
+            <version>2.3.0.1</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>com.sun.xml.bind</groupId>
             <artifactId>jaxb-impl</artifactId>
-            <version>2.2.11</version>
+            <version>2.3.2</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -175,6 +175,22 @@
                 <groupId>io.openliberty.tools</groupId>
                 <artifactId>liberty-maven-plugin</artifactId>
                 <version>${version.liberty-maven-plugin}</version>
+                <configuration>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>package-server</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>package</goal>
+                        </goals>
+                        <configuration>
+                            <packageName>guide-sessions</packageName>
+                            <packageType>tar.gz</packageType>
+                            <include>usr</include>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
             <!-- Plugin to run functional tests -->
             <plugin>
