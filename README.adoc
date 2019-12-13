@@ -167,13 +167,13 @@ You'll use the peer-to-peer model in a Kubernetes environment for this guide.
 
 JCache, which stands for Java Caching, is an interface
 to standardize distributed caching on the Java platform.
-The `sessionCache` feature uses JCache, which allows for session
+The [hotspot=sessionCache]`sessionCache` feature uses JCache, which allows for session
 persistence by providing a common cache of session data between servers.
 This feature doesn't include a JCache implementation.
 For this guide, you'll use Hazelcast as an open source JCache provider.
 
 Hazelcast is a JCache provider. Open Liberty needs to be configured to use
-Hazelcast after the `sessionCache` feature is enabled.
+Hazelcast after the [hotspot=sessionCache]`sessionCache` feature is enabled.
 
 [role="code_command hotspot", subs="quotes"]
 ----
