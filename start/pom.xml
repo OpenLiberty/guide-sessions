@@ -12,18 +12,19 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <failOnMissingWebXml>false</failOnMissingWebXml>
-        <hazelcast.version>3.11.2</hazelcast.version>
         <!-- Plugin versions -->
         <version.liberty-maven-plugin>3.1</version.liberty-maven-plugin>
         <version.maven-failsafe-plugin>2.22.2</version.maven-failsafe-plugin>
         <version.maven-war-plugin>3.2.3</version.maven-war-plugin>
         <version.maven-surefire-plugin>2.22.2</version.maven-surefire-plugin>
         <version.maven-dependency-plugin>3.1.1</version.maven-dependency-plugin>
-        <version.maven-resources-plugin>3.1.0</version.maven-resources-plugin>
+        <version.hazelcast>3.11.2</version.hazelcast>
         <!-- Liberty configuration -->
+        <hazelcast.path>${user.home}/.m2/repository/com/hazelcast/hazelcast/</hazelcast.path>
         <liberty.var.default.http.port>9080</liberty.var.default.http.port>
         <liberty.var.default.https.port>9443</liberty.var.default.https.port>
         <liberty.var.app.context.root>${project.artifactId}</liberty.var.app.context.root>
+        <liberty.var.hazelcast.lib>${hazelcast.path}/${version.hazelcast}/hazelcast-${version.hazelcast}.jar</liberty.var.hazelcast.lib>
     </properties>
 
     <dependencies>
@@ -41,12 +42,15 @@
             <type>pom</type>
             <scope>provided</scope>
         </dependency>
+        
         <!-- Hazelcast Dependency -->
         <dependency>
             <groupId>com.hazelcast</groupId>
             <artifactId>hazelcast</artifactId>
-            <version>${hazelcast.version}</version>
+            <version>${version.hazelcast}</version>
+            <scope>test</scope>
         </dependency>
+        
         <!-- For tests -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
@@ -72,6 +76,7 @@
             <version>1.0.4</version>
             <scope>test</scope>
         </dependency>
+        
         <!-- Support for JDK 9 and above -->
         <dependency>
             <groupId>javax.xml.bind</groupId>
@@ -107,13 +112,15 @@
                 <artifactId>maven-war-plugin</artifactId>
                 <version>${version.maven-war-plugin}</version>
             </plugin>
-            <!-- Plugin to run unit tests -->
+            
+            <!-- Enable Liberty Maven plugin -->
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>${version.maven-surefire-plugin}</version>
+                <groupId>io.openliberty.tools</groupId>
+                <artifactId>liberty-maven-plugin</artifactId>
+                <version>${version.liberty-maven-plugin}</version>
             </plugin>
-            <!-- package hazelcast.jar -->
+            
+            <!-- Copy the hazelcast library -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
@@ -134,62 +141,20 @@
                             <artifactId>hazelcast</artifactId>
                             <version>${hazelcast.version}</version>
                             <type>jar</type>
-                            <overWrite>false</overWrite>
-                            <outputDirectory>${project.build.directory}/liberty/wlp/usr/shared/resources</outputDirectory>
-                            <destFileName>hazelcast.jar</destFileName>
                         </artifactItem>
                     </artifactItems>
-                    <outputDirectory>${project.build.directory}/liberty/wlp/usr/shared/resources</outputDirectory>
-                    <overWriteReleases>false</overWriteReleases>
-                    <overWriteSnapshots>true</overWriteSnapshots>
+                    <outputDirectory>${project.build.directory}</outputDirectory>
                 </configuration>
             </plugin>
-            <!-- package hazelcast-config.xml -->
+      
+                  
+            <!-- Plugin to run unit tests -->
             <plugin>
-                <artifactId>maven-resources-plugin</artifactId>
-                <version>${version.maven-resources-plugin}</version>
-                <executions>
-                    <execution>
-                        <id>copy-resources</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>copy-resources</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${project.build.directory}/liberty/wlp/usr/shared/config</outputDirectory>
-                            <resources>
-                                <resource>
-                                    <directory>${project.basedir}/src/main/liberty/config</directory>
-                                    <includes>
-                                        <include>hazelcast-config.xml</include>
-                                    </includes>
-                                </resource>
-                            </resources>
-                        </configuration>
-                    </execution>
-                </executions>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${version.maven-surefire-plugin}</version>
             </plugin>
-
-            <!-- Enable Liberty Maven plugin -->
-            <plugin>
-                <groupId>io.openliberty.tools</groupId>
-                <artifactId>liberty-maven-plugin</artifactId>
-                <version>${version.liberty-maven-plugin}</version>
-                <executions>
-                    <execution>
-                        <id>package-server</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>package</goal>
-                        </goals>
-                        <configuration>
-                            <packageName>guide-sessions</packageName>
-                            <packageType>tar.gz</packageType>
-                            <include>usr</include>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
+            
             <!-- Plugin to run functional tests -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

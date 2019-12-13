@@ -18,14 +18,12 @@
         <version.maven-war-plugin>3.2.3</version.maven-war-plugin>
         <version.maven-surefire-plugin>2.22.2</version.maven-surefire-plugin>
         <version.maven-dependency-plugin>3.1.1</version.maven-dependency-plugin>
-        <version.maven-resources-plugin>3.1.0</version.maven-resources-plugin>
         <version.hazelcast>3.11.2</version.hazelcast>
         <!-- Liberty configuration -->
         <hazelcast.path>${user.home}/.m2/repository/com/hazelcast/hazelcast/</hazelcast.path>
         <liberty.var.default.http.port>9080</liberty.var.default.http.port>
         <liberty.var.default.https.port>9443</liberty.var.default.https.port>
         <liberty.var.app.context.root>${project.artifactId}</liberty.var.app.context.root>
-        <liberty.var.hazelcast.version>${version.hazelcast}</liberty.var.hazelcast.version>
         <liberty.var.hazelcast.lib>${hazelcast.path}/${version.hazelcast}/hazelcast-${version.hazelcast}.jar</liberty.var.hazelcast.lib>
     </properties>
 
