@@ -12,9 +12,7 @@
 // end::copyright[]
 package io.openliberty.guides.cart;
 
-import java.util.ArrayList;
 import java.util.Enumeration;
-import java.util.Properties;
 
 import javax.json.Json;
 import javax.json.JsonArrayBuilder;
@@ -29,7 +27,6 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.parameters.Parameter;
