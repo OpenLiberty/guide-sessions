@@ -192,7 +192,7 @@ to the server where the Hazelcast implementation of JCache is located.
 Your Hazelcast implementation of JCache is a JAR file which resides in the location defined by
 the [hotspot=hazelcastLib]`${hazelcast.lib}` variable.
 The [hotspot=hazelcastjar]`hazelcast.jar` file is downloaded as a dependency and copied to the
-predefined `{shared.resource.dir}` directory when the Maven build runs. This goal is defined in the
+predefined `target` directory when the Maven build runs. This goal is defined in the
 provided Maven POM file.
 
 === Configuring Hazelcast
@@ -361,11 +361,11 @@ Repeat the GET request. You see the same `session-id`
 but a different `pod-name` because the session data is cached but the request
 is served by a different pod (server).
 
-Verify that the Hazelcast cluster is running. Check the logs of your pod using the `kubectl logs` command:
+Verify that the Hazelcast cluster is running by checking the Open Liberty log. Run the following command:
 
 [role='command']
 ```
-kubectl logs [pod-name]
+kubectl exec -it [pod-name] cat /logs/messages.log
 ```
 
 You see a message similar to the following:
