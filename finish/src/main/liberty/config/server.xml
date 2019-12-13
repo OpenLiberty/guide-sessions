@@ -25,8 +25,9 @@
     <variable name="default.http.port" defaultValue="9080"/>
     <variable name="default.https.port" defaultValue="9443"/>
     <variable name="app.context.root" defaultValue="guide-sessions"/>
+    <!-- tag::hazelcastLib[] -->
     <variable name="hazelcast.lib" defaultValue="${shared.resource.dir}/hazelcast.jar"/>
-     
+    <!-- end::hazelcastLib[] -->
 
     <httpEndpoint httpPort="${default.http.port}" httpsPort="${default.https.port}"
         id="defaultHttpEndpoint" host="*" />
