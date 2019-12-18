@@ -189,7 +189,7 @@ include::finish/src/main/liberty/config/server.xml[]
 
 The [hotspot=library]`<library />` tag includes the library reference that indicates
 to the server where the Hazelcast implementation of JCache is located. 
-Your Hazelcast implementation of JCache is a JAR file which resides in the location defined by
+Your Hazelcast implementation of JCache is a JAR file that resides in the location that is defined by
 the [hotspot=hazelcastLib]`${hazelcast.lib}` variable.
 The [hotspot=hazelcastjar]`hazelcast.jar` file is downloaded as a dependency and copied to the
 predefined `target` directory when the Maven build runs. This goal is defined in the
@@ -264,10 +264,8 @@ check out the https://openliberty.io/guides/containerize.html[Containerizing mic
 which covers Dockerfile in depth.
 
 Run the `mvn package` command from the `start` directory so that the `.war` file resides in the `target` directory.
-To build and containerize the application, start your Docker daemon and then run the
-following Docker build command in the `start` directory. 
+To build and containerize the application, start your Docker daemon and then run the following commands in the `start` directory:
 
-Navigate to the `start` directory and run the following commands:
 [role='command']
 ```
 mvn package
@@ -361,7 +359,8 @@ Repeat the GET request. You see the same `session-id`
 but a different `pod-name` because the session data is cached but the request
 is served by a different pod (server).
 
-Verify that the Hazelcast cluster is running by checking the Open Liberty log. Run the following command:
+Verify that the Hazelcast cluster is running by checking the Open Liberty log. 
+To check the log, run the following command:
 
 [role='command']
 ```
