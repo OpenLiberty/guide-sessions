@@ -167,13 +167,13 @@ You'll use the peer-to-peer model in a Kubernetes environment for this guide.
 
 JCache, which stands for Java Caching, is an interface
 to standardize distributed caching on the Java platform.
-The `sessionCache` feature uses JCache, which allows for session
+The [hotspot=sessionCache]`sessionCache` feature uses JCache, which allows for session
 persistence by providing a common cache of session data between servers.
 This feature doesn't include a JCache implementation.
 For this guide, you'll use Hazelcast as an open source JCache provider.
 
 Hazelcast is a JCache provider. Open Liberty needs to be configured to use
-Hazelcast after the `sessionCache` feature is enabled.
+Hazelcast after the [hotspot=sessionCache]`sessionCache` feature is enabled.
 
 [role="code_command hotspot", subs="quotes"]
 ----
@@ -188,9 +188,11 @@ include::finish/src/main/liberty/config/server.xml[]
 ----
 
 The [hotspot=library]`<library />` tag includes the library reference that indicates
-to the server where the Hazelcast implementation of JCache is located.
+to the server where the Hazelcast implementation of JCache is located. 
+Your Hazelcast implementation of JCache is a JAR file that resides in the location that is defined by
+the [hotspot=hazelcastLib]`${hazelcast.lib}` variable.
 The [hotspot=hazelcastjar]`hazelcast.jar` file is downloaded as a dependency and copied to the
-predefined `{shared.resource.dir}` directory when the Maven build runs. This goal is defined in the
+predefined `target` directory when the Maven build runs. This goal is defined in the
 provided Maven POM file.
 
 === Configuring Hazelcast
@@ -223,31 +225,18 @@ The cluster group [hotspot=cartCluster file=1]`CartCluster` is defined in the [h
 
 In the [hotspot file=0]`server.xml` file, a reference to the Hazelcast configuration file is made by using
 the [hotspot=httpSessionCache file=0]`httpSessionCache` tag.
-The [hotspot file=1]`hazelcast-config.xml` file is copied to the predefined `{shared.resource.dir}` directory
-when a Maven build runs. This goal is defined in the provided Maven POM file.
 
 There are more configuration settings that you can explore in the
 https://docs.hazelcast.org/docs/latest/manual/html-single/#understanding-configuration[Hazelcast documentation^].
 
+// =================================================================================================
+// Running the application
+// =================================================================================================
 
-== Building and running the application
-
-To build the application, run the Maven `install` phase from the command line in the `start` directory:
-
-[role="command"]
-```
-mvn install
-```
-
-This command builds the application and creates a `.war` file in the target directory. It also
-configures and installs Open Liberty into the `target/liberty/wlp` directory.
-
-Next, run the Maven `liberty:start-server` goal to start an Open Liberty server instance:
+== Running the application
 
 [role="command"]
-```
-mvn liberty:start-server
-```
+include::{common-includes}/devmode-start.adoc[]
 
 Point your browser to the link:http://localhost:9080/openapi/ui/[^] URL. This URL
 displays the available REST endpoints.
@@ -263,13 +252,8 @@ endpoint on the UI, click the `Try it out` button,
 and then click the `Execute` button. The GET request
 returns a pod name, a session ID, and all the items from your session.
 
-After you're done checking out the application, stop the Open Liberty server:
-
-[role="command"]
-```
-mvn liberty:stop-server
-```
-
+[role='command']
+include::{common-includes}/devmode-quit.adoc[]
 
 == Containerizing the application
 
@@ -279,9 +263,12 @@ The Dockerfile is provided at the `start` directory. If you're unfamiliar with D
 check out the https://openliberty.io/guides/containerize.html[Containerizing microservices^] guide,
 which covers Dockerfile in depth.
 
-Navigate to the `start` directory and run the following command:
+Run the `mvn package` command from the `start` directory so that the `.war` file resides in the `target` directory.
+To build and containerize the application, start your Docker daemon and then run the following commands in the `start` directory:
+
 [role='command']
 ```
+mvn package
 docker build -t cart-app:1.0-SNAPSHOT .
 ```
 
@@ -365,15 +352,15 @@ the pod for the GET request that you just ran:
 
 [role='command']
 ```
-kubectl exec -it [pod-name] /opt/ol/wlp/bin/server pause defaultServer
+kubectl exec -it [pod-name] /opt/ol/wlp/bin/server pause
 ```
 
 Repeat the GET request. You see the same `session-id`
 but a different `pod-name` because the session data is cached but the request
 is served by a different pod (server).
 
-Verify that the Hazelcast cluster is running by checking the Open Liberty log.
-Run the following command:
+Verify that the Hazelcast cluster is running by checking the Open Liberty log. 
+To check the log, run the following command:
 
 [role='command']
 ```
@@ -397,7 +384,7 @@ You can resume the paused pod by running the following command:
 
 [role='command']
 ```
-kubectl exec -it [pod-name] /opt/ol/wlp/bin/server resume defaultServer
+kubectl exec -it [pod-name] /opt/ol/wlp/bin/server resume
 ```
 
 

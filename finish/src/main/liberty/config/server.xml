@@ -22,20 +22,27 @@
         <feature>mpOpenAPI-1.1</feature>
     </featureManager>
 
+    <variable name="default.http.port" defaultValue="9080"/>
+    <variable name="default.https.port" defaultValue="9443"/>
+    <variable name="app.context.root" defaultValue="guide-sessions"/>
+    <!-- tag::hazelcastLib[] -->
+    <variable name="hazelcast.lib" defaultValue="${shared.resource.dir}/hazelcast.jar"/>
+    <!-- end::hazelcastLib[] -->
+
     <httpEndpoint httpPort="${default.http.port}" httpsPort="${default.https.port}"
         id="defaultHttpEndpoint" host="*" />
     <!-- tag::httpSessionCache[] -->
     <httpSessionCache libraryRef="jCacheVendorLib"
-        uri="file:${shared.config.dir}/hazelcast-config.xml" />
+        uri="file:${server.config.dir}/hazelcast-config.xml" />
     <!-- end::httpSessionCache[] -->
     <!-- tag::library[] -->
     <library id="jCacheVendorLib">
-    	  <!-- tag::hazelcastjar[] -->
-        <file name="${shared.resource.dir}/hazelcast.jar" />
+    	<!-- tag::hazelcastjar[] -->
+        <file name="${hazelcast.lib}" />
         <!-- end::hazelcastjar[] -->
     </library>
     <!-- end::library[] -->
 
-    <webApplication location="cart-app.war" contextRoot="${app.context.root}" />
+    <webApplication location="guide-sessions.war" contextRoot="${app.context.root}" />
 
 </server>

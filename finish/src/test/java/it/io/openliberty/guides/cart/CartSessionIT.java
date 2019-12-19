@@ -12,8 +12,8 @@
 // end::copyright[]
 package it.io.openliberty.guides.cart;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Map;
 
@@ -30,25 +30,25 @@ import javax.ws.rs.core.NewCookie;
 import javax.ws.rs.core.Response;
 
 import org.apache.cxf.jaxrs.provider.jsrjsonp.JsrJsonpProvider;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-public class CartSessionTest {
+public class CartSessionIT {
     private Client client;
-    private static String serverport = System.getProperty("liberty.server.port");
+    private static String serverport = System.getProperty("http.port");
     private static final String ITEM = "SpaceShip";
     private static final String PRICE = "20.0";
     private static final String POST = "POST";
     private static final String GET = "GET";
 
-    @Before
+    @BeforeEach
     public void setup() {
         client = ClientBuilder.newClient();
         client.register(JsrJsonpProvider.class);
     }
 
-    @After
+    @AfterEach
     public void teardown() {
         client.close();
     }
@@ -59,8 +59,7 @@ public class CartSessionTest {
         assertResponse(getURL(GET, serverport), response);
 
         JsonObject obj = response.readEntity(JsonObject.class);
-        assertTrue("The cart should be empty on application start but was not",
-                    obj.getJsonArray("cart").isEmpty());
+        assertTrue(obj.getJsonArray("cart").isEmpty(), "The cart should be empty on application start but was not");
 
         response.close();
     }
@@ -82,12 +81,9 @@ public class CartSessionTest {
         JsonObject actualGetCart = getCartResponse.readEntity(JsonObject.class);
         String expectedGetCart =  ITEM + " | $" + PRICE;
 
-        assertEquals("Adding item to cart response failed", expectedAddToCart,
-            actualAddToCart);
-        assertEquals("Cart response did not match expected string", expectedGetCart,
-        	actualGetCart.getJsonArray("cart").getString(0));
-        assertEquals("Cart response did not match expected subtotal",
-        	actualGetCart.getJsonNumber("subtotal").doubleValue(), 20.0, 0.0);
+        assertEquals(expectedAddToCart, actualAddToCart, "Adding item to cart response failed");
+        assertEquals(expectedGetCart, actualGetCart.getJsonArray("cart").getString(0), "Cart response did not match expected string");
+        assertEquals(actualGetCart.getJsonNumber("subtotal").doubleValue(), 20.0, 0.0, "Cart response did not match expected subtotal");
 
         addToCartResponse.close();
         getCartResponse.close();
@@ -118,17 +114,17 @@ public class CartSessionTest {
         String result = null;
         switch (method) {
         case POST:
-            result = "http://localhost:" + port + "/SessionsGuide/cart/" + ITEM + "&"
+            result = "http://localhost:" + port + "/guide-sessions/cart/" + ITEM + "&"
                             + PRICE;
             break;
         case GET:
-            result = "http://localhost:" + port + "/SessionsGuide/cart";
+            result = "http://localhost:" + port + "/guide-sessions/cart";
             break;
         }
         return result;
     }
 
     private void assertResponse(String url, Response response) {
-        assertEquals("Incorrect response code from " + url, 200, response.getStatus());
+        assertEquals(200, response.getStatus(), "Incorrect response code from " + url);
     }
 }
