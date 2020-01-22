@@ -17,7 +17,7 @@
 :page-permalink: /guides/{projectid}
 :page-search-keywords: ['sessions', 'session persistence', 'sessionCache', 'Hazelcast', 'JCache']
 :common-includes: ../guides-common/
-:imagesdir: /img/guide
+:imagesdir: /img/guide/{projectid}
 :page-seo-title: Caching HTTP session data
 :page-seo-description: A tutorial on how to create, use and cache HTTP session data for an enterprise Java application
 = Caching HTTP session data
