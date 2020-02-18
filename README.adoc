@@ -19,8 +19,8 @@
 :common-includes: ../guides-common/
 :imagesdir: /img/guide/{projectid}
 :page-seo-title: Caching HTTP session data using JCache and Hazelcast
-:page-seo-description: A getting started tutorial with examples on how to create, use and cache HTTP session data for an enterprise Java application on a Kubernetes cluster by using Java Caching (JCache).
-= Caching HTTP session data
+:page-seo-description: A getting started tutorial with examples on how to create, use, and cache HTTP session data for an enterprise Java application on a Kubernetes cluster by using Java Caching (JCache).
+= Caching HTTP session data using JCache and Hazelcast
 
 Learn how to create, use, and cache HTTP session data for your application.
 
