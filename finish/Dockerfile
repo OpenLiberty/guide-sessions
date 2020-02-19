@@ -7,14 +7,14 @@ LABEL \
   org.opencontainers.image.authors="My Name" \
   org.opencontainers.image.vendor="Open Liberty" \
   org.opencontainers.image.url="local" \
-  org.opencontainers.image.source="https://github.com/guide-sessions" \
+  org.opencontainers.image.source="https://github.com/OpenLiberty/guide-sessions" \
   org.opencontainers.image.version="$VERSION" \
   org.opencontainers.image.revision="$REVISION" \
   vendor="Open Liberty" \
-  name="finish" \
+  name="system" \
   version="$VERSION-$REVISION" \
   summary="The application from the Sessions guide" \
-  description="This image contains the WAR file with the Java runtime, running with the Open Liberty runtime."
+  description="This image contains the system microservice running with the Open Liberty runtime."
 
 COPY --chown=1001:0 src/main/liberty/config /config/
 COPY --chown=1001:0 target/guide-sessions.war /config/apps
