@@ -11,7 +11,7 @@ LABEL \
   org.opencontainers.image.version="$VERSION" \
   org.opencontainers.image.revision="$REVISION" \
   vendor="Open Liberty" \
-  name="system" \
+  name="cart-app" \
   version="$VERSION-$REVISION" \
   summary="The cart application from the Sessions guide" \
   description="This image contains the cart application running with the Open Liberty runtime."
