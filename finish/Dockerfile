@@ -13,8 +13,8 @@ LABEL \
   vendor="Open Liberty" \
   name="system" \
   version="$VERSION-$REVISION" \
-  summary="The system microservice from the Sessions guide" \
-  description="This image contains the system microservice running with the Open Liberty runtime."
+  summary="The cart application from the Sessions guide" \
+  description="This image contains the cart application running with the Open Liberty runtime."
 
 COPY --chown=1001:0 src/main/liberty/config /config/
 COPY --chown=1001:0 target/guide-sessions.war /config/apps
