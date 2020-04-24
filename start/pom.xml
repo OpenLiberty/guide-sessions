@@ -18,7 +18,7 @@
         <version.maven-war-plugin>3.2.3</version.maven-war-plugin>
         <version.maven-surefire-plugin>2.22.2</version.maven-surefire-plugin>
         <version.maven-dependency-plugin>3.1.2</version.maven-dependency-plugin>
-        <version.hazelcast>4.0.1</version.hazelcast>
+        <version.hazelcast>3.12.6</version.hazelcast>
         <!-- Liberty configuration -->
         <hazelcast.path>${user.home}/.m2/repository/com/hazelcast/hazelcast/</hazelcast.path>
         <liberty.var.default.http.port>9080</liberty.var.default.http.port>
