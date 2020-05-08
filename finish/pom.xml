@@ -152,10 +152,10 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>
-                <version>${version.maven-failsafe-plugin}</version>
+                <version>2.22.2</version>
                 <configuration>
                     <systemPropertyVariables>
-                        <http.port>2.22.2</http.port>
+                        <http.port>${liberty.var.default.http.port}</http.port>
                     </systemPropertyVariables>
                 </configuration>
             </plugin>
