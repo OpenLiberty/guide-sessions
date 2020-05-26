@@ -15,7 +15,7 @@
 :page-tags: ['Docker']
 :page-related-guides: ['rest-intro', 'microprofile-openapi', 'kubernetes-intro']
 :page-permalink: /guides/{projectid}
-:common-includes: ../guides-common/
+:common-includes: https://raw.githubusercontent.com/OpenLiberty/guides-common/master
 :imagesdir: /img/guide/{projectid}
 :page-seo-title: Caching HTTP session data using JCache and Hazelcast
 :page-seo-description: A getting started tutorial with examples on how to create, use, and cache HTTP session data for an enterprise Java application on a Kubernetes cluster by using Java Caching (JCache).
@@ -258,6 +258,8 @@ include::{common-includes}/devmode-quit.adoc[]
 
 Before you can deploy the application to Kubernetes, you need to containerize it with Docker.
 
+Make sure to start your Docker daemon before you proceed.
+
 The Dockerfile is provided at the `start` directory. If you're unfamiliar with Dockerfile,
 check out the https://openliberty.io/guides/containerize.html[Containerizing microservices^] guide,
 which covers Dockerfile in depth.
@@ -270,10 +272,9 @@ To build and containerize the application, start your Docker daemon and then run
 mvn package
 ```
 
-[role='command']
 include::{common-includes}/ol-kernel-docker-pull.adoc[]
 
-Next, run the `docker build` commands to build container images for your application:
+To build and containerize the application, run the following Docker build command in the `start` directory:
 
 [role='command']
 ```
