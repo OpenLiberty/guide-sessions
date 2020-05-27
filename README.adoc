@@ -1,4 +1,4 @@
-// Copyright (c) 2019 IBM Corporation and others.
+// Copyright (c) 2019, 2020 IBM Corporation and others.
 // Licensed under Creative Commons Attribution-NoDerivatives
 // 4.0 International (CC BY-ND 4.0)
 //   https://creativecommons.org/licenses/by-nd/4.0/
@@ -15,7 +15,7 @@
 :page-tags: ['Docker']
 :page-related-guides: ['rest-intro', 'microprofile-openapi', 'kubernetes-intro']
 :page-permalink: /guides/{projectid}
-:common-includes: ../guides-common/
+:common-includes: https://raw.githubusercontent.com/OpenLiberty/guides-common/master
 :imagesdir: /img/guide/{projectid}
 :page-seo-title: Caching HTTP session data using JCache and Hazelcast
 :page-seo-description: A getting started tutorial with examples on how to create, use, and cache HTTP session data for an enterprise Java application on a Kubernetes cluster by using Java Caching (JCache).
@@ -258,16 +258,25 @@ include::{common-includes}/devmode-quit.adoc[]
 
 Before you can deploy the application to Kubernetes, you need to containerize it with Docker.
 
+Make sure to start your Docker daemon before you proceed.
+
 The Dockerfile is provided at the `start` directory. If you're unfamiliar with Dockerfile,
 check out the https://openliberty.io/guides/containerize.html[Containerizing microservices^] guide,
 which covers Dockerfile in depth.
 
 Run the `mvn package` command from the `start` directory so that the `.war` file resides in the `target` directory.
-To build and containerize the application, start your Docker daemon and then run the following commands in the `start` directory:
 
 [role='command']
 ```
 mvn package
+```
+
+include::{common-includes}/ol-kernel-docker-pull.adoc[]
+
+To build and containerize the application, run the following Docker build command in the `start` directory:
+
+[role='command']
+```
 docker build -t cart-app:1.0-SNAPSHOT .
 ```
 
@@ -280,9 +289,9 @@ docker images
 Verify that the `cart-app:1.0-SNAPSHOT` image is listed among the Docker images, for example:
 [source, role="no_copy"]
 ----
-REPOSITORY           TAG
-cart-app             1.0-SNAPSHOT
-open-liberty         latest
+REPOSITORY                      TAG
+cart-app                        1.0-SNAPSHOT
+openliberty/open-liberty        kernel-java8-openj9-ubi
 ----
 
 
