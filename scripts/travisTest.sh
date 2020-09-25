@@ -53,6 +53,10 @@ echo "$postStatus"
 echo get status
 echo "$getStatus"
 
+CARTAPP=`kubectl get pods | grep -m 1 cart | sed 's/ .*//'`
+kubectl exec $CARTAPP -- cat /logs/messages.log | grep product
+kubectl exec $CARTAPP -- cat /logs/messages.log | grep java
+
 if [ "$postStatus" == 'eggs added to your cart and costs $2.29' ] && [ "$getStatus" == "200" ] && [ "$openApiStatus" == "200" ]
 then
     echo POST/GET OK
