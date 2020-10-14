@@ -47,15 +47,17 @@ echo `minikube ip`
 postStatus="$(curl -X POST "http://localhost:31000/guide-sessions/cart/eggs&2.29" --cookie "c.txt" --cookie-jar "c.txt")"
 getStatus="$(curl --write-out "%{http_code}\n" --silent --output /dev/null "http://`minikube ip`:31000/guide-sessions/cart" --cookie "c.txt" --cookie-jar "c.txt")"
 openApiStatus="$(curl --write-out "%{http_code}\n" --silent --output /dev/null "http://`minikube ip`:31000/openapi/ui/")"
+runningPod="$(curl --silent "http://`minikube ip`:31000/guide-sessions/cart" --cookie "c.txt" --cookie-jar "c.txt" | sed 's/^.*\(cart-.*\)/\1/' | sed 's/".*//')"
 
 echo post status 
 echo "$postStatus"
 echo get status
 echo "$getStatus"
+echo running pod
+echo "$runningPod"
 
-CARTAPP=`kubectl get pods | grep -m 1 cart | sed 's/ .*//'`
-kubectl exec $CARTAPP -- cat /logs/messages.log | grep product
-kubectl exec $CARTAPP -- cat /logs/messages.log | grep java
+kubectl exec $runningPod -- cat /logs/messages.log | grep product
+kubectl exec $runningPod -- cat /logs/messages.log | grep java
 
 if [ "$postStatus" == 'eggs added to your cart and costs $2.29' ] && [ "$getStatus" == "200" ] && [ "$openApiStatus" == "200" ]
 then
