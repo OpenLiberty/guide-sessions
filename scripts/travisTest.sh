@@ -53,6 +53,8 @@ echo "$postStatus"
 echo get status
 echo "$getStatus"
 
+sleep 120
+
 CARTAPP=`kubectl get pods | grep -m 1 cart | sed 's/ .*//'`
 kubectl exec $CARTAPP -- cat /logs/messages.log | grep product
 kubectl exec $CARTAPP -- cat /logs/messages.log | grep java
