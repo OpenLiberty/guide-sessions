@@ -47,7 +47,7 @@ echo `minikube ip`
 postStatus="$(curl -X POST "http://localhost:31000/guide-sessions/cart/eggs&2.29" --cookie "c.txt" --cookie-jar "c.txt")"
 getStatus="$(curl --write-out "%{http_code}\n" --silent --output /dev/null "http://`minikube ip`:31000/guide-sessions/cart" --cookie "c.txt" --cookie-jar "c.txt")"
 openApiStatus="$(curl --write-out "%{http_code}\n" --silent --output /dev/null "http://`minikube ip`:31000/openapi/ui/")"
-runningPod=`curl --silent "http://`minikube ip`:31000/guide-sessions/cart"|sed 's/^.*\(cart-.*\)/\1/'|sed 's/".*//'`
+runningPod="$(curl --silent "http://`minikube ip`:31000/guide-sessions/cart" --cookie "c.txt" --cookie-jar "c.txt" | sed 's/^.*\(cart-.*\)/\1/' | sed 's/".*//')"
 
 echo post status 
 echo "$postStatus"
