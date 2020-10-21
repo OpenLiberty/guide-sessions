@@ -360,7 +360,7 @@ the pod for the GET request that you just ran:
 
 [role='command']
 ```
-kubectl exec -it [pod-name] /opt/ol/wlp/bin/server pause
+kubectl exec -it [pod-name] -- /opt/ol/wlp/bin/server pause
 ```
 
 Repeat the GET request. You see the same `session-id`
@@ -372,7 +372,7 @@ To check the log, run the following command:
 
 [role='command']
 ```
-kubectl exec -it [pod-name] cat /logs/messages.log
+kubectl exec -it [pod-name] -- cat /logs/messages.log
 ```
 
 You see a message similar to the following:
@@ -392,7 +392,7 @@ You can resume the paused pod by running the following command:
 
 [role='command']
 ```
-kubectl exec -it [pod-name] /opt/ol/wlp/bin/server resume
+kubectl exec -it [pod-name] -- /opt/ol/wlp/bin/server resume
 ```
 
 
