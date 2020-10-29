@@ -254,6 +254,14 @@ returns a pod name, a session ID, and all the items from your session.
 [role='command']
 include::{common-includes}/devmode-quit.adoc[]
 
+
+// =================================================================================================
+// Staring and preparing your cluster for deployment
+// =================================================================================================
+[role='command']
+include::{common-includes}/kube-start.adoc[]
+
+
 == Containerizing the application
 
 Before you can deploy the application to Kubernetes, you need to containerize it with Docker.
@@ -294,11 +302,6 @@ cart-app                        1.0-SNAPSHOT
 openliberty/open-liberty        kernel-java8-openj9-ubi
 ----
 
-// =================================================================================================
-// Staring and preparing your cluster for deployment
-// =================================================================================================
-[role='command']
-include::{common-includes}/kube-start.adoc[]
 
 == Deploying and running the application in Kubernetes
 
@@ -334,6 +337,7 @@ cart-deployment-98f4ff789-2xlhs  1/1    Running  0         17s
 cart-deployment-98f4ff789-6rvfj  1/1    Running  0         17s
 cart-deployment-98f4ff789-qrh45  1/1    Running  0         17s
 ----
+
 
 include::{common-includes}/os-tabs.adoc[]
 
