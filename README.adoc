@@ -254,6 +254,14 @@ returns a pod name, a session ID, and all the items from your session.
 [role='command']
 include::{common-includes}/devmode-quit.adoc[]
 
+
+// =================================================================================================
+// Staring and preparing your cluster for deployment
+// =================================================================================================
+[role='command']
+include::{common-includes}/kube-start.adoc[]
+
+
 == Containerizing the application
 
 Before you can deploy the application to Kubernetes, you need to containerize it with Docker.
@@ -330,8 +338,21 @@ cart-deployment-98f4ff789-6rvfj  1/1    Running  0         17s
 cart-deployment-98f4ff789-qrh45  1/1    Running  0         17s
 ----
 
-Point your browser to the link:http://localhost:31000/openapi/ui/[^] URL. This
-URL displays the available REST endpoints.
+
+include::{common-includes}/os-tabs.adoc[]
+
+[.tab_content.windows_section.mac_section]
+--
+Point your browser to the link:http://localhost:31000/openapi/ui/[^] URL.
+This URL displays the available REST endpoints.
+--
+
+[.tab_content.linux_section]
+--
+Run the `minikube ip` command to get the hostname for minikube.
+Then, go to the `http://[hostname]:31000/openapi/ui/` URL in your browser. 
+This URL displays the available REST endpoints.
+--
 
 Make a POST request to the `/cart/{item}&{price}` endpoint. To make this request, expand the POST
 endpoint on the UI, click the `Try it out` button, provide an item and a price,
