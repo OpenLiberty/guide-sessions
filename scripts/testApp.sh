@@ -11,7 +11,7 @@ chmod +x minikube
 sudo apt-get update -y
 sudo apt-get install -y conntrack
 
-run: sudo minikube start --vm-driver=none --bootstrapper=kubeadm
+sudo minikube start --vm-driver=none --bootstrapper=kubeadm
 
 # TEST 1: Building and running the application
 
