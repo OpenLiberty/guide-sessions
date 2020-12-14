@@ -75,8 +75,3 @@ else
     echo "$getStatus"
     exit 1
 fi
-
-kubectl delete -f kubernetes.yaml
-eval $(minikube docker-env -u)
-minikube stop
-minikube delete
