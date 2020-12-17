@@ -20,13 +20,3 @@ cat Dockerfile
 sudo ../scripts/startMinikube.sh
 sudo ../scripts/testApp.sh
 sudo ../scripts/stopMinikube.sh
-
-echo "Testing daily Docker image"
-
-sed -i "s;FROM "$DOCKER_USERNAME"/olguides:"$BUILD";FROM openliberty/daily:latest;g" Dockerfile
-
-cat Dockerfile
-
-docker pull "openliberty/daily:latest"
-
-../scripts/testApp.sh
