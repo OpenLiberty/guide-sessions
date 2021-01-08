@@ -1,12 +1,6 @@
 #!/bin/bash
 set -euxo pipefail
 
-##############################################################################
-##
-##  Travis CI test script
-##
-##############################################################################
-
 # TEST 1: Building and running the application
 
 # LMP 3.0+ goals are listed here: https://github.com/OpenLiberty/ci.maven#goals
