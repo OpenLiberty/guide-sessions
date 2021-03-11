@@ -246,7 +246,7 @@ and then click the `Execute` button.
 The POST request adds a user-specified item and price to a session
 that represents data in a user's cart.
 
-Next, make a GET request to `/cart` endpoint. To make this request, expand the GET
+Next, make a GET request to the `/cart` endpoint. To make this request, expand the GET
 endpoint on the UI, click the `Try it out` button,
 and then click the `Execute` button. The GET request
 returns a pod name, a session ID, and all the items from your session.
