@@ -25,7 +25,10 @@ mvn package
 #       liberty:stop              - Stop a Liberty server.
 #       failsafe:verify           - Verifies that the integration tests of an application passed.
 mvn liberty:start
-mvn failsafe:integration-test liberty:stop
+mvn -Dhttp.keepAlive=false \
+    -Dmaven.wagon.http.pool=false \
+    -Dmaven.wagon.httpconnectionManager.ttlSeconds=120 \
+    failsafe:integration-test liberty:stop
 mvn failsafe:verify
 
 # TEST 2:  Running the application in Kubernetes
@@ -39,12 +42,12 @@ sleep 120
 
 kubectl get pods
 
-echo `minikube ip`
+minikube ip
 
 postStatus="$(curl -X POST "http://localhost:31000/guide-sessions/cart/eggs&2.29" --cookie "c.txt" --cookie-jar "c.txt")"
-getStatus="$(curl --write-out "%{http_code}\n" --silent --output /dev/null "http://`minikube ip`:31000/guide-sessions/cart" --cookie "c.txt" --cookie-jar "c.txt")"
-openApiStatus="$(curl --write-out "%{http_code}\n" --silent --output /dev/null "http://`minikube ip`:31000/openapi/ui/")"
-runningPod="$(curl --silent "http://`minikube ip`:31000/guide-sessions/cart" --cookie "c.txt" --cookie-jar "c.txt" | sed 's/^.*\(cart-.*\)/\1/' | sed 's/".*//')"
+getStatus="$(curl --write-out "%{http_code}\n" --silent --output /dev/null "http://$(minikube ip):31000/guide-sessions/cart" --cookie "c.txt" --cookie-jar "c.txt")"
+openApiStatus="$(curl --write-out "%{http_code}\n" --silent --output /dev/null "http://$(minikube ip):31000/openapi/ui/")"
+runningPod="$(curl --silent "http://$(minikube ip):31000/guide-sessions/cart" --cookie "c.txt" --cookie-jar "c.txt" | sed 's/^.*\(cart-.*\)/\1/' | sed 's/".*//')"
 
 echo post status 
 echo "$postStatus"
@@ -53,8 +56,8 @@ echo "$getStatus"
 echo running pod
 echo "$runningPod"
 
-kubectl exec $runningPod -- cat /logs/messages.log | grep product
-kubectl exec $runningPod -- cat /logs/messages.log | grep java
+kubectl exec "$runningPod" -- cat /logs/messages.log | grep product
+kubectl exec "$runningPod" -- cat /logs/messages.log | grep java
 
 if [ "$postStatus" == 'eggs added to your cart and costs $2.29' ] && [ "$getStatus" == "200" ] && [ "$openApiStatus" == "200" ]
 then
