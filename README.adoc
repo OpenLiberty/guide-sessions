@@ -235,7 +235,7 @@ https://docs.hazelcast.org/docs/latest/manual/html-single/#understanding-configu
 == Running the application
 
 [role="command"]
-include::{common-includes}/devmode-start.adoc[]
+include::{common-includes}/devmode-lmp33-start.adoc[]
 
 Point your browser to the link:http://localhost:9080/openapi/ui/[^] URL. This URL
 displays the available REST endpoints.
@@ -279,7 +279,7 @@ Run the `mvn package` command from the `start` directory so that the `.war` file
 mvn package
 ```
 
-include::{common-includes}/ol-kernel-docker-pull.adoc[]
+include::{common-includes}/ol-full-docker-pull.adoc[]
 
 To build and containerize the application, run the following Docker build command in the `start` directory:
 
@@ -299,7 +299,7 @@ Verify that the `cart-app:1.0-SNAPSHOT` image is listed among the Docker images,
 ----
 REPOSITORY                      TAG
 cart-app                        1.0-SNAPSHOT
-openliberty/open-liberty        kernel-java8-openj9-ubi
+openliberty/open-liberty        full-java8-openj9-ubi
 ----
 
 
