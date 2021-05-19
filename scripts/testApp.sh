@@ -57,7 +57,7 @@ echo "$runningPod"
 kubectl exec "$runningPod" -- cat /logs/messages.log | grep product
 kubectl exec "$runningPod" -- cat /logs/messages.log | grep java
 
-if [ "$postStatus" == 'eggs added to your cart and costs $2.29' ] && [ "$getStatus" == "200" ] && [ "$openApiStatus" == "200" ]
+if [ "$postStatus" == "eggs added to your cart and costs \$2.29" ] && [ "$getStatus" == "200" ] && [ "$openApiStatus" == "200" ]
 then
     echo POST/GET OK
 else
