@@ -59,7 +59,8 @@ public class CartSessionIT {
         assertResponse(getURL(GET, serverport), response);
 
         JsonObject obj = response.readEntity(JsonObject.class);
-        assertTrue(obj.getJsonArray("cart").isEmpty(), "The cart should be empty on application start but was not");
+        assertTrue(obj.getJsonArray("cart").isEmpty(),
+                   "The cart should be empty on application start but was not");
 
         response.close();
     }
@@ -71,19 +72,24 @@ public class CartSessionIT {
 
         Map<String, NewCookie> cookies = addToCartResponse.getCookies();
         Cookie cookie = ((NewCookie) cookies.values().iterator().next()).toCookie();
-        
+
         Response getCartResponse = getResponse(GET, serverport, cookie);
         assertResponse(getURL(POST, serverport), getCartResponse);
-        
+
         String actualAddToCart = addToCartResponse.readEntity(String.class);
         String expectedAddToCart = ITEM + " added to your cart and costs $" + PRICE;
 
         JsonObject actualGetCart = getCartResponse.readEntity(JsonObject.class);
         String expectedGetCart =  ITEM + " | $" + PRICE;
 
-        assertEquals(expectedAddToCart, actualAddToCart, "Adding item to cart response failed");
-        assertEquals(expectedGetCart, actualGetCart.getJsonArray("cart").getString(0), "Cart response did not match expected string");
-        assertEquals(actualGetCart.getJsonNumber("subtotal").doubleValue(), 20.0, 0.0, "Cart response did not match expected subtotal");
+        assertEquals(expectedAddToCart, actualAddToCart,
+                     "Adding item to cart response failed");
+        assertEquals(expectedGetCart, actualGetCart.getJsonArray("cart").getString(0),
+                     "Cart response did not match expected string");
+        assertEquals(PRICE, actualGetCart.getJsonNumber("subtotal")
+                                                    .doubleValue(),
+                     0.0,
+                     "Cart response did not match expected subtotal");
 
         addToCartResponse.close();
         getCartResponse.close();
@@ -98,13 +104,15 @@ public class CartSessionIT {
             result = client.target(url).request().post(Entity.form(form));
             break;
         case GET:
-        	WebTarget target = client.target(url);
-        	Builder builder = target.request(MediaType.APPLICATION_JSON_TYPE);
+            WebTarget target = client.target(url);
+            Builder builder = target.request(MediaType.APPLICATION_JSON_TYPE);
             if (cookie == null) {
-                result = builder.get(); 
+                result = builder.get();
             } else {
                 result = builder.cookie(cookie).get();
             }
+            break;
+        default:
             break;
         }
         return result;
@@ -120,12 +128,15 @@ public class CartSessionIT {
         case GET:
             result = "http://localhost:" + port + "/guide-sessions/cart";
             break;
+        default:
+            break;
         }
         return result;
     }
 
     private void assertResponse(String url, Response response) {
         assertEquals(200, response.getStatus(),
-                     "Incorrect response code from " + url + "\n" + response.readEntity(String.class));
+                     "Incorrect response code from " + url + "\n"
+                     + response.readEntity(String.class));
     }
 }
