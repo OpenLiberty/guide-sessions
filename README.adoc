@@ -186,7 +186,7 @@ server.xml
 include::finish/src/main/liberty/config/server.xml[]
 ----
 
-The [hotspot=library]`<library />` tag includes the library reference that indicates
+The [hotspot=library]`<library>` tag includes the library reference that indicates
 to the server where the Hazelcast implementation of JCache is located. 
 Your Hazelcast implementation of JCache is a JAR file that resides in the location that is defined by
 the [hotspot=hazelcastLib]`${hazelcast.lib}` variable.
@@ -206,7 +206,7 @@ By default, all Open Liberty servers that run the [hotspot=sessionCache file=0]`
 feature and Hazelcast are connected using a peer-to-peer model.
 
 You can share the session cache only among certain Hazelcast instances
-by using the [hotspot=group file=1]`<group />` configuration tag in the Hazelcast configuration file.
+by using the [hotspot=group file=1]`<group>` configuration tag in the Hazelcast configuration file.
 
 [role="code_command hotspot file=1", subs="quotes"]
 ----
@@ -237,8 +237,8 @@ https://docs.hazelcast.org/docs/latest/manual/html-single/#understanding-configu
 [role="command"]
 include::{common-includes}/devmode-lmp33-start.adoc[]
 
-Point your browser to the link:http://localhost:9080/openapi/ui/[^] URL. This URL
-displays the available REST endpoints.
+Point your browser to the link:http://localhost:9080/openapi/ui/[^] URL.
+This URL displays the available REST endpoints.
 
 First, make a POST request to the `/cart/{item}&{price}` endpoint. To make this request, expand the POST
 endpoint on the UI, click the `Try it out` button, provide an item and a price,

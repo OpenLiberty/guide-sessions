@@ -36,7 +36,7 @@
         uri="file:${server.config.dir}/hazelcast-config.xml" />
     <!-- end::httpSessionCache[] -->
     <!-- tag::library[] -->
-    <library id="jCacheVendorLib">
+    <library id="jCacheLib">
     	<!-- tag::hazelcastjar[] -->
         <file name="${hazelcast.lib}" />
         <!-- end::hazelcastjar[] -->
