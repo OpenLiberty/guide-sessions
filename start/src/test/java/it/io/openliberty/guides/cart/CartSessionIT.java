@@ -82,11 +82,13 @@ public class CartSessionIT {
         JsonObject actualGetCart = getCartResponse.readEntity(JsonObject.class);
         String expectedGetCart =  ITEM + " | $" + PRICE;
 
+        double expectedSubtotal = Double.parseDouble(PRICE);
+
         assertEquals(expectedAddToCart, actualAddToCart,
                      "Adding item to cart response failed");
         assertEquals(expectedGetCart, actualGetCart.getJsonArray("cart").getString(0),
                      "Cart response did not match expected string");
-        assertEquals(PRICE, actualGetCart.getJsonNumber("subtotal")
+        assertEquals(expectedSubtotal, actualGetCart.getJsonNumber("subtotal")
                                                     .doubleValue(),
                      0.0,
                      "Cart response did not match expected subtotal");
@@ -137,6 +139,6 @@ public class CartSessionIT {
     private void assertResponse(String url, Response response) {
         assertEquals(200, response.getStatus(),
                      "Incorrect response code from " + url + "\n"
-                     + response.readEntity(String.class));
+                     + response.getEntity());
     }
 }
