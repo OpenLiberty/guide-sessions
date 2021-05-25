@@ -26,17 +26,17 @@
     <variable name="default.https.port" defaultValue="9443"/>
     <variable name="app.context.root" defaultValue="guide-sessions"/>
     <!-- tag::hazelcastLib[] -->
-    <variable name="hazelcast.lib" defaultValue="${shared.resource.dir}/hazelcast.jar"/>
+    <variable name="hazelcast.lib" defaultValue="${shared.resource.dir}/jcache/JCacheProvider.jar"/>
     <!-- end::hazelcastLib[] -->
 
     <httpEndpoint httpPort="${default.http.port}" httpsPort="${default.https.port}"
         id="defaultHttpEndpoint" host="*" />
     <!-- tag::httpSessionCache[] -->
-    <httpSessionCache libraryRef="jCacheVendorLib"
-        uri="file:${server.config.dir}/hazelcast-config.xml" />
+    <httpSessionCache libraryRef="JCacheLib"
+        uri="${server.config.dir}hazelcast-config.xml" />
     <!-- end::httpSessionCache[] -->
     <!-- tag::library[] -->
-    <library id="jCacheLib">
+    <library id="JCacheLib">
     	<!-- tag::hazelcastjar[] -->
         <file name="${hazelcast.lib}" />
         <!-- end::hazelcastjar[] -->

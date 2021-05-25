@@ -16,7 +16,7 @@
         <liberty.var.default.http.port>9080</liberty.var.default.http.port>
         <liberty.var.default.https.port>9443</liberty.var.default.https.port>
         <liberty.var.app.context.root>${project.artifactId}</liberty.var.app.context.root>
-        <liberty.var.hazelcast.lib>${hazelcast.path}/3.12.6/hazelcast-3.12.6.jar</liberty.var.hazelcast.lib>
+        <liberty.var.hazelcast.lib>${hazelcast.path}/4.2/hazelcast-4.2.jar</liberty.var.hazelcast.lib>
     </properties>
 
     <dependencies>
