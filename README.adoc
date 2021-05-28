@@ -205,6 +205,9 @@ include::finish/src/main/liberty/config/server.xml[]
 By default, all Open Liberty servers that run the [hotspot=sessionCache file=0]`sessionCache`
 feature and Hazelcast are connected using a peer-to-peer model.
 
+You can share the session cache only among certain Hazelcast instances
+by using the [hotspot=group file=1]`<group />` configuration tag in the Hazelcast configuration file.
+
 [role="code_command hotspot file=1", subs="quotes"]
 ----
 #Create the `hazelcast-config.xml` configuration file.#
