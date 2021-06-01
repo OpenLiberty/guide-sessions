@@ -33,7 +33,7 @@
         id="defaultHttpEndpoint" host="*" />
     <!-- tag::httpSessionCache[] -->
     <httpSessionCache libraryRef="jCacheVendorLib"
-        uri="${server.config.dir}/hazelcast-config.xml" />
+        uri="file:${server.config.dir}/hazelcast-config.xml" />
     <!-- end::httpSessionCache[] -->
     <!-- tag::library[] -->
     <library id="jCacheVendorLib">
