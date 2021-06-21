@@ -237,8 +237,20 @@ https://docs.hazelcast.org/docs/latest/manual/html-single/#understanding-configu
 [role="command"]
 include::{common-includes}/devmode-lmp33-start.adoc[]
 
+// Static guide instruction
+ifndef::cloud-hosted[]
 Point your browser to the link:http://localhost:9080/openapi/ui/[^] URL.
 This URL displays the available REST endpoints.
+endif::[]
+
+// Cloud hosted guide instruction
+ifdef::cloud-hosted[]
+Select **Launch Application** from the menu of the IDE, 
+type in **9080** to specify the port number for the microservice, and click the **OK** button. 
+You can now check out the service by going to the **`https://accountname-9080.theiadocker-4.proxy.cognitiveclass.ai`** URL, 
+where **accountname** is your account name.
+This URL displays the available REST endpoints.
+endif::[]
 
 First, make a POST request to the `/cart/{item}&{price}` endpoint. To make this request, expand the POST
 endpoint on the UI, click the `Try it out` button, provide an item and a price,
