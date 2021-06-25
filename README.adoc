@@ -15,7 +15,7 @@
 :page-tags: ['Docker']
 :page-related-guides: ['rest-intro', 'microprofile-openapi', 'kubernetes-intro']
 :page-permalink: /guides/{projectid}
-:common-includes: https://raw.githubusercontent.com/OpenLiberty/guides-common/master
+:common-includes: https://raw.githubusercontent.com/OpenLiberty/guides-common/prod
 :imagesdir: /img/guide/{projectid}
 :page-seo-title: Caching HTTP session data using JCache and Hazelcast
 :page-seo-description: A getting started tutorial with examples on how to create, use, and cache HTTP session data for an enterprise Java application on a Kubernetes cluster by using Java Caching (JCache).
