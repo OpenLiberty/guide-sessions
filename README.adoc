@@ -393,14 +393,14 @@ Point your browser to the link:http://localhost:31000/openapi/ui/[^] URL.
 This URL displays the available REST endpoints.
 --
 
-ifndef::cloud-hosted[]
 [.tab_content.linux_section]
 --
+ifndef::cloud-hosted[]
 Run the `minikube ip` command to get the hostname for minikube.
 Then, go to the `http://[hostname]:31000/openapi/ui/` URL in your browser. 
 This URL displays the available REST endpoints.
---
 endif::[]
+--
 
 ifdef::cloud-hosted[]
 Open another command-line session by selecting **Terminal** > **New Terminal** from the menu of the IDE.
@@ -410,6 +410,7 @@ CART_NODEPORT=`kubectl get -o jsonpath="{.spec.ports[0].nodePort}" services cart
 echo https://${USERNAME}-${CART_NODEPORT}.$(echo $TOOL_DOMAIN | sed 's/\.labs\./.proxy./g')/openapi/ui
 ```
 {: codeblock}
+
 This URL displays the available REST endpoints.
 endif::[]
 
