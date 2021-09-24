@@ -270,9 +270,17 @@ include::{common-includes}/devmode-quit.adoc[]
 // =================================================================================================
 // Staring and preparing your cluster for deployment
 // =================================================================================================
+// Static guide instruction
+ifndef::cloud-hosted[]
 [role='command']
 include::{common-includes}/kube-start.adoc[]
+endif::[]
 
+// =================================================================================================
+// Logging into your cluster
+// =================================================================================================
+[role='command']
+include::{common-includes}/skills-network-kube-setup.adoc[]
 
 == Containerizing the application
 
