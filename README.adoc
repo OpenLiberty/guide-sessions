@@ -248,7 +248,7 @@ ifdef::cloud-hosted[]
 Once your application is up and running, use the following command to get the URL.
 Open your browser and check out your service by going to the URL that the command returns.
 ```
-echo http://${USERNAME}-9080.$(echo $TOOL_DOMAIN | sed 's/\.labs\./.proxy./g')
+echo http://${USERNAME}-9080.$(echo $TOOL_DOMAIN | sed 's/\.labs\./.proxy./g')/openapi/ui
 ```
 {: codeblock} 
 endif::[]
@@ -329,6 +329,16 @@ If the images built without errors, push them to your container registry on IBM 
 docker tag cart-app:1.0-SNAPSHOT us.icr.io/$NAMESPACE_NAME/cart-app:1.0-SNAPSHOT
 docker push us.icr.io/$NAMESPACE_NAME/cart-app:1.0-SNAPSHOT
 ```
+{: codeblock}
+
+Update the image names so that the images in your IBM Cloud container registry are used,
+and remove the **nodePort** fields so that the ports can be generated automatically:
+
+```
+sed -i 's=cart-app:1.0-SNAPSHOT=us.icr.io/'"$NAMESPACE_NAME"'/cart-app:1.0-SNAPSHOT\n        imagePullPolicy: Always=g' kubernetes.yaml
+sed -i 's=nodePort: 31000==g' kubernetes.yaml
+```
+{: codeblock}
 endif::[]
 
 == Deploying and running the application in Kubernetes
@@ -338,18 +348,6 @@ kubernetes.yaml
 ----
 include::finish/kubernetes.yaml[]
 ----
-
-ifdef::cloud-hosted[]
-Update the image names so that the images in your IBM Cloud container registry are used,
-and remove the **nodePort** fields so that the ports can be generated automatically:
-
-```
-sed -i 's=cart-app:1.0-SNAPSHOT=us.icr.io/'"$NAMESPACE_NAME"'/cart-app:1.0-SNAPSHOT\n
-imagePullPolicy: Always=g' kubernetes.yaml
-sed -i 's=nodePort: 31000==g' kubernetes.yaml
-```
-{: codeblock}
-endif::[]
 
 Now that the containerized application is built, deploy it to a local Kubernetes cluster by using
 a Kubernetes resource definition, which is provided in the [hotspot file=0]`kubernetes.yaml` file
@@ -382,8 +380,9 @@ ifdef::cloud-hosted[]
 Run the following commands to get the necessary port to connect to the application.
 ```
 CART_NODEPORT=`kubectl get -o jsonpath="{.spec.ports[0].nodePort}" services cart-service`
-kubectl port-forward svc/system-service $CART_NODEPORT:9080
+kubectl port-forward svc/cart-service $CART_NODEPORT:9080
 ```
+{: codeblock}
 endif::[]
 
 include::{common-includes}/os-tabs.adoc[]
@@ -410,6 +409,7 @@ Run the following commands to get the URL to access the application.
 CART_NODEPORT=`kubectl get -o jsonpath="{.spec.ports[0].nodePort}" services cart-service`
 echo https://${USERNAME}-${CART_NODEPORT}.$(echo $TOOL_DOMAIN | sed 's/\.labs\./.proxy./g')/openapi/ui
 ```
+{: codeblock}
 This URL displays the available REST endpoints.
 endif::[]
 
@@ -489,15 +489,15 @@ by running the `kubectl delete` command:
 ```
 kubectl delete -f kubernetes.yaml
 ```
-
+ifndef::cloud-hosted[]
 [role='command']
 include::{common-includes}/kube-minikube-teardown.adoc[]
+endif::[]
 
 
 == Great work! You're done!
 
-You have created, used, and cached HTTP session data for an application that was running on Open Liberty server
-and deployed in a Kubernetes cluster.
+You have created, used, and cached HTTP session data for an application that was running on Open Liberty server and deployed in a Kubernetes cluster.
 
 
 include::{common-includes}/attribution.adoc[subs="attributes"]
