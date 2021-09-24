@@ -322,6 +322,13 @@ cart-app                        1.0-SNAPSHOT
 openliberty/open-liberty        full-java11-openj9-ubi
 ----
 
+ifdef::cloud-hosted[]
+If the images built without errors, push them to your container registry on IBM Cloud with the following commands:
+```
+docker tag cart-app:1.0-SNAPSHOT us.icr.io/$NAMESPACE_NAME/cart-app:1.0-SNAPSHOT
+docker push us.icr.io/$NAMESPACE_NAME/cart-app:1.0-SNAPSHOT
+```
+endif::[]
 
 == Deploying and running the application in Kubernetes
 
@@ -330,6 +337,18 @@ kubernetes.yaml
 ----
 include::finish/kubernetes.yaml[]
 ----
+
+ifdef::cloud-hosted[]
+Update the image names so that the images in your IBM Cloud container registry are used,
+and remove the **nodePort** fields so that the ports can be generated automatically:
+
+```
+sed -i 's=cart-app:1.0-SNAPSHOT=us.icr.io/'"$NAMESPACE_NAME"'/cart-app:1.0-SNAPSHOT\n
+imagePullPolicy: Always=g' kubernetes.yaml
+sed -i 's=nodePort: 31000==g' kubernetes.yaml
+```
+{: codeblock}
+endif::[]
 
 Now that the containerized application is built, deploy it to a local Kubernetes cluster by using
 a Kubernetes resource definition, which is provided in the [hotspot file=0]`kubernetes.yaml` file
@@ -358,6 +377,13 @@ cart-deployment-98f4ff789-6rvfj  1/1    Running  0         17s
 cart-deployment-98f4ff789-qrh45  1/1    Running  0         17s
 ----
 
+ifdef::cloud-hosted[]
+Run the following commands to get the necessary port to connect to the application.
+```
+CART_NODEPORT=`kubectl get -o jsonpath="{.spec.ports[0].nodePort}" services cart-service`
+kubectl port-forward svc/system-service $CART_NODEPORT:9080
+```
+endif::[]
 
 include::{common-includes}/os-tabs.adoc[]
 
@@ -367,12 +393,24 @@ Point your browser to the link:http://localhost:31000/openapi/ui/[^] URL.
 This URL displays the available REST endpoints.
 --
 
+ifndef::cloud-hosted[]
 [.tab_content.linux_section]
 --
 Run the `minikube ip` command to get the hostname for minikube.
 Then, go to the `http://[hostname]:31000/openapi/ui/` URL in your browser. 
 This URL displays the available REST endpoints.
 --
+endif::[]
+
+ifdef::cloud-hosted[]
+Open another command-line session by selecting **Terminal** > **New Terminal** from the menu of the IDE.
+Run the following commands to get the URL to access the application.
+```
+CART_NODEPORT=`kubectl get -o jsonpath="{.spec.ports[0].nodePort}" services cart-service`
+echo https://${USERNAME}-${CART_NODEPORT}.$(echo $TOOL_DOMAIN | sed 's/\.labs\./.proxy./g')/openapi/ui
+```
+This URL displays the available REST endpoints.
+endif::[]
 
 Make a POST request to the `/cart/{item}&{price}` endpoint. To make this request, expand the POST
 endpoint on the UI, click the `Try it out` button, provide an item and a price,
