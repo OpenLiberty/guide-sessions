@@ -279,7 +279,7 @@ Run the `mvn package` command from the `start` directory so that the `.war` file
 mvn package
 ```
 
-include::{common-includes}/ol-full-docker-pull.adoc[]
+include::{common-includes}/ol-icr-full-docker-pull.adoc[]
 
 To build and containerize the application, run the following Docker build command in the `start` directory:
 
@@ -400,7 +400,7 @@ You see a message similar to the following:
 
 [role="no_copy"]
 ----
-... I [10.1.0.46]:5701 [CartCluster] [3.11.2]
+... [10.1.0.46]:5701 [CartCluster] [3.11.2]
 
 Members {size:3, ver:3} [
 	Member [10.1.0.40]:5701 - 01227d80-501e-4789-ae9d-6fb348d794ea
