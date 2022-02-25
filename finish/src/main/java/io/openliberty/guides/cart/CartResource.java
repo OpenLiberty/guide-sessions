@@ -71,8 +71,8 @@ public class CartResource {
     @Produces(MediaType.APPLICATION_JSON)
     @APIResponse(responseCode = "200",
         description = "Items successfully retrieved from your cart.")
-    @Operation(summary = "Return an JsonObject instance which contains " +
-                         "the items in your cart and the subtotal.")
+    @Operation(summary = "Return an JsonObject instance which contains "
+                         + "the items in your cart and the subtotal.")
     // tag::getCart[]
     public JsonObject getCart(@Context HttpServletRequest request) {
         HttpSession session = request.getSession();
@@ -102,8 +102,9 @@ public class CartResource {
 
     private String getHostname() {
         String hostname = System.getenv("HOSTNAME");
-        if (hostname == null)
-        	hostname = "localhost";
-        	return hostname;
+        if (hostname == null) {
+            hostname = "localhost";
+        }
+            return hostname;
     }
 }
