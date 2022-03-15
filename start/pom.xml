@@ -109,7 +109,7 @@
                         <artifactItem>
                             <groupId>com.hazelcast</groupId>
                             <artifactId>hazelcast</artifactId>
-                            <version>3.12.12</version>
+                            <version>5.1</version>
                             <type>jar</type>
                         </artifactItem>
                     </artifactItems>
