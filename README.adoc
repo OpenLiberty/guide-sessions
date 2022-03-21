@@ -1,4 +1,4 @@
-// Copyright (c) 2019, 2021 IBM Corporation and others.
+// Copyright (c) 2019, 2022 IBM Corporation and others.
 // Licensed under Creative Commons Attribution-NoDerivatives
 // 4.0 International (CC BY-ND 4.0)
 //   https://creativecommons.org/licenses/by-nd/4.0/
@@ -35,39 +35,17 @@ Learn how to create, use, and cache HTTP session data for your application.
 
 === What is a session?
 // *Session* +
-On the internet, a web server doesn't know who you are or what you do
-because it's processing stateless HTTP requests. An HTTP session provides a way to store
-information to be used across multiple requests.
-Session variables store user information like user name or items in a shopping cart.
-By default, session variables will timeout after 30 minutes of being unused.
-Cookies, which also store user information, are maintained on a client's computer,
-whereas session variables are maintained on a web server. For security reasons,
-an HTTP session is preferred over cookies when used with sensitive data.
-A session hides data from users.
-Cookies can be manipulated by a savvy user to make fake requests to your site.
+On the internet, a web server doesn't know who you are or what you do because it's processing stateless HTTP requests. An HTTP session provides a way to store information to be used across multiple requests. Session variables store user information like user name or items in a shopping cart. By default, session variables will timeout after 30 minutes of being unused. Cookies, which also store user information, are maintained on a client's computer, whereas session variables are maintained on a web server. For security reasons, an HTTP session is preferred over cookies when used with sensitive data. A session hides data from users. Cookies can be manipulated by a savvy user to make fake requests to your site.
 
 === What is session persistence?
 // *Session caching* +
-High traffic websites must support thousands of users in a fast and reliable way.
-Load balancing requires running several instances of the same application in parallel
-so that traffic can be routed to different instances to maximize speed and reliability.
-Unless a user is tied to a particular instance, running multiple instances of the same
-application can pose an out-of-sync problem when each instance keeps an isolated copy of its
-session data. HTTP session data caching can solve this problem by allowing all
-instances of the application to share caches among each other.
-Sharing caches among instances eliminates the need to route a user to the same instance
-and helps in failover situations by distributing the cache.
+High traffic websites must support thousands of users in a fast and reliable way. Load balancing requires running several instances of the same application in parallel so that traffic can be routed to different instances to maximize speed and reliability. Unless a user is tied to a particular instance, running multiple instances of the same application can pose an out-of-sync problem when each instance keeps an isolated copy of its session data. HTTP session data caching can solve this problem by allowing all instances of the application to share caches among each other. Sharing caches among instances eliminates the need to route a user to the same instance and helps in failover situations by distributing the cache.
 
 image::sessionCache.png[Session Cache,width=100%]
 
-You will learn how to build an application that creates and uses HTTP session data.
-You will also learn how to use Open Liberty's `sessionCache` feature to persist HTTP sessions
-by using Java Caching (JCache), the standard caching API for Java.
+You will learn how to build an application that creates and uses HTTP session data. You will also learn how to use Open Liberty's `sessionCache` feature to persist HTTP sessions by using Java Caching (JCache), the standard caching API for Java.
 
-You will containerize and deploy the application to a local Kubernetes cluster.
-You will then replicate the application in multiple pods and see that the session data is cached and
-shared among all instances of the application. Even if an instance is unavailable, the other instances
-are able to take over and handle requests from the same user by using the cached session data.
+You will containerize and deploy the application to a local Kubernetes cluster. You will then replicate the application in multiple pods and see that the session data is cached and shared among all instances of the application. Even if an instance is unavailable, the other instances are able to take over and handle requests from the same user by using the cached session data.
 
 
 // =================================================================================================
@@ -85,12 +63,7 @@ include::{common-includes}/gitclone.adoc[]
 
 == Creating the application
 
-The application that you are working with is a shopping cart web service that uses JAX-RS,
-which is a Java API for building RESTful web services.
-You'll learn how to persist a user's shopping cart data between servers by using the
-`sessionCache` feature in Open Liberty. The `sessionCache` feature persists HTTP
-sessions using JCache. You can have high-performance HTTP session persistence
-without using a relational database.
+The application that you are working with is a shopping cart web service that uses JAX-RS, which is a Java API for building RESTful web services. You'll learn how to persist a user's shopping cart data between servers by using the `sessionCache` feature in Open Liberty. The `sessionCache` feature persists HTTP sessions using JCache. You can have high-performance HTTP session persistence without using a relational database.
 
 Navigate to the `start` directory to begin.
 
@@ -119,60 +92,31 @@ CartResource.java
 include::finish/src/main/java/io/openliberty/guides/cart/CartResource.java[]
 ----
 
-The [hotspot file=1]`CartResource` class defines the REST endpoints at which a user can make
-an HTTP request.
+The [hotspot file=1]`CartResource` class defines the REST endpoints at which a user can make an HTTP request.
 
-The [hotspot=addToCart file=1]`addToCart` and [hotspot=getCart file=1]`getCart` methods
-have a number of annotations. Most of these annotations are used by the
-MicroProfile OpenAPI and JAX-RS features to document the REST endpoints and map Java objects to web resources.
-More information about these annotations can be found in the
-https://openliberty.io/guides/microprofile-openapi.html#augmenting-the-existing-jax-rs-annotations-with-openapi-annotations[Documenting RESTful APIs^]
-and
-https://openliberty.io/guides/rest-intro.html#creating-a-jax-rs-application[Creating a RESTful web service^]
-guides.
+The [hotspot=addToCart file=1]`addToCart` and [hotspot=getCart file=1]`getCart` methods have a number of annotations. Most of these annotations are used by the MicroProfile OpenAPI and JAX-RS features to document the REST endpoints and map Java objects to web resources. More information about these annotations can be found in the https://openliberty.io/guides/microprofile-openapi.html#augmenting-the-existing-jax-rs-annotations-with-openapi-annotations[Documenting RESTful APIs^] and https://openliberty.io/guides/rest-intro.html#creating-a-jax-rs-application[Creating a RESTful web service^] guides.
 
-The [hotspot=endpointCartItemPrice file=1]`cart/{item}&{price}` endpoint demonstrates how to set session data.
-The [hotspot=item hotspot=price file=1]`@PathParam` annotation injects a custom [hotspot=item file=1]`item` and
-[hotspot=price file=1]`price` from the POST request into the method parameter.
-The [hotspot=addToCart file=1]`addToCart` method gets the current [hotspot=getSession file=1]`session` and binds
-the `{item}:{price}` key-value pair into the session by the [hotspot=setAttribute file=1]`setAttribute()` method.
-A response is then built and returned to confirm that an item was added to your cart and session.
+The [hotspot=endpointCartItemPrice file=1]`cart/{item}&{price}` endpoint demonstrates how to set session data. The [hotspot=item hotspot=price file=1]`@PathParam` annotation injects a custom [hotspot=item file=1]`item` and [hotspot=price file=1]`price` from the POST request into the method parameter. The [hotspot=addToCart file=1]`addToCart` method gets the current [hotspot=getSession file=1]`session` and binds the `{item}:{price}` key-value pair into the session by the [hotspot=setAttribute file=1]`setAttribute()` method. A response is then built and returned to confirm that an item was added to your cart and session.
 
-The [hotspot=endpointCart file=1]`cart` endpoint demonstrates how to get session data.
-The [hotspot=getCart file=1]`getCart` method gets the current session, iterates through all key-value
-pairs that are stored in the current session, and creates a `JsonObject` response.
-The `JsonObject` response is returned to confirm the server instance by
-[hotspot=podname file=1]`pod-name`, the session by [hotspot=sessionid file=1]`session-id`,
-and the items in your cart by [hotspot=cart file=1]`cart`.
+The [hotspot=endpointCart file=1]`cart` endpoint demonstrates how to get session data. The [hotspot=getCart file=1]`getCart` method gets the current session, iterates through all key-value pairs that are stored in the current session, and creates a `JsonObject` response. The `JsonObject` response is returned to confirm the server instance by [hotspot=podname file=1]`pod-name`, the session by [hotspot=sessionid file=1]`session-id`, and the items in your cart by [hotspot=cart file=1]`cart`.
 
 
 == Configuring session persistence
 
 === Using client-server vs peer-to-peer model
 
-Session caching is only valuable when a server is connected to at least
-one other member. There are two different ways session caching can behave in a
-cluster environment:
+Session caching is only valuable when a server is connected to at least one other member. There are two different ways session caching can behave in a cluster environment:
 
-* Client-server model: A Liberty server can act as the JCache client and connect
-to a dedicated JCache server.
-* Peer-to-peer model: A Liberty server can connect with other Liberty servers
-that are also running with the session cache and configured to be
-part of the same cluster.
+* Client-server model: A Liberty server can act as the JCache client and connect to a dedicated JCache server.
+* Peer-to-peer model: A Liberty server can connect with other Liberty servers that are also running with the session cache and configured to be part of the same cluster.
 
 You'll use the peer-to-peer model in a Kubernetes environment for this guide.
 
 === Configuring session persistence with JCache in Open Liberty
 
-JCache, which stands for Java Caching, is an interface
-to standardize distributed caching on the Java platform.
-The [hotspot=sessionCache]`sessionCache` feature uses JCache, which allows for session
-persistence by providing a common cache of session data between servers.
-This feature doesn't include a JCache implementation.
-For this guide, you'll use Hazelcast as an open source JCache provider.
+JCache, which stands for Java Caching, is an interface to standardize distributed caching on the Java platform. The [hotspot=sessionCache]`sessionCache` feature uses JCache, which allows for session persistence by providing a common cache of session data between servers. This feature doesn't include a JCache implementation. For this guide, you'll use Hazelcast as an open source JCache provider.
 
-Hazelcast is a JCache provider. Open Liberty needs to be configured to use
-Hazelcast after the [hotspot=sessionCache]`sessionCache` feature is enabled.
+Hazelcast is a JCache provider. Open Liberty needs to be configured to use Hazelcast after the [hotspot=sessionCache]`sessionCache` feature is enabled.
 
 [role="code_command hotspot", subs="quotes"]
 ----
@@ -186,13 +130,7 @@ server.xml
 include::finish/src/main/liberty/config/server.xml[]
 ----
 
-The [hotspot=library]`library` element includes the library reference that indicates
-to the server where the Hazelcast implementation of JCache is located. 
-Your Hazelcast implementation of JCache is a JAR file that resides in the location that is defined by
-the [hotspot=hazelcastLib]`${hazelcast.lib}` variable.
-The [hotspot=hazelcastjar]`hazelcast.jar` file is downloaded as a dependency and copied to the
-predefined `target` directory when the Maven build runs. This goal is defined in the
-provided Maven POM file.
+The [hotspot=library]`library` element includes the library reference that indicates to the server where the Hazelcast implementation of JCache is located. Your Hazelcast implementation of JCache is a JAR file that resides in the location that is defined by the [hotspot=hazelcastLib]`${hazelcast.lib}` variable. The [hotspot=hazelcastjar]`hazelcast.jar` file is downloaded as a dependency and copied to the predefined `target` directory when the Maven build runs. This goal is defined in the provided Maven POM file.
 
 === Configuring Hazelcast
 
@@ -202,11 +140,9 @@ server.xml
 include::finish/src/main/liberty/config/server.xml[]
 ----
 
-By default, all Open Liberty servers that run the [hotspot=sessionCache file=0]`sessionCache`
-feature and Hazelcast are connected using a peer-to-peer model.
+By default, all Open Liberty servers that run the [hotspot=sessionCache file=0]`sessionCache` feature and Hazelcast are connected using a peer-to-peer model.
 
-You can share the session cache only among certain Hazelcast instances
-by using the [hotspot=group file=1]`group` configuration element in the Hazelcast configuration file.
+You can share the session cache only among certain Hazelcast instances by using the [hotspot=group file=1]`group` configuration element in the Hazelcast configuration file.
 
 [role="code_command hotspot file=1", subs="quotes"]
 ----
@@ -222,11 +158,9 @@ include::finish/src/main/liberty/config/hazelcast-config.xml[]
 
 The cluster group [hotspot=cartCluster file=1]`CartCluster` is defined in the [hotspot file=1]`hazelcast-config.xml`.
 
-In the [hotspot file=0]`server.xml` file, a reference to the Hazelcast configuration file is made by using
-the [hotspot=httpSessionCache file=0]`httpSessionCache` tag.
+In the [hotspot file=0]`server.xml` file, a reference to the Hazelcast configuration file is made by using the [hotspot=httpSessionCache file=0]`httpSessionCache` tag.
 
-There are more configuration settings that you can explore in the
-https://docs.hazelcast.org/docs/latest/manual/html-single/#understanding-configuration[Hazelcast documentation^].
+There are more configuration settings that you can explore in the https://docs.hazelcast.org/docs/latest/manual/html-single/#understanding-configuration[Hazelcast documentation^].
 
 // =================================================================================================
 // Running the application
@@ -237,19 +171,11 @@ https://docs.hazelcast.org/docs/latest/manual/html-single/#understanding-configu
 [role="command"]
 include::{common-includes}/devmode-lmp33-start.adoc[]
 
-Point your browser to the link:http://localhost:9080/openapi/ui/[^] URL.
-This URL displays the available REST endpoints.
+Point your browser to the link:http://localhost:9080/openapi/ui/[^] URL. This URL displays the available REST endpoints.
 
-First, make a POST request to the `/cart/{item}&{price}` endpoint. To make this request, expand the POST
-endpoint on the UI, click the `Try it out` button, provide an item and a price,
-and then click the `Execute` button.
-The POST request adds a user-specified item and price to a session
-that represents data in a user's cart.
+First, make a POST request to the `/cart/{item}&{price}` endpoint. To make this request, expand the POST endpoint on the UI, click the `Try it out` button, provide an item and a price, and then click the `Execute` button. The POST request adds a user-specified item and price to a session that represents data in a user's cart.
 
-Next, make a GET request to the `/cart` endpoint. To make this request, expand the GET
-endpoint on the UI, click the `Try it out` button,
-and then click the `Execute` button. The GET request
-returns a pod name, a session ID, and all the items from your session.
+Next, make a GET request to the `/cart` endpoint. To make this request, expand the GET endpoint on the UI, click the `Try it out` button, and then click the `Execute` button. The GET request returns a pod name, a session ID, and all the items from your session.
 
 [role='command']
 include::{common-includes}/devmode-quit.adoc[]
@@ -268,9 +194,7 @@ Before you can deploy the application to Kubernetes, you need to containerize it
 
 Make sure to start your Docker daemon before you proceed.
 
-The Dockerfile is provided at the `start` directory. If you're unfamiliar with Dockerfile,
-check out the https://openliberty.io/guides/containerize.html[Containerizing microservices^] guide,
-which covers Dockerfile in depth.
+The Dockerfile is provided at the `start` directory. If you're unfamiliar with Dockerfile, check out the https://openliberty.io/guides/containerize.html[Containerizing microservices^] guide, which covers Dockerfile in depth.
 
 Run the `mvn package` command from the `start` directory so that the `.war` file resides in the `target` directory.
 
@@ -311,12 +235,9 @@ kubernetes.yaml
 include::finish/kubernetes.yaml[]
 ----
 
-Now that the containerized application is built, deploy it to a local Kubernetes cluster by using
-a Kubernetes resource definition, which is provided in the [hotspot file=0]`kubernetes.yaml` file
-at the `start` directory.
+Now that the containerized application is built, deploy it to a local Kubernetes cluster by using a Kubernetes resource definition, which is provided in the [hotspot file=0]`kubernetes.yaml` file at the `start` directory.
 
-Run the following command to deploy the application into [hotspot=replicas file=0]`3` replicated pods as defined
-in the `kubernetes.yaml` file:
+Run the following command to deploy the application into [hotspot=replicas file=0]`3` replicated pods as defined in the `kubernetes.yaml` file:
 [role='command']
 ```
 kubectl apply -f kubernetes.yaml
@@ -343,26 +264,17 @@ include::{common-includes}/os-tabs.adoc[]
 
 [.tab_content.windows_section.mac_section]
 --
-Point your browser to the link:http://localhost:31000/openapi/ui/[^] URL.
-This URL displays the available REST endpoints.
+Point your browser to the link:http://localhost:31000/openapi/ui/[^] URL. This URL displays the available REST endpoints.
 --
 
 [.tab_content.linux_section]
 --
-Run the `minikube ip` command to get the hostname for minikube.
-Then, go to the `http://[hostname]:31000/openapi/ui/` URL in your browser. 
-This URL displays the available REST endpoints.
+Run the `minikube ip` command to get the hostname for minikube. Then, go to the `http://[hostname]:31000/openapi/ui/` URL in your browser.  This URL displays the available REST endpoints.
 --
 
-Make a POST request to the `/cart/{item}&{price}` endpoint. To make this request, expand the POST
-endpoint on the UI, click the `Try it out` button, provide an item and a price,
-and then click the `Execute` button.
-The POST request adds a user-specified item and price to a session
-that represents data in a user's cart.
+Make a POST request to the `/cart/{item}&{price}` endpoint. To make this request, expand the POST endpoint on the UI, click the `Try it out` button, provide an item and a price, and then click the `Execute` button. The POST request adds a user-specified item and price to a session that represents data in a user's cart.
 
-Next, make a GET request to the `/cart` endpoint. To make this request, expand the GET
-endpoint on the UI, click the `Try it out` button, and then click the `Execute` button.
-The GET request returns a pod name, a session ID, and all the items from your session.
+Next, make a GET request to the `/cart` endpoint. To make this request, expand the GET endpoint on the UI, click the `Try it out` button, and then click the `Execute` button. The GET request returns a pod name, a session ID, and all the items from your session.
 
 [role="no_copy"]
 ----
@@ -376,20 +288,16 @@ The GET request returns a pod name, a session ID, and all the items from your se
 }
 ----
 
-Replace the `[pod-name]` in the following command, and then run the command to pause
-the pod for the GET request that you just ran:
+Replace the `[pod-name]` in the following command, and then run the command to pause the pod for the GET request that you just ran:
 
 [role='command']
 ```
 kubectl exec -it [pod-name] -- /opt/ol/wlp/bin/server pause
 ```
 
-Repeat the GET request. You see the same `session-id`
-but a different `pod-name` because the session data is cached but the request
-is served by a different pod (server).
+Repeat the GET request. You see the same `session-id` but a different `pod-name` because the session data is cached but the request is served by a different pod (server).
 
-Verify that the Hazelcast cluster is running by checking the Open Liberty log. 
-To check the log, run the following command:
+Verify that the Hazelcast cluster is running by checking the Open Liberty log. To check the log, run the following command:
 
 [role='command']
 ```
@@ -423,8 +331,7 @@ kubectl exec -it [pod-name] -- /opt/ol/wlp/bin/server resume
 
 == Tearing down the environment
 
-When you no longer need your deployed application, you can delete all {kube} resources
-by running the `kubectl delete` command:
+When you no longer need your deployed application, you can delete all {kube} resources by running the `kubectl delete` command:
 
 [role='command']
 ```
@@ -437,8 +344,7 @@ include::{common-includes}/kube-minikube-teardown.adoc[]
 
 == Great work! You're done!
 
-You have created, used, and cached HTTP session data for an application that was running on Open Liberty server
-and deployed in a Kubernetes cluster.
+You have created, used, and cached HTTP session data for an application that was running on Open Liberty server and deployed in a Kubernetes cluster.
 
 
 include::{common-includes}/attribution.adoc[subs="attributes"]
