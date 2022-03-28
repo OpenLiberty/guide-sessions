@@ -32,8 +32,10 @@
     <httpEndpoint httpPort="${default.http.port}" httpsPort="${default.https.port}"
         id="defaultHttpEndpoint" host="*" />
     <!-- tag::httpSessionCache[] -->
-    <httpSessionCache libraryRef="jCacheVendorLib"
-        uri="file:${server.config.dir}/hazelcast-config.xml" />
+       <httpSessionCache libraryRef="jCacheVendorLib"
+        hazelcast.jcache.provider.type="member"
+        hazelcast.config.location="file:${server.config.dir}/hazelcast-config
+    />
     <!-- end::httpSessionCache[] -->
     <!-- tag::library[] -->
     <library id="jCacheVendorLib">

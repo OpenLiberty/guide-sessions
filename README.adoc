@@ -237,6 +237,8 @@ https://docs.hazelcast.org/docs/latest/manual/html-single/#understanding-configu
 [role="command"]
 include::{common-includes}/devmode-lmp33-start.adoc[]
 
+Download hazelcast 5.1 from https://hazelcast.com/open-source-projects/downloads/ and run it local.
+
 Point your browser to the link:http://localhost:9080/openapi/ui/[^] URL.
 This URL displays the available REST endpoints.
 
@@ -302,6 +304,7 @@ cart-app                        1.0-SNAPSHOT
 openliberty/open-liberty        full-java11-openj9-ubi
 ----
 
+Install Hazelcast operator to kubernetes by https://docs.hazelcast.com/operator/latest/get-started
 
 == Deploying and running the application in Kubernetes
 
