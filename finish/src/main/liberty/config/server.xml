@@ -34,8 +34,7 @@
     <!-- tag::httpSessionCache[] -->
        <httpSessionCache libraryRef="jCacheVendorLib"
         hazelcast.jcache.provider.type="member"
-        hazelcast.config.location="file:${server.config.dir}/hazelcast-config
-    />
+        hazelcast.config.location="file:${server.config.dir}/hazelcast-config"/>
     <!-- end::httpSessionCache[] -->
     <!-- tag::library[] -->
     <library id="jCacheVendorLib">
