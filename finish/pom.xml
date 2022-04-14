@@ -39,7 +39,7 @@
         <dependency>
             <groupId>com.hazelcast</groupId>
             <artifactId>hazelcast</artifactId>
-            <version>4.0.5</version>
+            <version>3.12.12</version>
             <scope>test</scope>
         </dependency>
         
