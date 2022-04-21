@@ -19,6 +19,6 @@ LABEL \
 
 COPY --chown=1001:0 src/main/liberty/config /config/
 COPY --chown=1001:0 target/guide-sessions.war /config/apps
-COPY --chown=1001:0 target/hazelcast-*.jar /opt/ol/wlp/usr/shared/resources/hazelcast.jar
+COPY --chown=1001:0 target/liberty/wlp/usr/shared/resources/hazelcast-5.1.1.jar /opt/ol/wlp/usr/shared/resources
 
 RUN configure.sh
