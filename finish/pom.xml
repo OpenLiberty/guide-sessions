@@ -16,7 +16,7 @@
         <liberty.var.default.http.port>9080</liberty.var.default.http.port>
         <liberty.var.default.https.port>9443</liberty.var.default.https.port>
         <liberty.var.app.context.root>${project.artifactId}</liberty.var.app.context.root>
-        <liberty.var.hazelcast.lib>${hazelcast.path}/3.12.12/hazelcast-3.12.12.jar</liberty.var.hazelcast.lib>
+        <liberty.var.hazelcast.lib>${hazelcast.path}/5.1.1/hazelcast-5.1.1.jar</liberty.var.hazelcast.lib>
     </properties>
 
     <dependencies>
@@ -39,7 +39,7 @@
         <dependency>
             <groupId>com.hazelcast</groupId>
             <artifactId>hazelcast</artifactId>
-            <version>3.12.12</version>
+            <version>5.1.1</version>
             <scope>test</scope>
         </dependency>
         
@@ -84,11 +84,6 @@
                 <groupId>io.openliberty.tools</groupId>
                 <artifactId>liberty-maven-plugin</artifactId>
                 <version>3.5.1</version>
-                <configuration>
-                    <install>
-                        <version>22.0.0.2</version>
-                    </install>
-                </configuration>
             </plugin>
             
             <!-- Copy the hazelcast library -->
@@ -110,7 +105,7 @@
                         <artifactItem>
                             <groupId>com.hazelcast</groupId>
                             <artifactId>hazelcast</artifactId>
-                            <version>3.12.12</version>
+                            <version>5.1.1</version>
                             <type>jar</type>
                         </artifactItem>
                     </artifactItems>
