@@ -83,6 +83,7 @@
                 <groupId>io.openliberty.tools</groupId>
                 <artifactId>liberty-maven-plugin</artifactId>
                 <version>3.5.1</version>
+                <!-- tag::configuration[] -->
                 <configuration>
                     <!-- Copy the hazelcast library -->
                     <copyDependencies>
@@ -96,6 +97,7 @@
                         </dependencyGroup>
                     </copyDependencies>
                 </configuration>
+                <!-- end::configuration[] -->
             </plugin>
             
             <!-- Plugin to run unit tests -->

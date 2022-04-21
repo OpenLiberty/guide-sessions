@@ -1,4 +1,4 @@
-// Copyright (c) 2019, 2021 IBM Corporation and others.
+// Copyright (c) 2019, 2022 IBM Corporation and others.
 // Licensed under Creative Commons Attribution-NoDerivatives
 // 4.0 International (CC BY-ND 4.0)
 //   https://creativecommons.org/licenses/by-nd/4.0/
@@ -186,13 +186,16 @@ server.xml
 include::finish/src/main/liberty/config/server.xml[]
 ----
 
-The [hotspot=library]`library` element includes the library reference that indicates
+pom.xml
+[source, xml, linenums, indent=0, role="code_column hide_tags=copyright"]
+----
+include::finish/pom.xml[]
+----
+
+The [hotspot=library file=0]`library` element includes the library reference that indicates
 to the server where the Hazelcast implementation of JCache is located. 
-Your Hazelcast implementation of JCache is a JAR file that resides in the location that is defined by
-the [hotspot=hazelcastLib]`${hazelcast.lib}` variable.
-The [hotspot=hazelcastjar]`hazelcast.jar` file is downloaded as a dependency and copied to the
-predefined `target` directory when the Maven build runs. This goal is defined in the
-provided Maven POM file.
+Your Hazelcast implementation of JCache is a JAR file that resides in the shared resources directory that is defined by the [hotspot=hazelcastjar file=0]`file` element.
+The `hazelcast-*.jar` file is downloaded by the Liberty Maven plugin. The [hotspot=configuration file=1]`configuration` is defined in the provided Maven POM file.
 
 === Configuring Hazelcast
 
@@ -206,7 +209,7 @@ By default, all Open Liberty servers that run the [hotspot=sessionCache file=0]`
 feature and Hazelcast are connected using a peer-to-peer model.
 
 You can share the session cache only among certain Hazelcast instances
-by using the [hotspot=group file=1]`group` configuration element in the Hazelcast configuration file.
+by using the `cluster-name` configuration element in the Hazelcast configuration file.
 
 [role="code_command hotspot file=1", subs="quotes"]
 ----
@@ -220,7 +223,7 @@ hazelcast-config.xml
 include::finish/src/main/liberty/config/hazelcast-config.xml[]
 ----
 
-The cluster group [hotspot=cartCluster file=1]`CartCluster` is defined in the [hotspot file=1]`hazelcast-config.xml`.
+The cluster name [hotspot=cartCluster file=1]`CartCluster` is defined in the [hotspot file=1]`hazelcast-config.xml`.
 
 In the [hotspot file=0]`server.xml` file, a reference to the Hazelcast configuration file is made by using
 the [hotspot=httpSessionCache file=0]`httpSessionCache` tag.
