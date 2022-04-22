@@ -231,6 +231,21 @@ the [hotspot=httpSessionCache file=0]`httpSessionCache` tag.
 There are more configuration settings that you can explore in the
 https://docs.hazelcast.org/docs/latest/manual/html-single/#understanding-configuration[Hazelcast documentation^].
 
+
+[role="code_command hotspot file=2", subs="quotes"]
+----
+#Create the `bootstrap.properties` file.#
+`src/main/liberty/config/bootstrap.properties`
+----
+
+bootstrap.properties
+[source, text, linenums, indent=0, role="code_column"]
+----
+include::finish/src/main/liberty/config/bootstrap.properties[]
+----
+
+Hazelcast JCache provides the client and member providers. Set `hazelcast.jcache.provider.type` to `member` for using the member provider.
+
 // =================================================================================================
 // Running the application
 // =================================================================================================
