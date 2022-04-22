@@ -228,9 +228,6 @@ The cluster name [hotspot=cartCluster file=1]`CartCluster` is defined in the [ho
 In the [hotspot file=0]`server.xml` file, a reference to the Hazelcast configuration file is made by using
 the [hotspot=httpSessionCache file=0]`httpSessionCache` tag.
 
-There are more configuration settings that you can explore in the
-https://docs.hazelcast.org/docs/latest/manual/html-single/#understanding-configuration[Hazelcast documentation^].
-
 
 [role="code_command hotspot file=2", subs="quotes"]
 ----
@@ -245,6 +242,9 @@ include::finish/src/main/liberty/config/bootstrap.properties[]
 ----
 
 Hazelcast JCache provides the client and member providers. Set `hazelcast.jcache.provider.type` to `member` for using the member provider.
+
+There are more configuration settings that you can explore in the
+https://docs.hazelcast.org/docs/latest/manual/html-single/#understanding-configuration[Hazelcast documentation^].
 
 // =================================================================================================
 // Running the application
