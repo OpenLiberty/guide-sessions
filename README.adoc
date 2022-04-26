@@ -241,7 +241,7 @@ bootstrap.properties
 include::finish/src/main/liberty/config/bootstrap.properties[]
 ----
 
-Hazelcast JCache provides the client and member providers. Set `hazelcast.jcache.provider.type` to `member` for using the member provider.
+Hazelcast JCache provides the client and member providers. Set `hazelcast.jcache.provider.type` to `member` to use the member provider.
 
 There are more configuration settings that you can explore in the
 https://docs.hazelcast.org/docs/latest/manual/html-single/#understanding-configuration[Hazelcast documentation^].
