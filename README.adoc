@@ -333,7 +333,7 @@ Now that the containerized application is built, deploy it to a local Kubernetes
 a Kubernetes resource definition, which is provided in the [hotspot file=0]`kubernetes.yaml` file
 at the `start` directory.
 
-First, use  the `ClusterRoleBinding` Kubernetes API object to grant Hazelcast members to access the cluster.
+First, use the `ClusterRoleBinding` Kubernetes API object to grant Hazelcast members to access the cluster.
 [role='command']
 ```
 kubectl apply -f https://raw.githubusercontent.com/hazelcast/hazelcast/master/kubernetes-rbac.yaml
