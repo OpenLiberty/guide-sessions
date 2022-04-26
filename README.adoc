@@ -333,6 +333,12 @@ Now that the containerized application is built, deploy it to a local Kubernetes
 a Kubernetes resource definition, which is provided in the [hotspot file=0]`kubernetes.yaml` file
 at the `start` directory.
 
+First, use `ClusterRoleBinding` Kubernetes API object to grant Hazelcast members to access the cluster.
+[role='command']
+```
+kubectl apply -f https://raw.githubusercontent.com/hazelcast/hazelcast/master/kubernetes-rbac.yaml
+```
+
 Run the following command to deploy the application into [hotspot=replicas file=0]`3` replicated pods as defined
 in the `kubernetes.yaml` file:
 [role='command']
@@ -441,12 +447,12 @@ kubectl exec -it [pod-name] -- /opt/ol/wlp/bin/server resume
 
 == Tearing down the environment
 
-When you no longer need your deployed application, you can delete all {kube} resources
-by running the `kubectl delete` command:
+When you no longer need your deployed application, you can delete all {kube} resources and disable the Hazelcast members to access the cluster by running the `kubectl delete` commands:
 
 [role='command']
 ```
 kubectl delete -f kubernetes.yaml
+kubectl delete -f https://raw.githubusercontent.com/hazelcast/hazelcast/master/kubernetes-rbac.yaml
 ```
 
 [role='command']

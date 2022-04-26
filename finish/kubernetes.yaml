@@ -18,7 +18,10 @@ spec:
       - name: cart-container
         image: cart-app:1.0-SNAPSHOT
         ports:
-        - containerPort: 9080
+        - name: http
+          containerPort: 9080
+        - name: hazelcast
+          containerPort: 5701
 ---
 apiVersion: v1
 kind: Service
