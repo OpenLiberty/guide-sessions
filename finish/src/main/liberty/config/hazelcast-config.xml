@@ -13,12 +13,10 @@
 <hazelcast xmlns="http://www.hazelcast.com/schema/config"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.hazelcast.com/schema/config
-       https://hazelcast.com/schema/config/hazelcast-config-3.12.xsd">
-    <!-- tag::group[] -->
-    <group>
-        <!-- tag::cartCluster[] -->
-        <name>CartCluster</name>
-        <!-- end::cartCluster[] -->
-    </group>
-    <!-- end::group[] -->
+       https://hazelcast.com/schema/config/hazelcast-config-5.1.xsd">
+
+    <!--  tag::cartCluster[] -->
+    <cluster-name>CartCluster</cluster-name>
+    <!--  end::cartCluster[] -->
+
 </hazelcast>
