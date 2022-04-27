@@ -16,7 +16,6 @@
         <liberty.var.default.http.port>9080</liberty.var.default.http.port>
         <liberty.var.default.https.port>9443</liberty.var.default.https.port>
         <liberty.var.app.context.root>${project.artifactId}</liberty.var.app.context.root>
-        <liberty.var.hazelcast.lib>${hazelcast.path}/3.12.12/hazelcast-3.12.12.jar</liberty.var.hazelcast.lib>
     </properties>
 
     <dependencies>
@@ -39,7 +38,7 @@
         <dependency>
             <groupId>com.hazelcast</groupId>
             <artifactId>hazelcast</artifactId>
-            <version>3.12.12</version>
+            <version>5.1.1</version>
             <scope>test</scope>
         </dependency>
         
@@ -85,36 +84,21 @@
                 <groupId>io.openliberty.tools</groupId>
                 <artifactId>liberty-maven-plugin</artifactId>
                 <version>3.5.1</version>
-            </plugin>
-            
-            <!-- Copy the hazelcast library -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <version>3.2.0</version>
-                <executions>
-                    <execution>
-                        <id>copy</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>copy</goal>
-                        </goals>
-                    </execution>
-                </executions>
                 <configuration>
-                    <artifactItems>
-                        <artifactItem>
-                            <groupId>com.hazelcast</groupId>
-                            <artifactId>hazelcast</artifactId>
-                            <version>3.12.12</version>
-                            <type>jar</type>
-                        </artifactItem>
-                    </artifactItems>
-                    <outputDirectory>${project.build.directory}</outputDirectory>
+                    <!-- Copy the hazelcast library -->
+                    <copyDependencies>
+                        <dependencyGroup>
+                            <location>${project.build.directory}/liberty/wlp/usr/shared/resources</location>
+                            <dependency>
+                                <groupId>com.hazelcast</groupId>
+                                <artifactId>hazelcast</artifactId>
+                                <version>5.1.1</version>
+                            </dependency>
+                        </dependencyGroup>
+                    </copyDependencies>
                 </configuration>
             </plugin>
-      
-                  
+           
             <!-- Plugin to run unit tests -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

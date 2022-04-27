@@ -1,4 +1,4 @@
-FROM icr.io/appcafe/open-liberty:22.0.0.2-full-java11-openj9-ubi
+FROM icr.io/appcafe/open-liberty:full-java11-openj9-ubi
 
 ARG VERSION=1.0
 ARG REVISION=SNAPSHOT
@@ -18,6 +18,6 @@ LABEL \
 
 COPY --chown=1001:0 src/main/liberty/config /config/
 COPY --chown=1001:0 target/guide-sessions.war /config/apps
-COPY --chown=1001:0 target/hazelcast-*.jar /opt/ol/wlp/usr/shared/resources/hazelcast.jar
+COPY --chown=1001:0 target/liberty/wlp/usr/shared/resources/hazelcast-5.1.1.jar /opt/ol/wlp/usr/shared/resources
 
 RUN configure.sh
