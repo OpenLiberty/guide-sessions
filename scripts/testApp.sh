@@ -1,6 +1,8 @@
 #!/bin/bash
 set -euxo pipefail
 
+../scripts/startMinikube.sh
+
 # TEST 1: Building and running the application
 
 # LMP 3.0+ goals are listed here: https://github.com/OpenLiberty/ci.maven#goals
@@ -57,6 +59,8 @@ echo "$runningPod"
 
 kubectl exec "$runningPod" -- cat /logs/messages.log | grep product
 kubectl exec "$runningPod" -- cat /logs/messages.log | grep java
+
+../scripts/stopMinikube.sh
 
 if [ "$postStatus" == "eggs added to your cart and costs \$2.29" ] && [ "$getStatus" == "200" ] && [ "$openApiStatus" == "200" ]
 then
