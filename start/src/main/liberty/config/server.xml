@@ -1,0 +1,35 @@
+<server description="Liberty Server for Sessions Management">
+
+    <featureManager>
+        <feature>servlet-4.0</feature>
+        <feature>sessionCache-1.0</feature>
+        <feature>jaxrs-2.1</feature>
+        <feature>jsonp-1.1</feature>
+        <feature>mpOpenAPI-2.0</feature>
+    </featureManager>
+
+    <variable name="default.http.port" defaultValue="9080"/>
+    <variable name="default.https.port" defaultValue="9443"/>
+    <variable name="app.context.root" defaultValue="guide-sessions"/>
+
+    <httpEndpoint host="*"
+                  id="defaultHttpEndpoint"
+                  httpPort="9080"
+                  httpsPort="9443" />
+
+  <httpSessionCache libraryRef="InfinispanLib" enableBetaSupportForInfinispan="true">
+    <properties infinispan.client.hotrod.server_list="infinispan-server:11222"/>
+    <properties infinispan.client.hotrod.auth_username="sampleUser"/>
+    <properties infinispan.client.hotrod.auth_password="samplePassword"/>
+    <properties infinispan.client.hotrod.auth_realm="default"/>
+    <properties infinispan.client.hotrod.sasl_mechanism="PLAIN"/>
+    <properties infinispan.client.hotrod.marshaller="org.infinispan.commons.marshall.JavaSerializationMarshaller"/>
+  </httpSessionCache>
+
+    <library id="InfinispanLib">
+        <fileset dir="${shared.resource.dir}/infinispan" includes="*.jar"/>
+    </library>
+
+    <webApplication location="guide-sessions.war" contextRoot="${app.context.root}" />
+
+</server>

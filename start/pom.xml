@@ -35,12 +35,11 @@
             <scope>provided</scope>
         </dependency>
         
-        <!-- Hazelcast Dependency -->
+        <!-- Infinispan Dependency -->
         <dependency>
-            <groupId>com.hazelcast</groupId>
-            <artifactId>hazelcast</artifactId>
-            <version>3.12.12</version>
-            <scope>test</scope>
+            <groupId>org.infinispan</groupId>
+            <artifactId>infinispan-jcache-remote</artifactId>
+            <version>13.0.10.Final</version>
         </dependency>
         
         <!-- For tests -->
@@ -104,13 +103,13 @@
                 <configuration>
                     <artifactItems>
                         <artifactItem>
-                            <groupId>com.hazelcast</groupId>
-                            <artifactId>hazelcast</artifactId>
-                            <version>3.12.12</version>
+                            <groupId>org.infinispan</groupId>
+                            <artifactId>infinispan-jcache-remote</artifactId>
+                            <version>13.0.10.Final</version>
                             <type>jar</type>
                         </artifactItem>
                     </artifactItems>
-                    <outputDirectory>${project.build.directory}</outputDirectory>
+                    <outputDirectory>${shared.resource.dir}/infinispan</outputDirectory>
                 </configuration>
             </plugin>
       
