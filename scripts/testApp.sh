@@ -1,7 +1,13 @@
 #!/bin/bash
 set -euxo pipefail
 
-../scripts/startMinikube.sh
+#../scripts/startMinikube.sh
+minikube start
+minikube status
+#kubectl cluster-info
+#kubectl get services --all-namespaces
+#kubectl config view
+eval "$(minikube docker-env)"
 
 # TEST 1: Building and running the application
 
@@ -12,7 +18,7 @@ set -euxo pipefail
 #       liberty:create            - Create a Liberty server.
 #       liberty:install-feature   - Install a feature packaged as a Subsystem Archive (esa) to the Liberty runtime.
 #       liberty:deploy            - Copy applications to the Liberty server's dropins or apps directory. 
-mvn -Dhttp.keepAlive=false \
+mvn -ntp -Dhttp.keepAlive=false \
     -Dmaven.wagon.http.pool=false \
     -Dmaven.wagon.httpconnectionManager.ttlSeconds=120 \
     -q clean package liberty:create liberty:install-feature liberty:deploy
@@ -26,11 +32,11 @@ mvn -Dhttp.keepAlive=false \
 #       failsafe:verify           - Verifies that the integration tests of an application passed.
 mvn liberty:start
 sleep 30
-mvn -Dhttp.keepAlive=false \
+mvn -ntp -Dhttp.keepAlive=false \
     -Dmaven.wagon.http.pool=false \
     -Dmaven.wagon.httpconnectionManager.ttlSeconds=120 \
     failsafe:integration-test liberty:stop
-mvn failsafe:verify
+mvn -ntp failsafe:verify
 
 # TEST 2:  Running the application in Kubernetes
 docker build -t cart-app:1.0-SNAPSHOT .
@@ -43,12 +49,12 @@ sleep 120
 
 kubectl get pods
 
-minikube ip
+GUIDE_IP=$(minikube ip)
 
-postStatus="$(curl -X POST "http://localhost:31000/guide-sessions/cart/eggs&2.29" --cookie "c.txt" --cookie-jar "c.txt")"
-getStatus="$(curl --write-out "%{http_code}\n" --silent --output /dev/null "http://$(minikube ip):31000/guide-sessions/cart" --cookie "c.txt" --cookie-jar "c.txt")"
-openApiStatus="$(curl --write-out "%{http_code}\n" --silent --output /dev/null "http://$(minikube ip):31000/openapi/ui/")"
-runningPod="$(curl --silent "http://$(minikube ip):31000/guide-sessions/cart" --cookie "c.txt" --cookie-jar "c.txt" | sed 's/^.*\(cart-.*\)/\1/' | sed 's/".*//')"
+postStatus="$(curl -X POST "http://$GUIDE_IP:31000/guide-sessions/cart/eggs&2.29" --cookie "c.txt" --cookie-jar "c.txt")"
+getStatus="$(curl --write-out "%{http_code}\n" --silent --output /dev/null "http://$GUIDE_IP:31000/guide-sessions/cart" --cookie "c.txt" --cookie-jar "c.txt")"
+openApiStatus="$(curl --write-out "%{http_code}\n" --silent --output /dev/null "http://$GUIDE_IP:31000/openapi/ui/")"
+runningPod="$(curl --silent "http://$GUIDE_IP:31000/guide-sessions/cart" --cookie "c.txt" --cookie-jar "c.txt" | sed 's/^.*\(cart-.*\)/\1/' | sed 's/".*//')"
 
 echo post status 
 echo "$postStatus"
@@ -60,7 +66,9 @@ echo "$runningPod"
 kubectl exec "$runningPod" -- cat /logs/messages.log | grep product
 kubectl exec "$runningPod" -- cat /logs/messages.log | grep java
 
-../scripts/stopMinikube.sh
+#../scripts/stopMinikube.sh
+eval "$(minikube docker-env -u)"
+minikube stop
 
 if [ "$postStatus" == "eggs added to your cart and costs \$2.29" ] && [ "$getStatus" == "200" ] && [ "$openApiStatus" == "200" ]
 then
