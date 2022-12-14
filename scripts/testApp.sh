@@ -49,12 +49,12 @@ sleep 120
 
 kubectl get pods
 
-minikube ip
+GUIDE_IP=$(minikube ip)
 
-postStatus="$(curl -X POST "http://localhost:31000/guide-sessions/cart/eggs&2.29" --cookie "c.txt" --cookie-jar "c.txt")"
-getStatus="$(curl --write-out "%{http_code}\n" --silent --output /dev/null "http://$(minikube ip):31000/guide-sessions/cart" --cookie "c.txt" --cookie-jar "c.txt")"
-openApiStatus="$(curl --write-out "%{http_code}\n" --silent --output /dev/null "http://$(minikube ip):31000/openapi/ui/")"
-runningPod="$(curl --silent "http://$(minikube ip):31000/guide-sessions/cart" --cookie "c.txt" --cookie-jar "c.txt" | sed 's/^.*\(cart-.*\)/\1/' | sed 's/".*//')"
+postStatus="$(curl -X POST "http://$GUIDE_IP:31000/guide-sessions/cart/eggs&2.29" --cookie "c.txt" --cookie-jar "c.txt")"
+getStatus="$(curl --write-out "%{http_code}\n" --silent --output /dev/null "http://$GUIDE_IP:31000/guide-sessions/cart" --cookie "c.txt" --cookie-jar "c.txt")"
+openApiStatus="$(curl --write-out "%{http_code}\n" --silent --output /dev/null "http://$GUIDE_IP:31000/openapi/ui/")"
+runningPod="$(curl --silent "http://$GUIDE_IP:31000/guide-sessions/cart" --cookie "c.txt" --cookie-jar "c.txt" | sed 's/^.*\(cart-.*\)/\1/' | sed 's/".*//')"
 
 echo post status 
 echo "$postStatus"
@@ -67,8 +67,8 @@ kubectl exec "$runningPod" -- cat /logs/messages.log | grep product
 kubectl exec "$runningPod" -- cat /logs/messages.log | grep java
 
 #../scripts/stopMinikube.sh
-minikube stop
 eval "$(minikube docker-env -u)"
+minikube stop
 
 if [ "$postStatus" == "eggs added to your cart and costs \$2.29" ] && [ "$getStatus" == "200" ] && [ "$openApiStatus" == "200" ]
 then
