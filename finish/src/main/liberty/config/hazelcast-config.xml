@@ -14,8 +14,18 @@
     xsi:schemaLocation="http://www.hazelcast.com/schema/config
        https://hazelcast.com/schema/config/hazelcast-config-5.3.xsd">
 
-    <!--  tag::cartCluster[] -->
+    <!-- tag::cartCluster[] -->
     <cluster-name>CartCluster</cluster-name>
-    <!--  end::cartCluster[] -->
+    <!-- end::cartCluster[] -->
+
+    <!-- tag::network[] -->
+    <network>
+        <join>
+           <!-- tag::multicast[] -->
+           <multicast enabled="true"/>
+           <!-- end::multicast[] -->
+        </join>
+    </network>
+    <!-- end::network[] -->
 
 </hazelcast>
