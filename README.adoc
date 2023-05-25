@@ -424,7 +424,7 @@ You see a message similar to the following:
 
 [role="no_copy"]
 ----
-... [10.1.0.46]:5701 [CartCluster] [3.11.2]
+... [10.1.0.46]:5701 [CartCluster] [5.3.0]
 
 Members {size:3, ver:3} [
 	Member [10.1.0.40]:5701 - 01227d80-501e-4789-ae9d-6fb348d794ea
