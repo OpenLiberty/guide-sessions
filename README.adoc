@@ -1,4 +1,4 @@
-// Copyright (c) 2019, 2022 IBM Corporation and others.
+// Copyright (c) 2019, 2023 IBM Corporation and others.
 // Licensed under Creative Commons Attribution-NoDerivatives
 // 4.0 International (CC BY-ND 4.0)
 //   https://creativecommons.org/licenses/by-nd/4.0/
@@ -223,7 +223,7 @@ hazelcast-config.xml
 include::finish/src/main/liberty/config/hazelcast-config.xml[]
 ----
 
-The cluster name [hotspot=cartCluster file=1]`CartCluster` is defined in the [hotspot file=1]`hazelcast-config.xml`.
+The [hotspot=cartCluster file=1]`CartCluster` cluster name is defined in the [hotspot file=1]`hazelcast-config.xml` file. To allow Hazelcast cluster members to find each other, enable the [hotspot=multicast file=1]`multicast` communication in the [hotspot=network file=1]`network` configuration.
 
 In the [hotspot file=0]`server.xml` file, a reference to the Hazelcast configuration file is made by using
 the [hotspot=httpSessionCache file=0]`httpSessionCache` tag.
@@ -483,7 +483,7 @@ You see a message similar to the following:
 
 [role="no_copy"]
 ----
-... [10.1.0.46]:5701 [CartCluster] [3.11.2]
+... [10.1.0.46]:5701 [CartCluster] [5.3.0]
 
 Members {size:3, ver:3} [
 	Member [10.1.0.40]:5701 - 01227d80-501e-4789-ae9d-6fb348d794ea
