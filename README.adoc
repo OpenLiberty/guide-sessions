@@ -223,7 +223,7 @@ hazelcast-config.xml
 include::finish/src/main/liberty/config/hazelcast-config.xml[]
 ----
 
-The cluster name [hotspot=cartCluster file=1]`CartCluster` is defined in the [hotspot file=1]`hazelcast-config.xml`. To allow Hazelcast members to know each other, enable the [hotspot=multicast file=1]`multicast` communication in the [hotspot=network file=1]`network` configuration.
+The [hotspot=cartCluster file=1]`CartCluster` cluster name  is defined in the [hotspot file=1]`hazelcast-config.xml` file. To allow Hazelcast cluster members to find each other, enable the [hotspot=multicast file=1]`multicast` communication in the [hotspot=network file=1]`network` configuration.
 
 In the [hotspot file=0]`server.xml` file, a reference to the Hazelcast configuration file is made by using
 the [hotspot=httpSessionCache file=0]`httpSessionCache` tag.
