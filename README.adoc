@@ -297,7 +297,7 @@ Run the `mvn package` command from the `start` directory so that the `.war` file
 mvn package
 ```
 
-include::{common-includes}/ol-icr-full-docker-pull.adoc[]
+
 
 To build and containerize the application, run the following Docker build command in the `start` directory:
 
@@ -317,7 +317,7 @@ Verify that the `cart-app:1.0-SNAPSHOT` image is listed among the Docker images,
 ----
 REPOSITORY                      TAG
 cart-app                        1.0-SNAPSHOT
-openliberty/open-liberty        full-java11-openj9-ubi
+openliberty/open-liberty        kernel-slim-java11-openj9-ubi
 ----
 
 
