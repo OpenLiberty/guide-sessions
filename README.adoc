@@ -315,9 +315,9 @@ docker images
 Verify that the `cart-app:1.0-SNAPSHOT` image is listed among the Docker images, for example:
 [source, role="no_copy"]
 ----
-REPOSITORY                      TAG
-cart-app                        1.0-SNAPSHOT
-openliberty/open-liberty        kernel-slim-java11-openj9-ubi
+REPOSITORY                     TAG
+cart-app                       1.0-SNAPSHOT
+icr.io/appcafe/open-liberty    kernel-slim-java11-openj9-ubi
 ----
 
 
