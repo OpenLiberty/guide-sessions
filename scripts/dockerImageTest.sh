@@ -14,7 +14,7 @@ sed -i "\#</copyDependencies>#a<install><runtimeUrl>https://public.dhe.ibm.com/i
 cat pom.xml
 
 sed -i "s;FROM icr.io/appcafe/open-liberty:kernel-slim-java11-openj9-ubi;FROM openliberty/daily:latest;g" Dockerfile
-
+sed -i "s;RUN features.sh;#RUN features.sh;g" Dockerfile
 cat Dockerfile
 
 docker pull "openliberty/daily:latest"
