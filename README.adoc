@@ -87,8 +87,8 @@ include::{common-includes}/gitclone.adoc[]
 
 The application that you are working with is a shopping cart web service that uses JAX-RS,
 which is a Java API for building RESTful web services.
-You'll learn how to persist a user's shopping cart data between servers by using the
-`sessionCache` feature in Open Liberty. The `sessionCache` feature persists HTTP
+You'll learn how to persist a user's shopping cart data between Open Liberty instances by using the
+`sessionCache` feature. The `sessionCache` feature persists HTTP
 sessions using JCache. You can have high-performance HTTP session persistence
 without using a relational database.
 
@@ -141,7 +141,7 @@ A response is then built and returned to confirm that an item was added to your 
 The [hotspot=endpointCart file=1]`cart` endpoint demonstrates how to get session data.
 The [hotspot=getCart file=1]`getCart` method gets the current session, iterates through all key-value
 pairs that are stored in the current session, and creates a `JsonObject` response.
-The `JsonObject` response is returned to confirm the server instance by
+The `JsonObject` response is returned to confirm the Liberty instance by
 [hotspot=podname file=1]`pod-name`, the session by [hotspot=sessionid file=1]`session-id`,
 and the items in your cart by [hotspot=cart file=1]`cart`.
 
@@ -167,7 +167,7 @@ You'll use the peer-to-peer model in a Kubernetes environment for this guide.
 JCache, which stands for Java Caching, is an interface
 to standardize distributed caching on the Java platform.
 The [hotspot=sessionCache]`sessionCache` feature uses JCache, which allows for session
-persistence by providing a common cache of session data between servers.
+persistence by providing a common cache of session data between Liberty instances.
 This feature doesn't include a JCache implementation.
 For this guide, you'll use Hazelcast as an open source JCache provider.
 
@@ -176,7 +176,7 @@ Hazelcast after the [hotspot=sessionCache]`sessionCache` feature is enabled.
 
 [role="code_command hotspot", subs="quotes"]
 ----
-#Create the `server.xml` file.#
+#Create the Liberty `server.xml` configuration file.#
 `src/main/liberty/config/server.xml`
 ----
 
@@ -193,7 +193,7 @@ include::finish/pom.xml[]
 ----
 
 The [hotspot=library file=0]`library` element includes the library reference that indicates
-to the server where the Hazelcast implementation of JCache is located. 
+to the Liberty where the Hazelcast implementation of JCache is located. 
 Your Hazelcast implementation of JCache is a JAR file that resides in the shared resources directory that is defined by the [hotspot=hazelcastjar file=0]`file` element.
 The `hazelcast-*.jar` file is downloaded by the Liberty Maven plugin. The [hotspot=configuration file=1]`configuration` is defined in the provided Maven POM file.
 
@@ -225,7 +225,7 @@ include::finish/src/main/liberty/config/hazelcast-config.xml[]
 
 The [hotspot=cartCluster file=1]`CartCluster` cluster name is defined in the [hotspot file=1]`hazelcast-config.xml` file. To allow Hazelcast cluster members to find each other, enable the [hotspot=multicast file=1]`multicast` communication in the [hotspot=network file=1]`network` configuration.
 
-In the [hotspot file=0]`server.xml` file, a reference to the Hazelcast configuration file is made by using
+In the [hotspot file=0]`server.xml` configuration file, a reference to the Hazelcast configuration file is made by using
 the [hotspot=httpSessionCache file=0]`httpSessionCache` tag.
 
 
@@ -410,7 +410,7 @@ kubectl exec -it [pod-name] -- /opt/ol/wlp/bin/server pause
 
 Repeat the GET request. You see the same `session-id`
 but a different `pod-name` because the session data is cached but the request
-is served by a different pod (server).
+is served by a different pod (Liberty instance).
 
 Verify that the Hazelcast cluster is running by checking the Open Liberty log. 
 To check the log, run the following command:
@@ -461,7 +461,7 @@ include::{common-includes}/kube-minikube-teardown.adoc[]
 
 == Great work! You're done!
 
-You have created, used, and cached HTTP session data for an application that was running on Open Liberty instance
+You have created, used, and cached HTTP session data for an application that was running on Open Liberty
 and deployed in a Kubernetes cluster.
 
 
