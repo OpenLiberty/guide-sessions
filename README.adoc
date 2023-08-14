@@ -154,9 +154,9 @@ Session caching is only valuable when a server is connected to at least
 one other member. There are two different ways session caching can behave in a
 cluster environment:
 
-* Client-server model: A Liberty server can act as the JCache client and connect
+* Client-server model: A Liberty instance can act as the JCache client and connect
 to a dedicated JCache server.
-* Peer-to-peer model: A Liberty server can connect with other Liberty servers
+* Peer-to-peer model: A Liberty instance can connect with other Liberty instances
 that are also running with the session cache and configured to be
 part of the same cluster.
 
@@ -205,7 +205,7 @@ server.xml
 include::finish/src/main/liberty/config/server.xml[]
 ----
 
-By default, all Open Liberty servers that run the [hotspot=sessionCache file=0]`sessionCache`
+By default, all Open Liberty instances that run the [hotspot=sessionCache file=0]`sessionCache`
 feature and Hazelcast are connected using a peer-to-peer model.
 
 You can share the session cache only among certain Hazelcast instances
@@ -461,7 +461,7 @@ include::{common-includes}/kube-minikube-teardown.adoc[]
 
 == Great work! You're done!
 
-You have created, used, and cached HTTP session data for an application that was running on Open Liberty server
+You have created, used, and cached HTTP session data for an application that was running on Open Liberty instance
 and deployed in a Kubernetes cluster.
 
 
