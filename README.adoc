@@ -270,8 +270,7 @@ and then click the `Execute` button. The GET request
 returns a pod name, a session ID, and all the items from your session.
 
 [role='command']
-include::{common-includes}/devmode-quit.adoc[]
-
+include::{common-includes}/devmode-quit-ctrlc.adoc[]
 
 // =================================================================================================
 // Staring and preparing your cluster for deployment
