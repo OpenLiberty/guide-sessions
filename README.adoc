@@ -246,7 +246,7 @@ Hazelcast JCache provides the client and member providers. Set `hazelcast.jcache
 There are more configuration settings that you can explore in the
 https://docs.hazelcast.org/docs/latest/manual/html-single/#understanding-configuration[Hazelcast documentation^].
 
-The [hotspot=copyDependencies]`copyDependencies` tag copies the specified third-party [hotspot=hazelcast]`hazelcast` dependency to a specified location. Multiple [hotspot=dependency]`dependency` parameters and [hotspot=dependencyGroup]`dependencyGroup` parameters can be added to the [hotspot=copyDependenciesConfig]`copyDependencies` configuration. The location parameter can be added to the copyDependencies or dependencyGroup configuration to override the default [hotspot=location]`location`, which is the lib/global folder of the target server. 
+The [hotspot=copyDependencies]`copyDependencies` tag copies the specified third-party [hotspot=dependency]`hazelcast` dependency to a specified location. Multiple dependency parameters and dependencyGroup parameters can be added to the [hotspot=copyDependenciesConfig]`copyDependencies` configuration. The [hotspot=location]`location` parameter can be added to the copyDependencies or dependencyGroup configuration to override the default location, which is the lib/global folder of the target server. 
 
 // =================================================================================================
 // Running the application
