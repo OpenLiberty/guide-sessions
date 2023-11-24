@@ -253,7 +253,7 @@ In the [hotspot file=0]`pom.xml` configuration file, the [hotspot=copyDependenci
 pom.xml
 [source, Xml, linenums, role='code_column']
 ----
-include::finish/backendServices/pom.xml[]
+include::finish/pom.xml[]
 ----
 
 // =================================================================================================
