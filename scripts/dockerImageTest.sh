@@ -21,6 +21,6 @@ echo "$DOCKER_PASSWORD" | sudo docker login -u "$DOCKER_USERNAME" --password-std
 sudo docker pull -q "cp.stg.icr.io/cp/olc/open-liberty-daily:full-java11-openj9-ubi"
 sudo echo "build level:"; docker inspect --format "{{ index .Config.Labels \"org.opencontainers.image.revision\"}}" cp.stg.icr.io/cp/olc/open-liberty-daily:full-java11-openj9-ubi
 
-sudo ../scripts/startMinikube.sh
+#sudo ../scripts/startMinikube.sh
 sudo ../scripts/testApp.sh
-sudo ../scripts/stopMinikube.sh
+#sudo ../scripts/stopMinikube.sh
