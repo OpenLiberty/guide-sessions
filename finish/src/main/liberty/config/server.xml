@@ -1,6 +1,6 @@
 <!-- tag::copyright[] -->
 <!-- 
-     Copyright (c) 2019, 2023 IBM Corporation and others. 
+     Copyright (c) 2019, 2024 IBM Corporation and others. 
      All rights reserved. This program and the accompanying materials 
      are made available under the terms of the Eclipse Public License 2.0
      which accompanies this distribution, and is available at
@@ -22,11 +22,11 @@
         <feature>mpOpenAPI-3.1</feature>
     </featureManager>
 
-    <variable name="default.http.port" defaultValue="9080"/>
-    <variable name="default.https.port" defaultValue="9443"/>
+    <variable name="http.port" defaultValue="9090"/>
+    <variable name="https.port" defaultValue="9453"/>
     <variable name="app.context.root" defaultValue="guide-sessions"/>
 
-    <httpEndpoint httpPort="${default.http.port}" httpsPort="${default.https.port}"
+    <httpEndpoint httpPort="${http.port}" httpsPort="${https.port}"
         id="defaultHttpEndpoint" host="*" />
     <!-- tag::httpSessionCache[] -->
     <httpSessionCache libraryRef="jCacheVendorLib"
@@ -35,7 +35,7 @@
     <!-- tag::library[] -->
     <library id="jCacheVendorLib">
     	<!-- tag::hazelcastjar[] -->
-        <file name="${shared.resource.dir}/hazelcast-5.3.0.jar" />
+        <file name="${shared.resource.dir}/hazelcast-5.3.6.jar" />
         <!-- end::hazelcastjar[] -->
     </library>
     <!-- end::library[] -->
