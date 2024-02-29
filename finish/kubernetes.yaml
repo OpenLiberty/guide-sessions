@@ -19,7 +19,7 @@ spec:
         image: cart-app:1.0-SNAPSHOT
         ports:
         - name: http
-          containerPort: 9080
+          containerPort: 9090
         - name: hazelcast
           containerPort: 5701
 ---
@@ -33,6 +33,6 @@ spec:
     app: cart
   ports:
   - protocol: TCP
-    port: 9080
-    targetPort: 9080
+    port: 9090
+    targetPort: 9090
     nodePort: 31000

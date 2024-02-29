@@ -1,4 +1,4 @@
-// Copyright (c) 2019, 2023 IBM Corporation and others.
+// Copyright (c) 2019, 2024 IBM Corporation and others.
 // Licensed under Creative Commons Attribution-NoDerivatives
 // 4.0 International (CC BY-ND 4.0)
 //   https://creativecommons.org/licenses/by-nd/4.0/
@@ -12,7 +12,7 @@
 :page-releasedate: 2019-07-23
 :page-description: Learn how to create, use and cache HTTP session data.
 :guide-author: Open Liberty
-:page-tags: ['Docker']
+:page-tags: ['docker']
 :page-related-guides: ['rest-intro', 'microprofile-openapi', 'kubernetes-intro']
 :page-permalink: /guides/{projectid}
 :common-includes: https://raw.githubusercontent.com/OpenLiberty/guides-common/prod
@@ -255,7 +255,7 @@ https://docs.hazelcast.org/docs/latest/manual/html-single/#understanding-configu
 [role="command"]
 include::{common-includes}/devmode-lmp33-start.adoc[]
 
-Point your browser to the link:http://localhost:9080/openapi/ui/[^] URL.
+Point your browser to the link:http://localhost:9090/openapi/ui/[^] URL.
 This URL displays the available REST endpoints.
 
 First, make a POST request to the `/cart/{item}&{price}` endpoint. To make this request, expand the POST
