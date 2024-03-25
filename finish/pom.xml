@@ -86,16 +86,26 @@
                 <!-- tag::configuration[] -->
                 <configuration>
                     <!-- Copy the hazelcast library -->
+                    <!-- tag::copyDependencies[] -->
+                    <!-- tag::copyDependency[] -->
                     <copyDependencies>
+                    <!-- end::copyDependency[] -->
+                        <!-- tag::dependencyGroup[] -->
                         <dependencyGroup>
+                        <!-- end::dependencyGroup[] -->
+                            <!-- tag::location[] -->
                             <location>${project.build.directory}/liberty/wlp/usr/shared/resources</location>
+                            <!-- end::location[] -->
+                            <!-- tag::dependency[] -->
                             <dependency>
                                 <groupId>com.hazelcast</groupId>
                                 <artifactId>hazelcast</artifactId>
                                 <version>5.3.6</version>
                             </dependency>
+                            <!-- end::dependency[] -->
                         </dependencyGroup>
                     </copyDependencies>
+                    <!-- end::copyDependencies[] -->
                 </configuration>
                 <!-- end::configuration[] -->
             </plugin>

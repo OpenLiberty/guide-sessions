@@ -246,6 +246,16 @@ Hazelcast JCache provides the client and member providers. Set `hazelcast.jcache
 There are more configuration settings that you can explore in the
 https://docs.hazelcast.org/docs/latest/manual/html-single/#understanding-configuration[Hazelcast documentation^].
 
+=== Third-party libraries for Open Liberty with Maven 
+
+In the [hotspot file=0]`pom.xml` configuration file, the [hotspot=copyDependencies]`copyDependencies` tag copies the specified third-party [hotspot=dependency]`hazelcast dependency` to a specified location. The [hotspot=location]`location` parameter can be added to the `copyDependencies` or `dependencyGroup` configuration to override the default location, which is the lib/global folder of the target server. Multiple dependency parameters and dependencyGroup parameters can be added to the `copyDependencies` configuration. 
+
+pom.xml
+[source, Xml, linenums, role='code_column']
+----
+include::finish/pom.xml[]
+----
+
 // =================================================================================================
 // Running the application
 // =================================================================================================
