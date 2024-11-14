@@ -16,7 +16,7 @@
         <platform>microprofile-6.1</platform>
         <feature>servlet</feature>
         <!-- tag::sessionCache[] -->
-        <feature>sessionCache</feature>
+        <feature>sessionCache-1.0</feature>
         <!-- end::sessionCache[] -->
         <feature>restfulWS</feature>
         <feature>jsonb</feature>
