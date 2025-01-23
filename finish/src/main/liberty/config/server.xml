@@ -15,13 +15,13 @@
         <platform>jakartaee-10.0</platform>
         <platform>microprofile-7.0</platform>
         <feature>servlet</feature>
-        <!-- tag::sessionCache[] -->
-        <feature>sessionCache-1.0</feature>
-        <!-- end::sessionCache[] -->
         <feature>restfulWS</feature>
         <feature>jsonb</feature>
         <feature>jsonp</feature>
         <feature>mpOpenAPI</feature>
+        <!-- tag::sessionCache[] -->
+        <feature>sessionCache-1.0</feature>
+        <!-- end::sessionCache[] -->
     </featureManager>
 
     <variable name="http.port" defaultValue="9090"/>
