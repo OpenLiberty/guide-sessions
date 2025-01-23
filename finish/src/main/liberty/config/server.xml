@@ -13,7 +13,7 @@
 
     <featureManager>
         <platform>jakartaee-10.0</platform>
-        <platform>microprofile-6.1</platform>
+        <platform>microprofile-7.0</platform>
         <feature>servlet</feature>
         <!-- tag::sessionCache[] -->
         <feature>sessionCache-1.0</feature>
