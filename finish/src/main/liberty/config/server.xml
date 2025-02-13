@@ -12,14 +12,16 @@
 <server description="Liberty Server for Sessions Management">
 
     <featureManager>
-        <feature>servlet-6.0</feature>
+        <platform>jakartaee-10.0</platform>
+        <platform>microprofile-7.0</platform>
+        <feature>servlet</feature>
+        <feature>restfulWS</feature>
+        <feature>jsonb</feature>
+        <feature>jsonp</feature>
+        <feature>mpOpenAPI</feature>
         <!-- tag::sessionCache[] -->
         <feature>sessionCache-1.0</feature>
         <!-- end::sessionCache[] -->
-        <feature>restfulWS-3.1</feature>
-        <feature>jsonb-3.0</feature>
-        <feature>jsonp-2.1</feature>
-        <feature>mpOpenAPI-3.1</feature>
     </featureManager>
 
     <variable name="http.port" defaultValue="9090"/>
