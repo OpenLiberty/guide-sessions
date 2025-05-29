@@ -289,7 +289,7 @@ The Dockerfile is provided at the `start` directory. If you're unfamiliar with D
 check out the https://openliberty.io/guides/containerize.html[Containerizing microservices^] guide,
 which covers Dockerfile in depth.
 
-Run the `mvnw package` command from the `start` directory so that the `.war` file resides in the `target` directory.
+Run the Maven `package` goal from the `start` directory so that the `.war` file resides in the `target` directory.
 
 include::{common-includes}/os-tabs.adoc[]
 
