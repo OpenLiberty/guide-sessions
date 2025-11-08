@@ -38,7 +38,7 @@
         <dependency>
             <groupId>com.hazelcast</groupId>
             <artifactId>hazelcast</artifactId>
-            <version>5.6.0</version>
+            <version>5.3.8</version>
             <scope>test</scope>
         </dependency>
         
@@ -92,7 +92,7 @@
                             <dependency>
                                 <groupId>com.hazelcast</groupId>
                                 <artifactId>hazelcast</artifactId>
-                                <version>5.3.6</version>
+                                <version>5.3.8</version>
                             </dependency>
                         </dependencyGroup>
                     </copyDependencies>

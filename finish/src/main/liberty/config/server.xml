@@ -37,7 +37,7 @@
     <!-- tag::library[] -->
     <library id="jCacheVendorLib">
     	<!-- tag::hazelcastjar[] -->
-        <file name="${shared.resource.dir}/hazelcast-5.3.6.jar" />
+        <file name="${shared.resource.dir}/hazelcast-5.3.8.jar" />
         <!-- end::hazelcastjar[] -->
     </library>
     <!-- end::library[] -->
