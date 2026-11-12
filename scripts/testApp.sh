@@ -40,13 +40,13 @@ sleep 30
 ./mvnw -ntp failsafe:verify
 
 # TEST 2:  Running the application in Kubernetes
-docker build -t cart-app:1.0-SNAPSHOT .
+docker pull -q icr.io/appcafe/open-liberty:kernel-slim-java25-openj9-ubi-minimal
 
-sleep 120
+DOCKER_BUILDKIT=0 docker build -t cart-app:1.0-SNAPSHOT .
 
 kubectl apply -f kubernetes.yaml
 
-sleep 120
+sleep 180
 
 kubectl get pods
 
