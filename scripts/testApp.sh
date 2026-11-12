@@ -42,11 +42,9 @@ sleep 30
 # TEST 2:  Running the application in Kubernetes
 docker build -t cart-app:1.0-SNAPSHOT .
 
-sleep 120
-
 kubectl apply -f kubernetes.yaml
 
-sleep 120
+kubectl wait --for=condition=ready pod -l app=cart --timeout=300s
 
 kubectl get pods
 
