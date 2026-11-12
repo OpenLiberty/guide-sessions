@@ -40,7 +40,7 @@ sleep 30
 ./mvnw -ntp failsafe:verify
 
 # TEST 2:  Running the application in Kubernetes
-docker build -t cart-app:1.0-SNAPSHOT .
+DOCKER_BUILDKIT=0 docker build -t cart-app:1.0-SNAPSHOT .
 
 kubectl apply -f kubernetes.yaml
 
